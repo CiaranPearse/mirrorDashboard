@@ -31,7 +31,7 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get(`https://rss.cnn.com/rss/edition_world.rss`)
+    axios.get(`http://rss.cnn.com/rss/edition_world.rss`)
     .then(response => {
       var self = this
       parseString(response.data, function (err, result) {

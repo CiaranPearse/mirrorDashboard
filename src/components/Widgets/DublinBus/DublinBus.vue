@@ -30,7 +30,7 @@ export default {
     }
   },
   created () {
-    axios.get(`https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=` + this.stopId)
+    axios.get(`http://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=` + this.stopId)
     .then(response => {
       this.times = response.data.results
     })
