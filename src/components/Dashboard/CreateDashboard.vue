@@ -12,6 +12,19 @@
     			<v-layout row wrap>
             <v-flex xs12>
               <v-text-field
+                name="dashTitle"
+                label="Name this Dashboard"
+                id="dashTitle"
+                v-model="dashTitle"
+                :messages="['Give it a name so you know what it\'s for']"
+                required
+                >
+              </v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-text-field
                 name="deviceId"
                 label="Enter your Device ID"
                 id="deviceId"
@@ -21,14 +34,14 @@
                 >
               </v-text-field>
             </v-flex>
-    			</v-layout>
+          </v-layout>
     			<v-layout row wrap>
             <v-flex xs12>
               <v-text-field
                 name="Dashboard Location"
                 label="Where is your device located"
-                id="deviceLocation"
-                v-model="deviceLocation"
+                id="location"
+                v-model="location"
                 required
                 >
               </v-text-field>
@@ -49,6 +62,7 @@
 													      :items="items"
 													      :search-input.sync="searchLeft1"
 													      v-model="slotLeft1"
+                                :key="slotLeft1"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -64,6 +78,7 @@
 													      :items="items"
 													      :search-input.sync="searchLeft2"
 													      v-model="slotLeft2"
+                                :key="slotLeft2"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -79,6 +94,7 @@
 													      :items="items"
 													      :search-input.sync="searchLeft3"
 													      v-model="slotLeft3"
+                                :key="slotLeft3"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -99,6 +115,7 @@
 													      :items="items"
 													      :search-input.sync="searchCenter1"
 													      v-model="slotCenter1"
+                                :key="slotCenter1"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -114,6 +131,7 @@
 													      :items="items"
 													      :search-input.sync="searchCenter2"
 													      v-model="slotCenter2"
+                                :key="slotCenter2"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -129,13 +147,13 @@
 													      :items="items"
 													      :search-input.sync="searchCenter3"
 													      v-model="slotCenter3"
+                                :key="slotCenter3"
 													      cache-items
 													      class="mx-3"
 													      flat
 													      hide-no-data
 													      hide-details
 													      label="Search"
-													      solo-inverted
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  			</div>
@@ -150,6 +168,7 @@
 													      :items="items"
 													      :search-input.sync="searchRight1"
 													      v-model="slotRight1"
+                                :key="slotRight1"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -165,6 +184,7 @@
 													      :items="items"
 													      :search-input.sync="searchRight2"
 													      v-model="slotRight2"
+                                :key="slotRight2"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -180,6 +200,7 @@
 													      :items="items"
 													      :search-input.sync="searchRight3"
 													      v-model="slotRight3"
+                                :key="slotRight3"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -202,6 +223,7 @@
 													      :items="items"
 													      :search-input.sync="searchFooter"
 													      v-model="slotFooter"
+                                :key="slotFooter"
 													      cache-items
 													      class="mx-3"
 													      flat
@@ -229,52 +251,74 @@
     </v-layout>
     </v-container>
     <v-container fluid fill-height>
-    <v-layout row>
-    	<v-flex xs12>
-    	  <p>PREVIEW</p>
-    	  	<v-layout row>
-    	  		<v-flex xs3 class="dashedBorder leftBlock">
-    	  			<div>
-    	  				<div class="innerDotted">{{ this.searchLeft1 }}</div>
-    	  				<div class="innerDotted">{{ this.searchLeft2 }}</div>
-    	  				<div class="innerDotted">{{ this.searchLeft3 }}</div>
-    	  			</div>
-    	  		</v-flex>
-    	  		<v-flex xs8 class="dashedBorder centerBlock">
-    	  			<div>
-    	  				<div class="innerDotted">{{ this.searchCenter1 }}</div>
-    	  				<div class="innerDotted">{{ this.searchCenter2 }}</div>
-    	  				<div class="innerDotted">{{ this.searchCenter3 }}</div>
-    	  			</div>
-    	  		</v-flex>
-    	  		<v-flex xs3 class="dashedBorder rightBlock">
-    	  			<div>
-    	  				<div class="innerDotted">{{ this.searchRight1 }}</div>
-    	  				<div class="innerDotted">{{ this.searchRight2 }}</div>
-    	  				<div class="innerDotted">{{ this.searchRight3 }}</div>
-    	  			</div>
-    	  		</v-flex>
-    	  	</v-layout>
-    	  	<v-layout row>
-    	  		<v-flex xs12 class="dashedBorder footerBlock">
-    	  			<div>
-    	  				<div class="innerDotted">{{ this.searchFooter }}</div>
-    	  			</div>
-    	  		</v-flex>
-    	  	</v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      <v-layout row>
+        <v-flex xs12>
+          <div>
+            <h2 v-if="this.dashTitle !== ''" style="text-align: center;">Preview for {{ this.dashTitle }}</h2>
+            <h2 v-else style="text-align: center;">Preview for {{ this.dashTitle }}</h2>
+            <div class="picture-frame">
+            <div class="matte">
+              <v-layout row>
+                <v-flex xs12 class="pictureFrameData">
+                    <v-layout row class="pictureFrameMain">
+                      <v-flex xs3 class="leftBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft1"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft2"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft3"></component></div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs8 class="centerBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter2"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter3"></component></div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs3 class="rightBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight1"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight2"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight3"></component></div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout row class="pictureFrameFooter">
+                      <v-flex xs12 class="dashedBorder footerBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchFooter"></component></div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                </v-flex>
+              </v-layout>
+            </div>
+          </div>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-container>
 </div>
 </template>
 
 
 <script>
+import BBCNews from '../Widgets/BBCNews'
+import CNNWorldNews from '../Widgets/CNNWorldNews'
+import RTENews from '../Widgets/RTENews'
+import Clock from '../Widgets/Clock'
+import CryptoTicker from '../Widgets/CryptoTicker'
+import CurrencyTicker from '../Widgets/CurrencyTicker'
+import DublinBus from '../Widgets/DublinBus'
+import Quotes from '../Widgets/Quotes'
+import Weather from '../Widgets/Weather'
+import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
   data () {
     return {
       loading: false,
       items: [],
+      dashTitle: '',
       deviceId: '',
       location: '',
       searchLeft1: null,
@@ -297,23 +341,36 @@ export default {
       slotRight2: null,
       slotRight3: null,
       slotFooter: null,
+      created: '',
+      updated: '',
       widgets: [
-        'Clock',
-        'Weather 1 Day',
-        'Weather 3 Day',
-        'Weather 5 Day',
-        'Ireland: Dublin Bus',
-        'Ireland: News Headlines',
-        'Quotes: Beer',
-        'Quotes: Inspiration',
-        'Stocks: NYSE',
-        'Stocks: Crypto'
+        'BBC News',
+        'CNN World News',
+        'Clock Digital',
+        'Crypto Rates',
+        'Currency Rates',
+        'Dublin Bus',
+        'RTE News',
+        'Weather',
+        'Inspire Quotes',
+        'Welcome Message'
       ]
     }
   },
+  components: {
+    'BBC News': BBCNews,
+    'CNN World News': CNNWorldNews,
+    'Clock Digital': Clock,
+    'Crypto Rates': CryptoTicker,
+    'Currency Rates': CurrencyTicker,
+    'RTE News': RTENews,
+    'Dublin Bus': DublinBus,
+    'Inspire Quotes': Quotes,
+    'Weather': Weather,
+    'Welcome Message': WelcomeMessage
+  },
   watch: {
     searchLeft1 (val) {
-      console.log(val)
       val && val !== this.select && this.querySelections(val)
     },
     searchLeft2 (val) {
@@ -323,7 +380,6 @@ export default {
       val && val !== this.select && this.querySelections(val)
     },
     searchCenter1 (val) {
-      console.log(val)
       val && val !== this.select && this.querySelections(val)
     },
     searchCenter2 (val) {
@@ -333,7 +389,6 @@ export default {
       val && val !== this.select && this.querySelections(val)
     },
     searchRight1 (val) {
-      console.log(val)
       val && val !== this.select && this.querySelections(val)
     },
     searchRight2 (val) {
@@ -348,7 +403,7 @@ export default {
   },
   computed: {
     formIsValid () {
-      return this.deviceId !== '' && this.deviceLocation !== ''
+      return this.deviceId !== '' && this.location !== '' && this.dashTitle !== ''
     }
   },
   methods: {
@@ -366,9 +421,11 @@ export default {
       if (!this.formIsValid) {
         return
       }
+      const dateNow = new Date()
       const dashboardData = {
+        dashTitle: this.dashTitle,
         deviceId: this.deviceId,
-        deviceLocation: this.deviceLocation,
+        location: this.location,
         slotLeft1: this.slotLeft1,
         slotLeft2: this.slotLeft2,
         slotLeft3: this.slotLeft3,
@@ -379,9 +436,9 @@ export default {
         slotRight2: this.slotRight2,
         slotRight3: this.slotRight3,
         slotFooter: this.slotFooter,
-        createdOn: new Date()
+        created: dateNow.toISOString(),
+        updated: dateNow.toISOString()
       }
-      console.log(dashboardData)
       this.$store.dispatch('createDashboard', dashboardData)
       this.$router.push('/dashboards')
     }
@@ -393,6 +450,10 @@ export default {
 
 
 <style>
+  .pictureFrameData {
+    background: url(../../assets/img/frameBg1.jpg);
+    background-size: cover;
+  }
   .dashedBorder {
   	border: 1px #fff dashed;
   }
@@ -413,4 +474,34 @@ export default {
   	margin: 4px;
   	padding: 10px;
   }
+  .pictureFrameData {
+    min-height: 800px;
+  }
+  .pictureFrameMain {
+    height: 90%;
+  }
+  .pictureFrameFooter {
+    height: 10%;
+  }
+  .picture-frame {
+  background-color:black;
+  border:black solid 40px;
+  -webkit-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
+-moz-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
+box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
+  margin:40px;
+  min-height: 800px;
+}
+.matte {
+  background-color:#000;
+  height:100%;
+  -webkit-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
+box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
+}
+
+.art {
+  width:80%;
+  margin:10% 10% 10% 10%;
+}
 </style>

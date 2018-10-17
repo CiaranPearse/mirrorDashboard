@@ -3,11 +3,13 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Products from '@/components/Products'
 import About from '@/components/About'
+import Profile from '@/components/User/Profile'
 import Dashboards from '@/components/Dashboard/Dashboards'
 import Dashboard from '@/components/Dashboard/Dashboard'
 import CreateDashboard from '@/components/Dashboard/CreateDashboard'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
+import AuthGuard from './auth-guard'
 
 Vue.use(Router)
 
@@ -31,13 +33,20 @@ export default new Router({
     {
       path: '/dashboard/new',
       name: 'CreateDashboard',
-      component: CreateDashboard
+      component: CreateDashboard,
+      beforeEnter: AuthGuard
     },
     {
       path: '/dashboard/:id',
       name: 'Dashboard',
       props: true,
       component: Dashboard
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      beforeEnter: AuthGuard
     },
     {
       path: '/about',

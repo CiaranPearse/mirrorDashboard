@@ -13,13 +13,14 @@
 
             <v-card-title primary-title right>
               <div>
-                <h3 class="headline mb-0 mb5">{{ dashboard.title }}</h3>
-                <div>{{ dashboard.location }} <br>Created on: {{ dashboard.date | date }}</div>
+                <h3 class="headline mb-0 mb5">{{ dashboard.dashTitle }}</h3>
+                <p><strong>Device ID:</strong> {{ dashboard.deviceId}}
+                <p>{{ dashboard.location }} <br>Created on: {{ dashboard.created | date }}<br>Updated on: {{ dashboard.updated | date }}<br><strong>Belongs to:</strong> {{ dashboard.creatorId}}</p>
               </div>
             </v-card-title>
 
             <v-card-actions>
-              <v-btn flat @click="onLoadDashboard(dashboard.id)" >
+                <v-btn flat :to="'/dashboard/' + dashboard.id">
                 <v-icon left>view_compact</v-icon>View Dashboard
               </v-btn>
               <v-btn flat>
@@ -45,11 +46,6 @@
     computed: {
       dashboards () {
         return this.$store.getters.loadedDashboards
-      }
-    },
-    methods: {
-      onLoadDashboard (id) {
-        this.$router.push('/dashboard/' + id)
       }
     }
   }

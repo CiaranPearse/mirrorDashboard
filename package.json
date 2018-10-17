@@ -11,10 +11,17 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "firebase": "^5.5.4",
+    "moment-timezone": "^0.5.21",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.4",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
+    "vue-weather-widget": "^2.1.3",
     "vuetify": "^1.0.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
