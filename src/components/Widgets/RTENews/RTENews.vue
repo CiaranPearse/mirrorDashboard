@@ -31,7 +31,7 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get('http://www.rte.ie/news/rss/news-headlines.xml')
+    axios.get('https://www.rte.ie/news/rss/news-headlines.xml')
     .then(response => {
       var self = this
       parseString(response.data, function (err, result) {

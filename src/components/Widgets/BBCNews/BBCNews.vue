@@ -31,7 +31,7 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get(`http://feeds.bbci.co.uk/news/rss.xml?edition=uk`)
+    axios.get(`https://feeds.bbci.co.uk/news/rss.xml?edition=uk`)
     .then(response => {
       var self = this
       parseString(response.data, function (err, result) {
