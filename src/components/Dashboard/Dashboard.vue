@@ -1,23 +1,23 @@
 <template>
-  <div>
-	<v-container fluid fill-height>
-		<v-layout row wrap>
-      <v-flex xs6>
-      	<div>
-					<h2>{{ dashboard.dashTitle }}</h2>
-					<div>{{ dashboard.deviceLocation }}</div>
-          <div>{{ dashboard.created }}</div>
-          <div>{{ dashboard.slotLeft1 }}</div>
-				</div>
-      </v-flex>
-    </v-layout>
-  </v-container>
   <v-container fluid fill-height>
+      <v-layout row v-if="loading">
+        <v-flex xs12 class="text-xs-center">
+          <v-progress-circular
+            indeterminate
+            class="primary--text"
+            :width="7"
+            :size="70"></v-progress-circular>
+        </v-flex>
+      </v-layout>
       <v-layout row>
         <v-flex xs12>
           <div>
-            <h2 v-if="this.dashTitle !== ''" style="text-align: center;">Preview for {{ this.dashTitle }}</h2>
-            <h2 v-else style="text-align: center;">Preview for {{ this.dashTitle }}</h2>
+            <h2 v-if="this.dashTitle !== ''" style="text-align: center;">Preview</h2>
+            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }}</h2>
+            <template v-if="userIsCreator">
+              <v-spacer></v-spacer>
+              <app-edit-dashboard-details-dialog :dashboard="dashboard"></app-edit-dashboard-details-dialog>
+            </template>
             <div class="picture-frame">
             <div class="matte">
               <v-layout row>
@@ -60,7 +60,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </div>
 </template>
 
 
@@ -105,6 +104,18 @@ export default {
   computed: {
     dashboard () {
       return this.$store.getters.loadedDashboard(this.id)
+    },
+    userIsAuthenticated () {
+      return this.$store.getters.user != null && this.$store.getters.user != undefined
+    },
+    userIsCreator () {
+      if (!this.userIsAuthenticated) {
+        return false
+      }
+      return this.$store.getters.user.id === this.dashboard.creatorId
+    },
+    loading () {
+      return this.$store.getters.loading
     }
   },
   components: {

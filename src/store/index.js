@@ -46,6 +46,53 @@ export const store = new Vuex.Store({
     createDashboard (state, payload) {
       state.loadedDashboards.push(payload)
     },
+    updaterDashboard (state, payload) {
+      const dashboard = state.loadedDashboards.find(dashboard => {
+        return dashboard.id === payload.id
+      })
+      if (payload.dashTitle) {
+        dashboard.dashTitle = payload.dashTitle
+      }
+      if (payload.deviceId) {
+        dashboard.deviceId = payload.deviceId
+      }
+      if (payload.location) {
+        dashboard.location = payload.location
+      }
+      if (payload.slotLeft1) {
+        dashboard.slotLeft1 = payload.slotLeft1
+      }
+      if (payload.slotLeft2) {
+        dashboard.slotLeft2 = payload.slotLeft2
+      }
+      if (payload.slotLeft3) {
+        dashboard.slotLeft3 = payload.slotLeft3
+      }
+      if (payload.slotCenter1) {
+        dashboard.slotCenter1 = payload.slotCenter1
+      }
+      if (payload.slotCenter2) {
+        dashboard.slotCenter2 = payload.slotCenter2
+      }
+      if (payload.slotCenter3) {
+        dashboard.slotCenter3 = payload.slotCenter3
+      }
+      if (payload.slotRight1) {
+        dashboard.slotRight1 = payload.slotRight1
+      }
+      if (payload.slotRight2) {
+        dashboard.slotRight2 = payload.slotRight2
+      }
+      if (payload.slotRight3) {
+        dashboard.slotRight3 = payload.slotRight3
+      }
+      if (payload.slotFooter) {
+        dashboard.slotFooter = payload.slotFooter
+      }
+      if (payload.updated) {
+        dashboard.updated = payload.updated
+      }
+    },
     setUser (state, payload) {
       state.user = payload
     },
@@ -126,6 +173,61 @@ export const store = new Vuex.Store({
       })
       .catch((error) => {
         console.log(error)
+      })
+    },
+    updateDashboardData ({commit}, payload) {
+      commit('setLoading', true)
+      const updateObj = {}
+      if (payload.dashTitle) {
+        updateObj.dashTitle = payload.dashTitle
+      }
+      if (payload.deviceId) {
+        updateObj.deviceId = payload.deviceId
+      }
+      if (payload.location) {
+        updateObj.location = payload.location
+      }
+      if (payload.slotLeft1) {
+        updateObj.slotLeft1 = payload.slotLeft1
+      }
+      if (payload.slotLeft2) {
+        updateObj.slotLeft2 = payload.slotLeft2
+      }
+      if (payload.slotLeft3) {
+        updateObj.slotLeft3 = payload.slotLeft3
+      }
+      if (payload.slotCenter1) {
+        updateObj.slotCenter1 = payload.slotCenter1
+      }
+      if (payload.slotCenter2) {
+        updateObj.slotCenter2 = payload.slotCenter2
+      }
+      if (payload.slotCenter3) {
+        updateObj.slotCenter3 = payload.slotCenter3
+      }
+      if (payload.slotRight1) {
+        updateObj.slotRight1 = payload.slotRight1
+      }
+      if (payload.slotRight2) {
+        updateObj.slotRight2 = payload.slotRight2
+      }
+      if (payload.slotRight3) {
+        updateObj.slotRight3 = payload.slotRight3
+      }
+      if (payload.slotFooter) {
+        updateObj.slotFooter = payload.slotFooter
+      }
+      if (payload.updated) {
+        updateObj.updated = payload.updated
+      }
+      firebase.database().ref('dashboards').child(payload.id).update(updateObj)
+      .then(() => {
+        commit('setLoading', false)
+        commit('updateDashboard', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        commit('setLoading', false)
       })
     },
     signUserUp ({commit}, payload) {

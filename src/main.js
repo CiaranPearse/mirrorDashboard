@@ -10,12 +10,14 @@ import moment from 'moment-timezone'
 import { store } from './store'
 import DateFilter from './filters/dates'
 import AlertCmp from './components/Shared/Alert.vue'
+import EditDashboardDetailsDialog from './components/Dashboard/Edit/EditDashboardDetailsDialog.vue'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 Vue.use(VueAxios, axios)
 Vue.use(VueMoment, {moment})
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-dashboard-details-dialog', EditDashboardDetailsDialog)
 Vue.config.productionTip = false
 Vue.filter('date', DateFilter)
 /* eslint-disable no-new */
