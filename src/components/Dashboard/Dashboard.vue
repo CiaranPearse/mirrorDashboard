@@ -78,6 +78,7 @@ import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
   data () {
     return {
+      dashTitle: '',
       searchLeft1: null,
       searchLeft2: null,
       searchLeft3: null,

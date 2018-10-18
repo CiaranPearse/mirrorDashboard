@@ -30,7 +30,13 @@ export default {
     }
   },
   created () {
-    axios.get(`https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=` + this.stopId)
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+    axios.get(CORS_PROXY + `https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=` + this.stopId, {
+      headers: {
+        'crossDomain': true,
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
     .then(response => {
       this.times = response.data.results
     })

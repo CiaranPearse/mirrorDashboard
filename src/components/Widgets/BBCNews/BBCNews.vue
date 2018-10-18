@@ -31,7 +31,12 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get(`https://feeds.bbci.co.uk/news/rss.xml?edition=uk`)
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+    axios.get(CORS_PROXY + `https://feeds.bbci.co.uk/news/rss.xml?edition=uk`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
     .then(response => {
       var self = this
       parseString(response.data, function (err, result) {

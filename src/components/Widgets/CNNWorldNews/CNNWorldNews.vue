@@ -31,7 +31,12 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get(`https://rss.cnn.com/rss/edition_world.rss`)
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+    axios.get(CORS_PROXY + `http://rss.cnn.com/rss/edition_world.rss`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
     .then(response => {
       var self = this
       parseString(response.data, function (err, result) {

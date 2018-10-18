@@ -31,7 +31,12 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get('https://www.rte.ie/news/rss/news-headlines.xml')
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+    axios.get(CORS_PROXY + 'https://www.rte.ie/news/rss/news-headlines.xml', {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
     .then(response => {
       var self = this
       parseString(response.data, function (err, result) {
