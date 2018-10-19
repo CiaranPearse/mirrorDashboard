@@ -2,8 +2,10 @@
     <weather 
         api-key="3469e148ee58b9591f84c3244bad3199"
         title="Weather"
-        latitude="53.350140"
-        longitude="-6.266155"
+        :latitude=this.lat
+        :longitude=this.long
+        :updateInterval=this.updateInterval
+        :hideHeader=this.hideHeader
         language="en"
         bar-color="#fff"
         text-color="#fff"
@@ -18,9 +20,15 @@ import VueWeatherWidget from 'vue-weather-widget'
 import 'vue-weather-widget/dist/css/vue-weather-widget.css'
 
 export default {
+  name: 'app',
   components: {
-    'weather': VueWeatherWidget
-  }
+    'Weather': VueWeatherWidget
+  },
+  data: () => ({
+    lat: '24.886436',
+    long: '91.880722',
+    hideHeader: true
+  })
 }
 </script> 
 

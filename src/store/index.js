@@ -46,7 +46,7 @@ export const store = new Vuex.Store({
     createDashboard (state, payload) {
       state.loadedDashboards.push(payload)
     },
-    updaterDashboard (state, payload) {
+    updateDashboard (state, payload) {
       const dashboard = state.loadedDashboards.find(dashboard => {
         return dashboard.id === payload.id
       })
@@ -56,8 +56,8 @@ export const store = new Vuex.Store({
       if (payload.deviceId) {
         dashboard.deviceId = payload.deviceId
       }
-      if (payload.location) {
-        dashboard.location = payload.location
+      if (payload.deviceLocation) {
+        dashboard.deviceLocation = payload.deviceLocation
       }
       if (payload.slotLeft1) {
         dashboard.slotLeft1 = payload.slotLeft1
@@ -118,7 +118,7 @@ export const store = new Vuex.Store({
             id: key,
             deviceId: obj[key].deviceId,
             dashTitle: obj[key].dashTitle,
-            location: obj[key].location,
+            deviceLocation: obj[key].deviceLocation,
             slotLeft1: obj[key].slotLeft1,
             slotLeft2: obj[key].slotLeft2,
             slotLeft3: obj[key].slotLeft3,
@@ -148,7 +148,7 @@ export const store = new Vuex.Store({
       const dashboard = {
         dashTitle: payload.dashTitle,
         deviceId: payload.deviceId,
-        deviceLocation: payload.location,
+        deviceLocation: payload.deviceLocation,
         slotLeft1: payload.slotLeft1,
         slotLeft2: payload.slotLeft2,
         slotLeft3: payload.slotLeft3,
@@ -184,8 +184,8 @@ export const store = new Vuex.Store({
       if (payload.deviceId) {
         updateObj.deviceId = payload.deviceId
       }
-      if (payload.location) {
-        updateObj.location = payload.location
+      if (payload.deviceLocation) {
+        updateObj.deviceLocation = payload.deviceLocation
       }
       if (payload.slotLeft1) {
         updateObj.slotLeft1 = payload.slotLeft1

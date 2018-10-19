@@ -12,8 +12,8 @@
       <v-layout row>
         <v-flex xs12>
           <div>
-            <h2 v-if="this.dashTitle !== ''" style="text-align: center;">Preview</h2>
-            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }}</h2>
+            <h2 v-if="dashboard.dashTitle === ''" style="text-align: center;">Preview</h2>
+            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
             <template v-if="userIsCreator">
               <v-spacer></v-spacer>
               <app-edit-dashboard-details-dialog :dashboard="dashboard"></app-edit-dashboard-details-dialog>
@@ -78,6 +78,7 @@ export default {
   data () {
     return {
       dashTitle: '',
+      deviceLocation: '',
       searchLeft1: null,
       searchLeft2: null,
       searchLeft3: null,
@@ -106,7 +107,7 @@ export default {
       return this.$store.getters.loadedDashboard(this.id)
     },
     userIsAuthenticated () {
-      return this.$store.getters.user != null && this.$store.getters.user != undefined
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     },
     userIsCreator () {
       if (!this.userIsAuthenticated) {

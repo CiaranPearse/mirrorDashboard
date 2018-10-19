@@ -70,6 +70,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  				<div class="innerDotted">
@@ -86,6 +87,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  				<div class="innerDotted">
@@ -102,6 +104,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  			</div>
@@ -123,6 +126,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  				<div class="innerDotted">
@@ -139,6 +143,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  				<div class="innerDotted">
@@ -154,6 +159,8 @@
 													      hide-no-data
 													      hide-details
 													      label="Search"
+                                solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  			</div>
@@ -176,6 +183,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  				<div class="innerDotted">
@@ -192,6 +200,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  				<div class="innerDotted">
@@ -208,6 +217,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  			</div>
@@ -231,6 +241,7 @@
 													      hide-details
 													      label="Search"
 													      solo-inverted
+                                clearable
 													    ></v-autocomplete>
 						    	  				</div>
 						    	  			</div>
@@ -314,6 +325,7 @@ import Quotes from '../Widgets/Quotes'
 import Weather from '../Widgets/Weather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
+  props: ['id'],
   data () {
     return {
       loading: false,

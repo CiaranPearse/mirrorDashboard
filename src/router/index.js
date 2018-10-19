@@ -6,6 +6,7 @@ import About from '@/components/About'
 import Profile from '@/components/User/Profile'
 import Dashboards from '@/components/Dashboard/Dashboards'
 import Dashboard from '@/components/Dashboard/Dashboard'
+import EditDashboard from '@/components/Dashboard/EditDashboard'
 import CreateDashboard from '@/components/Dashboard/CreateDashboard'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
@@ -41,6 +42,12 @@ export default new Router({
       name: 'Dashboard',
       props: true,
       component: Dashboard
+    },
+    {
+      path: '/dashboard/edit/:id',
+      name: 'Edit Dashboard',
+      props: true,
+      component: EditDashboard
     },
     {
       path: '/profile',
