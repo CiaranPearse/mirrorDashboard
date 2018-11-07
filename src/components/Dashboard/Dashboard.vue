@@ -13,7 +13,7 @@
         <v-flex xs12>
           <div>
             <h2 v-if="dashboard.dashTitle === ''" style="text-align: center;">Preview</h2>
-            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
+            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }} ---- {{ dashboard.welcomeMessageTitle }} <br> {{ dashboard.deviceLocation}}</h2>
             <template v-if="userIsCreator">
               <v-spacer></v-spacer>
               <app-edit-dashboard-details-dialog :dashboard="dashboard"></app-edit-dashboard-details-dialog>
@@ -32,7 +32,7 @@
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotCenter1"></component></div>
+                          <div class="innerDotted"><component v-bind:is="dashboard.slotCenter1" v-bind:allProps="dashboard.allProps"></component></div>
                           <div class="innerDotted"><component v-bind:is="dashboard.slotCenter2"></component></div>
                           <div class="innerDotted"><component v-bind:is="dashboard.slotCenter3"></component></div>
                         </div>
@@ -75,6 +75,7 @@ import Quotes from '../Widgets/Quotes'
 import Weather from '../Widgets/Weather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
+  props: ['id'],
   data () {
     return {
       dashTitle: '',
@@ -98,10 +99,12 @@ export default {
       slotRight1: null,
       slotRight2: null,
       slotRight3: null,
-      slotFooter: null
+      slotFooter: null,
+      welcomeMessageData: null,
+      welcomeMessageTitle: null,
+      welcomeMessageSubtitle: null
     }
   },
-  props: ['id'],
   computed: {
     dashboard () {
       return this.$store.getters.loadedDashboard(this.id)

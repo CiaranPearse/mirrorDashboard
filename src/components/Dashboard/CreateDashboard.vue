@@ -281,7 +281,7 @@
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter1"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" :pushedStuff="templateProps.WidgetTemplate"></component></div>
                           <div class="innerDotted"><component v-bind:is="this.searchCenter2"></component></div>
                           <div class="innerDotted"><component v-bind:is="this.searchCenter3"></component></div>
                         </div>
@@ -324,12 +324,15 @@ import DublinBus from '../Widgets/DublinBus'
 import Quotes from '../Widgets/Quotes'
 import Weather from '../Widgets/Weather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
+import WidgetTemplate from '../Widgets/WidgetTemplate'
 export default {
   props: ['id'],
   data () {
     return {
       loading: false,
       items: [],
+      messageTitle: '',
+      messageSubtitle: '',
       dashTitle: '',
       deviceId: '',
       location: '',
@@ -365,8 +368,14 @@ export default {
         'RTE News',
         'Weather',
         'Inspire Quotes',
-        'Welcome Message'
-      ]
+        'Welcome Message',
+        'WidgetTemplate'
+      ],
+      templateProps: {
+        dashboard: this.id,
+        WidgetTemplate: {'first': 'First Newa', 'second': 'Second New', 'third': 'Third New'}
+      }
+      // WidgetTemplate: ['First New', 'Second New', 'Third New']
     }
   },
   components: {
@@ -379,7 +388,8 @@ export default {
     'Dublin Bus': DublinBus,
     'Inspire Quotes': Quotes,
     'Weather': Weather,
-    'Welcome Message': WelcomeMessage
+    'Welcome Message': WelcomeMessage,
+    'WidgetTemplate': WidgetTemplate
   },
   watch: {
     searchLeft1 (val) {
@@ -463,7 +473,7 @@ export default {
 
 <style>
   .pictureFrameData {
-    background: url(../../assets/img/frameBg1.jpg);
+    background: url(../../assets/img/bedroom1.jpg);
     background-size: cover;
   }
   .dashedBorder {

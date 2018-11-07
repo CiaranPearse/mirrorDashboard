@@ -25,9 +25,10 @@ export default {
     'Weather': VueWeatherWidget
   },
   data: () => ({
-    lat: '24.886436',
-    long: '91.880722',
-    hideHeader: true
+    lat: '53.350140',
+    long: '-6.266155',
+    hideHeader: true,
+    updateInterval: 1000
   })
 }
 </script> 

@@ -264,7 +264,7 @@
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter1"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" :pushedStuff="welcomeMessageData"></component></div>
                           <div class="innerDotted"><component v-bind:is="this.searchCenter2"></component></div>
                           <div class="innerDotted"><component v-bind:is="this.searchCenter3"></component></div>
                         </div>
@@ -352,6 +352,10 @@ export default {
       editedSlotRight3: this.dashboard.slotRight3,
       editedSlotFooter: this.dashboard.slotFooter,
       updated: null,
+      welcomeMessageData: [{
+        messageTitle: 'Placeholder Title',
+        messageSubtitle: 'Placeholder Subtitle'
+      }],
       widgets: [
         'BBC News',
         'CNN World News',

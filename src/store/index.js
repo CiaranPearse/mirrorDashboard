@@ -130,6 +130,8 @@ export const store = new Vuex.Store({
             slotRight3: obj[key].slotRight3,
             slotFooter: obj[key].slotFooter,
             created: obj[key].created,
+            welcomeMessageTitle: obj[key].welcomeMessageTitle,
+            allProps: obj[key].allProps,
             updated: obj[key].updated,
             creatorId: obj[key].creatorId
           })
@@ -223,6 +225,7 @@ export const store = new Vuex.Store({
       firebase.database().ref('dashboards').child(payload.id).update(updateObj)
       .then(() => {
         commit('setLoading', false)
+        console.log('This is the push of the payload', payload)
         commit('updateDashboard', payload)
       })
       .catch(error => {
