@@ -174,10 +174,10 @@ export default {
       console.log('This is the welcome message Event')
       console.log(newData)
       console.log('from dashboard: ', this.dashboard.allProps)
-      const newWelcome = Object.assign(this.dashboard.allProps, {welcomeMessage: newData})
+      // const newWelcome = Object.assign(this.dashboard.allProps, {welcomeMessage: newData})
       this.$store.dispatch('updateDashboardData', {
         id: this.dashboard.id,
-        allProps: newWelcome
+        welcomeMessage: newData
       })
     },
     handleCryptoRatesEvent () {
