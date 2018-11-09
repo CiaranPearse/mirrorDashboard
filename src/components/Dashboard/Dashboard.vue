@@ -13,7 +13,7 @@
         <v-flex xs12>
           <div>
             <h2 v-if="dashboard.dashTitle === ''" style="text-align: center;">Preview</h2>
-            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }} ---- {{ dashboard.welcomeMessageTitle }} <br> {{ dashboard.deviceLocation}}</h2>
+            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
             <template v-if="userIsCreator">
               <v-spacer></v-spacer>
               <app-edit-dashboard-details-dialog :dashboard="dashboard"></app-edit-dashboard-details-dialog>
@@ -25,23 +25,42 @@
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotLeft1"></component></div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotLeft2"></component></div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotLeft3"></component></div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotLeft1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotLeft2" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotLeft3" v-on="listeners" v-bind="attributes.listOfAttrs"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotCenter1" v-bind:allProps="dashboard.allProps"></component></div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotCenter2"></component></div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotCenter3"></component></div>
+                          <div class="innerDotted">
+                            <!-- <component v-bind:is="dashboard.slotCenter1" v-bind:allProps="dashboard.slotCenter1"></component> -->
+                            <component :is="dashboard.slotCenter1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotCenter2" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotCenter3" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
                         </div>
                       </v-flex>
                       <v-flex xs3 class="rightBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotRight1"></component></div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotRight2"></component></div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotRight3"></component></div>
+                          <div>
+                            <!-- <div class="innerDotted"><component v-bind:is="dashboard.slotRight1"></component></div> -->
+                            <component :is="dashboard.slotRight1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotRight2" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
+                          <div class="innerDotted">
+                            <component v-bind:is="dashboard.slotRight3" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                          </div>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -99,10 +118,7 @@ export default {
       slotRight1: null,
       slotRight2: null,
       slotRight3: null,
-      slotFooter: null,
-      welcomeMessageData: null,
-      welcomeMessageTitle: null,
-      welcomeMessageSubtitle: null
+      slotFooter: null
     }
   },
   computed: {
@@ -120,6 +136,55 @@ export default {
     },
     loading () {
       return this.$store.getters.loading
+    },
+    listeners () {
+      return {
+        'updateMessage': this.handleWelcomeMessageEvent,
+        'updateCrypto': this.handleCryptoRatesEvent,
+        'updateDublinBus': this.handleDublinBusEvent
+      }
+    },
+    attributes () {
+      console.log('ALL PROPS ARE : ', this.dashboard.allProps)
+      let listOfAttrs = {'default': 'default'}
+      if (this.dashboard.allProps) {
+        if ((this.dashboard.allProps.welcomeMessage !== null) || (this.dashboard.allProps.welcomeMessage !== undefined)) {
+          var addMessage = {'message': this.dashboard.allProps.welcomeMessage}
+          Object.assign(listOfAttrs, addMessage)
+        }
+        if ((this.dashboard.allProps.cryptoRates !== null) || (this.dashboard.allProps.cryptoRates !== undefined)) {
+          var addRates = {'rates': this.dashboard.allProps.cryptoRates}
+          Object.assign(listOfAttrs, addRates)
+        }
+        if ((this.dashboard.allProps.dublinBus !== null) || (this.dashboard.allProps.dublinBus !== undefined)) {
+          var addDublinBus = {'dublinBus': this.dashboard.allProps.dublinBus}
+          Object.assign(listOfAttrs, addDublinBus)
+        }
+      }
+      return {
+        listOfAttrs
+      }
+    }
+  },
+  mounted () {
+    console.log('inside mounted')
+  },
+  methods: {
+    handleWelcomeMessageEvent (newData) {
+      console.log('This is the welcome message Event')
+      console.log(newData)
+      console.log('from dashboard: ', this.dashboard.allProps)
+      const newWelcome = Object.assign(this.dashboard.allProps, {welcomeMessage: newData})
+      this.$store.dispatch('updateDashboardData', {
+        id: this.dashboard.id,
+        allProps: newWelcome
+      })
+    },
+    handleCryptoRatesEvent () {
+      console.log('The Crypto event was fired')
+    },
+    handleDublinBusEvent (busData) {
+      console.log('The Dublin Bus event was fired')
     }
   },
   components: {

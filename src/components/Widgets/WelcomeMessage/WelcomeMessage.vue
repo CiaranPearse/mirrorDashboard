@@ -36,7 +36,7 @@
 <script>
 
 export default {
-  props: ['allProps'],
+  props: ['message'],
   data () {
     return {
       edit: false,
@@ -50,23 +50,25 @@ export default {
     },
     onCloseEdit () {
       this.edit = false
-      this.messageTitle = ''
-      this.messageSubtitle = ''
     },
     onChangeMessage (payload) {
-      console.log(this.messageSubtitle)
-      console.log(this.messageTitle)
-      this.$emit('allProps.welcomeMessageTitle', this.messageTitle)
-      this.$emit('messageSubtitle', this.messageSubtitle)
+      console.log('Consolidated is: ', this.consolidated)
+      this.$emit('updateMessage', this.consolidated)
     }
   },
   mounted () {
-    this.messageTitle = this.allProps.welcomeMessageTitle
-    this.messageSubtitle = this.allProps.welcomeMessageSubtitle
+    this.messageTitle = this.message.welcomeMessageTitle
+    this.messageSubtitle = this.message.welcomeMessageSubtitle
   },
   computed: {
     formIsValid () {
       return this.messageTitle !== ''
+    },
+    consolidated () {
+      return {
+        welcomeMessageTitle: this.messageTitle,
+        welcomeMessageSubtitle: this.messageSubtitle
+      }
     }
   }
 }

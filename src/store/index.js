@@ -219,6 +219,16 @@ export const store = new Vuex.Store({
       if (payload.slotFooter) {
         updateObj.slotFooter = payload.slotFooter
       }
+      // if (payload.welcomeMessage) {
+      //   var welcomeMessage = payload.welcomeMessage
+      //   console.log('the payload has: ', welcomeMessage)
+      //   console.log(updateObj.allProps)
+      //   updateObj.welcomeMessage = welcomeMessage
+      // }
+      console.log('from update: ', payload.allProps)
+      if (payload.allProps) {
+        updateObj.allProps = payload.allProps
+      }
       if (payload.updated) {
         updateObj.updated = payload.updated
       }

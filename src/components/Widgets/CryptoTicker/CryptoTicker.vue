@@ -1,18 +1,27 @@
 <template>
-  <div><h1>This is crypto Ticker</h1></div>
+  <div>
+    <h1>Crypto Ticker</h1>
+    <div v-if="rates">
+      <p>BASE: {{ base }}<br/>Currency1: {{ currency1 }}<br/>Currency2: {{ currency2 }}</p>
+    </div>
+    <div v-else>
+      No Currency Settings
+    </div>
+  </div>
 </template>
 
 <script>
 
 export default {
+  props: ['rates'],
   data () {
     return {
       randomNumber: 3,
-      timer: ''
+      timer: '',
+      base: null,
+      currency1: null,
+      currency2: null
     }
-  },
-  mounted () {
-    this.$options.interval = setInterval(this.changedNumber, 10000)
   },
   beforeDestroy () {
     clearInterval(this.$options.interval)
@@ -22,6 +31,12 @@ export default {
       var ticker = Math.floor(Math.random() * 10) + 1
       this.randomNumber = ticker
     }
+  },
+  mounted () {
+    this.$options.interval = setInterval(this.changedNumber, 10000)
+    this.base = this.rates.base
+    this.currency1 = this.rates.currency1
+    this.currency2 = this.rates.currency2
   }
 }
 </script>

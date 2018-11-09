@@ -324,7 +324,6 @@ import DublinBus from '../Widgets/DublinBus'
 import Quotes from '../Widgets/Quotes'
 import Weather from '../Widgets/Weather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
-import WidgetTemplate from '../Widgets/WidgetTemplate'
 export default {
   props: ['id'],
   data () {
@@ -368,13 +367,8 @@ export default {
         'RTE News',
         'Weather',
         'Inspire Quotes',
-        'Welcome Message',
-        'WidgetTemplate'
-      ],
-      templateProps: {
-        dashboard: this.id,
-        WidgetTemplate: {'first': 'First Newa', 'second': 'Second New', 'third': 'Third New'}
-      }
+        'Welcome Message'
+      ]
       // WidgetTemplate: ['First New', 'Second New', 'Third New']
     }
   },
@@ -388,8 +382,7 @@ export default {
     'Dublin Bus': DublinBus,
     'Inspire Quotes': Quotes,
     'Weather': Weather,
-    'Welcome Message': WelcomeMessage,
-    'WidgetTemplate': WidgetTemplate
+    'Welcome Message': WelcomeMessage
   },
   watch: {
     searchLeft1 (val) {
