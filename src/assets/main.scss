@@ -4,6 +4,9 @@
     animation: loader 1s infinite;
     display: flex;
   }
+  .hoverCursor {
+    cursor: pointer;
+  }
   @-moz-keyframes loader {
     from {
       transform: rotate(0);

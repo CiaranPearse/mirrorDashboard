@@ -1,13 +1,15 @@
 <template>
   <div>
     <v-btn v-if="edit === false"
-              dark
-              fab
-              @click="onClickEdit"
-              color="gray"
-            >
-              <v-icon>edit</v-icon>
-            </v-btn>
+      dark
+      fab
+      small
+      right
+      @click="onClickEdit"
+      color="gray"
+    >
+      <v-icon>edit</v-icon>
+    </v-btn>
     <h1 v-if="messageTitle !== undefined && messageTitle !== ''">{{ messageTitle }}</h1>
     <h1 v-else>Placeholder Title</h1>
     <p v-if="messageSubtitle !== undefined && messageSubtitle !== ''">{{ messageSubtitle }}</p>
@@ -52,8 +54,8 @@ export default {
       this.edit = false
     },
     onChangeMessage (payload) {
-      console.log('Consolidated is: ', this.consolidated)
       this.$emit('updateMessage', this.consolidated)
+      this.edit = false
     }
   },
   mounted () {

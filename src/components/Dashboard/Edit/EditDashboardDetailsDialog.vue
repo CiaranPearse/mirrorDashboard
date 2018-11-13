@@ -365,7 +365,7 @@ export default {
         'Dublin Bus',
         'RTE News',
         'Weather',
-        'Inspire Quotes',
+        'Quotes',
         'Welcome Message'
       ]
     }
@@ -378,7 +378,7 @@ export default {
     'Currency Rates': CurrencyTicker,
     'RTE News': RTENews,
     'Dublin Bus': DublinBus,
-    'Inspire Quotes': Quotes,
+    'Quotes': Quotes,
     'Weather': Weather,
     'Welcome Message': WelcomeMessage
   },

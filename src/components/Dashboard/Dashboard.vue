@@ -97,7 +97,7 @@ export default {
   props: ['id'],
   data () {
     return {
-      dashTitle: '',
+      dashTitle: 'placeholder',
       deviceLocation: '',
       searchLeft1: null,
       searchLeft2: null,
@@ -141,11 +141,12 @@ export default {
       return {
         'updateMessage': this.handleWelcomeMessageEvent,
         'updateCrypto': this.handleCryptoRatesEvent,
-        'updateDublinBus': this.handleDublinBusEvent
+        'updateDublinBus': this.handleDublinBusEvent,
+        'updateClock': this.handleClockEvent,
+        'updateQuotes': this.handleQuotesEvent
       }
     },
     attributes () {
-      console.log('ALL PROPS ARE : ', this.dashboard.allProps)
       let listOfAttrs = {'default': 'default'}
       if (this.dashboard.allProps) {
         if ((this.dashboard.allProps.welcomeMessage !== null) || (this.dashboard.allProps.welcomeMessage !== undefined)) {
@@ -160,6 +161,14 @@ export default {
           var addDublinBus = {'dublinBus': this.dashboard.allProps.dublinBus}
           Object.assign(listOfAttrs, addDublinBus)
         }
+        if ((this.dashboard.allProps.clock !== null) || (this.dashboard.allProps.clock !== undefined)) {
+          var addClock = {'clock': this.dashboard.allProps.clock}
+          Object.assign(listOfAttrs, addClock)
+        }
+        if ((this.dashboard.allProps.quotes !== null) || (this.dashboard.allProps.quotes !== undefined)) {
+          var addQuotes = {'quoted': this.dashboard.allProps.quotes}
+          Object.assign(listOfAttrs, addQuotes)
+        }
       }
       return {
         listOfAttrs
@@ -167,24 +176,33 @@ export default {
     }
   },
   mounted () {
-    console.log('inside mounted')
   },
   methods: {
     handleWelcomeMessageEvent (newData) {
-      console.log('This is the welcome message Event')
-      console.log(newData)
-      console.log('from dashboard: ', this.dashboard.allProps)
-      // const newWelcome = Object.assign(this.dashboard.allProps, {welcomeMessage: newData})
       this.$store.dispatch('updateDashboardData', {
         id: this.dashboard.id,
         welcomeMessage: newData
       })
     },
     handleCryptoRatesEvent () {
-      console.log('The Crypto event was fired')
     },
-    handleDublinBusEvent (busData) {
-      console.log('The Dublin Bus event was fired')
+    handleDublinBusEvent (newData) {
+      this.$store.dispatch('updateDashboardData', {
+        id: this.dashboard.id,
+        dublinBus: newData
+      })
+    },
+    handleClockEvent (newData) {
+      this.$store.dispatch('updateDashboardData', {
+        id: this.dashboard.id,
+        clock: newData
+      })
+    },
+    handleQuotesEvent (newData) {
+      this.$store.dispatch('updateDashboardData', {
+        id: this.dashboard.id,
+        quotes: newData
+      })
     }
   },
   components: {
@@ -195,7 +213,7 @@ export default {
     'Currency Rates': CurrencyTicker,
     'RTE News': RTENews,
     'Dublin Bus': DublinBus,
-    'Inspire Quotes': Quotes,
+    'Quotes': Quotes,
     'Weather': Weather,
     'Welcome Message': WelcomeMessage
   }

@@ -130,7 +130,6 @@ export const store = new Vuex.Store({
             slotRight3: obj[key].slotRight3,
             slotFooter: obj[key].slotFooter,
             created: obj[key].created,
-            welcomeMessageTitle: obj[key].welcomeMessageTitle,
             allProps: obj[key].allProps,
             updated: obj[key].updated,
             creatorId: obj[key].creatorId
@@ -221,15 +220,20 @@ export const store = new Vuex.Store({
       }
       if (payload.welcomeMessage) {
         var welcomeMessage = payload.welcomeMessage
-        console.log('the payload has: ', welcomeMessage)
-        console.log(updateObj.allProps)
         updateObj['allProps/welcomeMessage'] = welcomeMessage
-        // "allProps/welcomeMessage": welcomeMessage
       }
-      // console.log('from update: ', payload.allProps)
-      // if (payload.allProps) {
-      //   updateObj.allProps = payload.allProps
-      // },
+      if (payload.dublinBus) {
+        var dublinBus = payload.dublinBus
+        updateObj['allProps/dublinBus'] = dublinBus
+      }
+      if (payload.clock) {
+        var clock = payload.clock
+        updateObj['allProps/clock'] = clock
+      }
+      if (payload.quotes) {
+        var quotes = payload.quotes
+        updateObj['allProps/quotes'] = quotes
+      }
       if (payload.updated) {
         updateObj.updated = payload.updated
       }
