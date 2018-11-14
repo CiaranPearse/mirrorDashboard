@@ -357,30 +357,30 @@ export default {
         messageSubtitle: 'Placeholder Subtitle'
       }],
       widgets: [
-        'BBC News',
-        'CNN World News',
-        'Clock Digital',
-        'Crypto Rates',
-        'Currency Rates',
-        'Dublin Bus',
-        'RTE News',
+        'BBCNews',
+        'CNNWorldNews',
+        'ClockDigital',
+        'CryptoRates',
+        'CurrencyRates',
+        'DublinBus',
+        'RTENews',
         'Weather',
         'Quotes',
-        'Welcome Message'
+        'WelcomeMessage'
       ]
     }
   },
   components: {
-    'BBC News': BBCNews,
-    'CNN World News': CNNWorldNews,
-    'Clock Digital': Clock,
-    'Crypto Rates': CryptoTicker,
-    'Currency Rates': CurrencyTicker,
-    'RTE News': RTENews,
-    'Dublin Bus': DublinBus,
+    'BBCNews': BBCNews,
+    'CNNWorldNews': CNNWorldNews,
+    'ClockDigital': Clock,
+    'CryptoRates': CryptoTicker,
+    'CurrencyRates': CurrencyTicker,
+    'RTENews': RTENews,
+    'DublinBus': DublinBus,
     'Quotes': Quotes,
     'Weather': Weather,
-    'Welcome Message': WelcomeMessage
+    'WelcomeMessage': WelcomeMessage
   },
   watch: {
     searchLeft1 (val) {

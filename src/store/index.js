@@ -89,6 +89,9 @@ export const store = new Vuex.Store({
       if (payload.slotFooter) {
         dashboard.slotFooter = payload.slotFooter
       }
+      if (payload.allProps) {
+        dashboard.allProps = payload.allProps
+      }
       if (payload.updated) {
         dashboard.updated = payload.updated
       }
@@ -109,57 +112,79 @@ export const store = new Vuex.Store({
   actions: {
     loadDashboards ({commit}) {
       commit('setLoading', true)
-      firebase.database().ref('dashboards').once('value')
-      .then((data) => {
-        const dashboards = []
-        const obj = data.val()
-        for (let key in obj) {
-          dashboards.push({
-            id: key,
-            deviceId: obj[key].deviceId,
-            dashTitle: obj[key].dashTitle,
-            deviceLocation: obj[key].deviceLocation,
-            slotLeft1: obj[key].slotLeft1,
-            slotLeft2: obj[key].slotLeft2,
-            slotLeft3: obj[key].slotLeft3,
-            slotCenter1: obj[key].slotCenter1,
-            slotCenter2: obj[key].slotCenter2,
-            slotCenter3: obj[key].slotCenter3,
-            slotRight1: obj[key].slotRight1,
-            slotRight2: obj[key].slotRight2,
-            slotRight3: obj[key].slotRight3,
-            slotFooter: obj[key].slotFooter,
-            created: obj[key].created,
-            allProps: obj[key].allProps,
-            updated: obj[key].updated,
-            creatorId: obj[key].creatorId
-          })
+      firebase.database().ref('dashboards').on('value', function (snapshot) {
+        if (snapshot.val()) {
+          const dashboards = []
+          const obj = snapshot.val()
+          console.log('FROM FIREBASE:', obj)
+          for (let key in obj) {
+            dashboards.push({
+              id: key,
+              deviceId: obj[key].deviceId,
+              dashTitle: obj[key].dashTitle,
+              deviceLocation: obj[key].deviceLocation,
+              slotLeft1: obj[key].slotLeft1,
+              slotLeft2: obj[key].slotLeft2,
+              slotLeft3: obj[key].slotLeft3,
+              slotCenter1: obj[key].slotCenter1,
+              slotCenter2: obj[key].slotCenter2,
+              slotCenter3: obj[key].slotCenter3,
+              slotRight1: obj[key].slotRight1,
+              slotRight2: obj[key].slotRight2,
+              slotRight3: obj[key].slotRight3,
+              slotFooter: obj[key].slotFooter,
+              created: obj[key].created,
+              allProps: obj[key].allProps,
+              updated: obj[key].updated,
+              creatorId: obj[key].creatorId
+            })
+          }
+          commit('setLoadedDashboards', dashboards)
+          commit('setLoading', false)
         }
-        commit('setLoadedDashboards', dashboards)
-        commit('setLoading', false)
       })
-      .catch(
-        (error) => {
-          console.log(error)
-          commit('setLoading', true)
-        }
-      )
+      // firebase.database().ref('dashboards').on('value')
+      // .then((data) => {
+      //   const dashboards = []
+      //   const obj = data.val()
+      //   for (let key in obj) {
+      //     dashboards.push({
+      //       id: key,
+      //       deviceId: obj[key].deviceId,
+      //       dashTitle: obj[key].dashTitle,
+      //       deviceLocation: obj[key].deviceLocation,
+      //       slotLeft1: obj[key].slotLeft1,
+      //       slotLeft2: obj[key].slotLeft2,
+      //       slotLeft3: obj[key].slotLeft3,
+      //       slotCenter1: obj[key].slotCenter1,
+      //       slotCenter2: obj[key].slotCenter2,
+      //       slotCenter3: obj[key].slotCenter3,
+      //       slotRight1: obj[key].slotRight1,
+      //       slotRight2: obj[key].slotRight2,
+      //       slotRight3: obj[key].slotRight3,
+      //       slotFooter: obj[key].slotFooter,
+      //       created: obj[key].created,
+      //       allProps: obj[key].allProps,
+      //       updated: obj[key].updated,
+      //       creatorId: obj[key].creatorId
+      //     })
+      //   }
+      //   commit('setLoadedDashboards', dashboards)
+      //   commit('setLoading', false)
+      // })
+      // .catch(
+      //   (error) => {
+      //     console.log(error)
+      //     commit('setLoading', true)
+      //   }
+      // )
     },
     createDashboard ({commit, getters}, payload) {
+      console.log('from create Dashboard line 182: ', payload)
       const dashboard = {
         dashTitle: payload.dashTitle,
         deviceId: payload.deviceId,
         deviceLocation: payload.deviceLocation,
-        slotLeft1: payload.slotLeft1,
-        slotLeft2: payload.slotLeft2,
-        slotLeft3: payload.slotLeft3,
-        slotCenter1: payload.slotCenter1,
-        slotCenter2: payload.slotCenter2,
-        slotCenter3: payload.slotCenter3,
-        slotRight1: payload.slotRight1,
-        slotRight2: payload.slotRight2,
-        slotRight3: payload.slotRight3,
-        slotFooter: payload.slotFooter,
         created: payload.created,
         updated: payload.updated,
         creatorId: getters.user.id

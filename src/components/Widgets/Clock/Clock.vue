@@ -15,7 +15,7 @@
                 <v-radio label="12 Hour" value="12Hour"></v-radio>
                 <v-radio label="24 Hour" value="24Hour"></v-radio>
               </v-radio-group>
-          <v-btn color="red" @click="onCloseEdit" type="submit">Close</v-btn>
+          <v-btn color="red" @click="onCloseEdit">Close</v-btn>
           <v-btn color="green" type="submit">Update Clock</v-btn>
           </form>
       </div>
@@ -56,6 +56,7 @@ export default {
       seconds: 0,
       UStime: 0,
       showSeconds: true,
+      hourtime: '',
       edit: false,
       timeFormat: '24Hour',
       switch1: true

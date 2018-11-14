@@ -23,7 +23,7 @@
                 <v-btn flat :to="'/dashboard/' + dashboard.id">
                 <v-icon left>view_compact</v-icon>View Dashboard
               </v-btn>
-              <v-btn flat>
+              <v-btn flat :to="'/dashboard/' + dashboard.id">
                 <v-icon left>edit</v-icon> Edit Dashboard
               </v-btn>
               <v-btn flat>

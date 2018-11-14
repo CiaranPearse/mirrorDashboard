@@ -11,9 +11,8 @@
       </v-layout>
       <v-layout row>
         <v-flex xs12>
-          <div>
-            <h2 v-if="dashboard.dashTitle === ''" style="text-align: center;">Preview</h2>
-            <h2 v-else style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
+          <div v-if="dashboard.dashTitle">
+            <h2 style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
             <template v-if="userIsCreator">
               <v-spacer></v-spacer>
               <app-edit-dashboard-details-dialog :dashboard="dashboard"></app-edit-dashboard-details-dialog>
@@ -206,16 +205,16 @@ export default {
     }
   },
   components: {
-    'BBC News': BBCNews,
-    'CNN World News': CNNWorldNews,
-    'Clock Digital': Clock,
-    'Crypto Rates': CryptoTicker,
-    'Currency Rates': CurrencyTicker,
-    'RTE News': RTENews,
-    'Dublin Bus': DublinBus,
+    'BBCNews': BBCNews,
+    'CNNWorldNews': CNNWorldNews,
+    'ClockDigital': Clock,
+    'CryptoRates': CryptoTicker,
+    'CurrencyRates': CurrencyTicker,
+    'RTENews': RTENews,
+    'DublinBus': DublinBus,
     'Quotes': Quotes,
     'Weather': Weather,
-    'Welcome Message': WelcomeMessage
+    'WelcomeMessage': WelcomeMessage
   }
 }
 </script>

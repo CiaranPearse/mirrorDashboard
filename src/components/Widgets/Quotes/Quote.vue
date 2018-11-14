@@ -11,30 +11,24 @@
     <div v-if="edit">
       <h4>Configure Quotes</h4>
         <form @submit.prevent="onChangeQuotes">
-          <v-radio-group v-model="quoteType">
-            <v-radio label="Inspirational" value="inspire"></v-radio>
-            <v-radio label="Beer" value="beer"></v-radio>
-          </v-radio-group>
-          <v-select
-          v-model="selectTimer"
-          :items="items"
-          item-text="friendlyTime"
-          item-value="abbr"
-          label="How often should quotes change"
-          persistent-hint
-          return-object
-          single-line
-        ></v-select>
+        <v-radio-group v-model="quoteType">
+          <v-radio label="Inspirational" value="inspire"></v-radio>
+          <v-radio label="Drinking" value="beer"></v-radio>
+        </v-radio-group>
+        <v-radio-group v-model="timer">
+          <v-radio label="10 Seconds" value="10000"></v-radio>
+          <v-radio label="20 Seconds" value="20000"></v-radio>
+        </v-radio-group>
           <v-btn color="red" @click="onCloseEdit" type="submit">Close</v-btn>
           <v-btn color="green" type="submit">Update Quotes</v-btn>
         </form>
     </div>
     <div v-else @click="onClickEdit" class="quotes">
-      <div v-if="this.quoted.quoteSubject == 'inspire'">
+      <div v-if="quoteType == 'inspire'">
         <p class="quote">{{ this.quotes.inspire[this.randomNumber].quote }}</p>
         <p class="author">{{ this.quotes.inspire[this.randomNumber].author }}</p> 
       </div>
-      <div v-if="this.quoted.quoteSubject == 'beer'">
+      <div v-if="quoteType == 'beer'">
         <p class="quote">{{ this.quotes.beer[this.randomNumber].quote }}</p>
         <p class="author">{{ this.quotes.beer[this.randomNumber].author }}</p> 
       </div>
@@ -52,7 +46,7 @@ export default {
       edit: false,
       randomNumber: 3,
       timer: 10000,
-      quoteType: 'inspire',
+      quoteType: this.quoted.quoteSubject,
       quotes: {
         inspire: [
           {
@@ -630,15 +624,7 @@ export default {
             author: 'Homer Simpson'
           }
         ]
-      },
-      selectTimer: { friendlyTime: '10 seconds', abbr: '10000' },
-      items: [
-        { friendlyTime: '10 Seconds', abbr: '10000' },
-        { friendlyTime: '20 Seconds', abbr: '20000' },
-        { friendlyTime: '30 Seconds', abbr: '30000' },
-        { friendlyTime: '1 Minute', abbr: '60000' },
-        { friendlyTime: '2 Minutes', abbr: '120000' }
-      ]
+      }
     }
   },
   mounted () {
@@ -670,7 +656,7 @@ export default {
     consolidated () {
       return {
         quoteSubject: this.quoteType,
-        quoteTimer: this.selectTimer.abbr
+        quoteTimer: this.timer
       }
     }
   }

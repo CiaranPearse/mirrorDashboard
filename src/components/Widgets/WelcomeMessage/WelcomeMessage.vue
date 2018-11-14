@@ -25,7 +25,7 @@
         v-model="messageSubtitle"
         label="Subtitle"
       ></v-text-field>
-      <v-btn color="red" @click="onCloseEdit" type="submit">Close</v-btn>
+      <v-btn color="red" @click="onCloseEdit">Close</v-btn>
       <v-btn color="green" :disabled="!formIsValid" type="submit">Add Message</v-btn>
       </form>
     </div>
