@@ -15,6 +15,15 @@
                 <v-radio label="12 Hour" value="12Hour"></v-radio>
                 <v-radio label="24 Hour" value="24Hour"></v-radio>
               </v-radio-group>
+              <v-switch
+                :label="`Show Day: ${showDay.toString()}`"
+                v-model="showDay"
+              ></v-switch>
+              <v-switch
+                :label="`Show Date: ${showDate.toString()}`"
+                v-model="showDate"
+              ></v-switch>
+
           <v-btn color="red" @click="onCloseEdit">Close</v-btn>
           <v-btn color="green" type="submit">Update Clock</v-btn>
           </form>
@@ -23,14 +32,14 @@
         <div class="clock" v-if="hourtime != ''">
           <div class="time">
               {{ this.hours }}:{{ this.minutes }}
-            <span class="showSeconds" v-if="showSeconds != false">
+            <span class="showSeconds" v-if="showSeconds != 'false'">
               {{ this.seconds }} <span v-if="timeFormat == '12Hour'" class="showAmPm">{{ this.hourtime }}</span>
             </span>
         	</div>
-        	<div class="dayName">
+        	<div class="dayName" v-if="this.showDay != false">
         		{{ this.dayName[dayNumber - 1] }}
         	</div>
-        	<div class="date">
+        	<div class="date" v-if="this.showDate != false">
         		{{ this.monthName[month] }} {{ this.thedate }}
         	</div>
         </div>
@@ -56,6 +65,8 @@ export default {
       seconds: 0,
       UStime: 0,
       showSeconds: true,
+      showDay: true,
+      showDate: true,
       hourtime: '',
       edit: false,
       timeFormat: '24Hour',
@@ -63,9 +74,12 @@ export default {
     }
   },
   mounted () {
+    console.log(this.clock.timeFormat)
     this.$options.interval = setInterval(this.updateDateTime, 1000)
     this.loading = false
-    this.timeFormat = this.clock
+    this.timeFormat = this.clock.timeFormat
+    this.showDay = this.clock.showDay
+    this.showDate = this.clock.showDate
   },
   beforeDestroy () {
     clearInterval(this.$options.interval)
@@ -96,8 +110,26 @@ export default {
       this.edit = false
     },
     onChangeClock (payload) {
-      this.$emit('updateClock', this.timeFormat)
+      this.$emit('updateClock', this.consolidated)
       this.edit = false
+    }
+  },
+  watch: {
+    clock: function (newVal, oldVal) {
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      console.log('Prop changed: ', newVal.timeFormat, ' | was: ', oldVal.timeFormat)
+      this.timeFormat = newVal.timeFormat
+      this.showDay = newVal.showDay
+      this.showDate = newVal.showDate
+    }
+  },
+  computed: {
+    consolidated () {
+      return {
+        timeFormat: this.timeFormat,
+        showDay: this.showDay,
+        showDate: this.showDate
+      }
     }
   }
 }

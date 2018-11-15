@@ -168,6 +168,7 @@ export default {
           var addQuotes = {'quoted': this.dashboard.allProps.quotes}
           Object.assign(listOfAttrs, addQuotes)
         }
+        console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }
       return {
         listOfAttrs
