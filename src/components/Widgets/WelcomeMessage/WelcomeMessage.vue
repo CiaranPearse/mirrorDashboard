@@ -1,20 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="edit === false"
-      dark
-      fab
-      small
-      right
-      @click="onClickEdit"
-      color="gray"
-    >
-      <v-icon>edit</v-icon>
-    </v-btn>
-    <h1 v-if="messageTitle">{{ messageTitle }}</h1>
-    <h1 v-else>Placeholder Title</h1>
-    <p v-if="messageSubtitle">{{ messageSubtitle }}</p>
-    <p v-else>Placeholder Subtitle</p>
-    <div v-if="edit === true">
+    <div v-if="edit">
       <form @submit.prevent="onChangeMessage">
           <v-text-field
         v-model="messageTitle"
@@ -29,8 +15,11 @@
       <v-btn color="green" :disabled="!formIsValid" type="submit">Add Message</v-btn>
       </form>
     </div>
-    <div>
-      
+    <div v-else @click="onClickEdit" class="hoverCursor">
+      <h1 v-if="messageTitle">{{ messageTitle }}</h1>
+      <h1 v-else>Placeholder Title</h1>
+      <p v-if="messageSubtitle">{{ messageSubtitle }}</p>
+      <p v-else>Placeholder Subtitle</p>
     </div>
   </div>
 </template>
@@ -42,7 +31,7 @@ export default {
   data () {
     return {
       edit: false,
-      messageTitle: this.message.welcomeMessageTitle,
+      messageTitle: 'Placeholder Title',
       messageSubtitle: 'Placeholder Subtitle'
     }
   },

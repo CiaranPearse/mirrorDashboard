@@ -20,7 +20,7 @@
             </v-card-title>
 
             <v-card-actions>
-                <v-btn flat :to="'/dashboard/' + dashboard.id">
+                <v-btn flat :to="'/view/' + dashboard.id">
                 <v-icon left>view_compact</v-icon>View Dashboard
               </v-btn>
               <v-btn flat :to="'/dashboard/' + dashboard.id">

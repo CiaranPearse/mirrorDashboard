@@ -1,5 +1,20 @@
 /* This is just a placeholder */
 
+.viewPage {
+  .v-navigation-drawer {
+    display: none;
+  }
+  .v-toolbar {
+    display: none;
+  }
+  main {
+    padding: 0px !important;
+    .container {
+      padding: 0px;
+    }
+  }
+}
+
 .custom-loader {
     animation: loader 1s infinite;
     display: flex;

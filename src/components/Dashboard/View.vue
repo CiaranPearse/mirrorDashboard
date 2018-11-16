@@ -10,42 +10,32 @@
         </v-flex>
       </v-layout>
       <v-layout row>
-        <v-flex xs12>
-          <div>
-            <h2 style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
-            <template v-if="userIsCreator">
-              <v-spacer></v-spacer>
-              <app-edit-dashboard-details-dialog :dashboard="dashboard"></app-edit-dashboard-details-dialog>
-            </template>
-            <div class="picture-frame">
-            <div class="matte">
-              <v-layout row>
+        
                 <v-flex xs12 class="pictureFrameData">
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotLeft1" v-on="listeners"></component>
-                            <!-- <component v-bind:is="dashboard.slotLeft1" v-on="listeners" :class=" dashboard.slotLeft1" :props="dashboard.slotLeft1"></component> -->
+                            <component v-bind:is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs"></component>
                           </div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotLeft2" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component v-bind:is="dashboard.slotLeft2" v-bind="attributes.listOfAttrs"></component>
                           </div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotLeft3" v-on="listeners" v-bind="attributes.listOfAttrs"></component></div>
+                            <component v-bind:is="dashboard.slotLeft3" v-bind="attributes.listOfAttrs"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
                           <div class="innerDotted">
                             <!-- <component v-bind:is="dashboard.slotCenter1" v-bind:allProps="dashboard.slotCenter1"></component> -->
-                            <component :is="dashboard.slotCenter1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component :is="dashboard.slotCenter1" v-bind="attributes.listOfAttrs"></component>
                           </div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotCenter2" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component v-bind:is="dashboard.slotCenter2" v-bind="attributes.listOfAttrs"></component>
                           </div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotCenter3" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component v-bind:is="dashboard.slotCenter3" v-bind="attributes.listOfAttrs"></component>
                           </div>
                         </div>
                       </v-flex>
@@ -53,13 +43,13 @@
                         <div>
                           <div>
                             <!-- <div class="innerDotted"><component v-bind:is="dashboard.slotRight1"></component></div> -->
-                            <component :is="dashboard.slotRight1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs"></component>
                           </div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotRight2" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component v-bind:is="dashboard.slotRight2" v-bind="attributes.listOfAttrs"></component>
                           </div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotRight3" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
+                            <component v-bind:is="dashboard.slotRight3" v-bind="attributes.listOfAttrs"></component>
                           </div>
                         </div>
                       </v-flex>
@@ -71,12 +61,8 @@
                         </div>
                       </v-flex>
                     </v-layout>
-                </v-flex>
-              </v-layout>
-            </div>
-          </div>
-          </div>
-        </v-flex>
+                  </v-flex>
+                    
       </v-layout>
     </v-container>
 </template>
@@ -99,26 +85,7 @@ export default {
     return {
       dashTitle: '',
       deviceLocation: '',
-      searchLeft1: null,
-      searchLeft2: null,
-      searchLeft3: null,
-      searchCenter1: null,
-      searchCenter2: null,
-      searchCenter3: null,
-      searchRight1: null,
-      searchRight2: null,
-      searchRight3: null,
-      searchFooter: null,
-      slotLeft1: null,
-      slotLeft2: null,
-      slotLeft3: null,
-      slotCenter1: null,
-      slotCenter2: null,
-      slotCenter3: null,
-      slotRight1: null,
-      slotRight2: null,
-      slotRight3: null,
-      slotFooter: null
+      slotLeft1: ''
     }
   },
   computed: {
@@ -136,15 +103,6 @@ export default {
     },
     loading () {
       return this.$store.getters.loading
-    },
-    listeners () {
-      return {
-        'updateMessage': this.handleWelcomeMessageEvent,
-        'updateCrypto': this.handleCryptoRatesEvent,
-        'updateDublinBus': this.handleDublinBusEvent,
-        'updateClock': this.handleClockEvent,
-        'updateQuotes': this.handleQuotesEvent
-      }
     },
     attributes () {
       let listOfAttrs = {'default': 'default'}
@@ -176,33 +134,8 @@ export default {
       }
     }
   },
-  methods: {
-    handleWelcomeMessageEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
-        id: this.dashboard.id,
-        welcomeMessage: newData
-      })
-    },
-    handleCryptoRatesEvent () {
-    },
-    handleDublinBusEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
-        id: this.dashboard.id,
-        dublinBus: newData
-      })
-    },
-    handleClockEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
-        id: this.dashboard.id,
-        clock: newData
-      })
-    },
-    handleQuotesEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
-        id: this.dashboard.id,
-        quotes: newData
-      })
-    }
+  beforeCreate: function () {
+    document.body.className = 'viewPage'
   },
   components: {
     'BBCNews': BBCNews,
