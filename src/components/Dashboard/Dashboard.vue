@@ -11,7 +11,7 @@
       </v-layout>
       <v-layout row>
         <v-flex xs12>
-          <div v-if="dashboard.dashTitle">
+          <div>
             <h2 style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
             <template v-if="userIsCreator">
               <v-spacer></v-spacer>
@@ -96,7 +96,7 @@ export default {
   props: ['id'],
   data () {
     return {
-      dashTitle: 'placeholder',
+      dashTitle: '',
       deviceLocation: '',
       searchLeft1: null,
       searchLeft2: null,
@@ -174,8 +174,6 @@ export default {
         listOfAttrs
       }
     }
-  },
-  mounted () {
   },
   methods: {
     handleWelcomeMessageEvent (newData) {

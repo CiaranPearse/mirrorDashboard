@@ -10,9 +10,9 @@
     >
       <v-icon>edit</v-icon>
     </v-btn>
-    <h1 v-if="messageTitle !== undefined && messageTitle !== ''">{{ messageTitle }}</h1>
+    <h1 v-if="messageTitle">{{ messageTitle }}</h1>
     <h1 v-else>Placeholder Title</h1>
-    <p v-if="messageSubtitle !== undefined && messageSubtitle !== ''">{{ messageSubtitle }}</p>
+    <p v-if="messageSubtitle">{{ messageSubtitle }}</p>
     <p v-else>Placeholder Subtitle</p>
     <div v-if="edit === true">
       <form @submit.prevent="onChangeMessage">
@@ -42,8 +42,8 @@ export default {
   data () {
     return {
       edit: false,
-      messageTitle: null,
-      messageSubtitle: null
+      messageTitle: this.message.welcomeMessageTitle,
+      messageSubtitle: 'Placeholder Subtitle'
     }
   },
   methods: {
@@ -61,6 +61,13 @@ export default {
   mounted () {
     this.messageTitle = this.message.welcomeMessageTitle
     this.messageSubtitle = this.message.welcomeMessageSubtitle
+  },
+  watch: {
+    message: function (newVal, oldVal) {
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      this.messageTitle = this.message.welcomeMessageTitle
+      this.messageSubtitle = this.message.welcomeMessageSubtitle
+    }
   },
   computed: {
     formIsValid () {

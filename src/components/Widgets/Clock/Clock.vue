@@ -74,12 +74,8 @@ export default {
     }
   },
   mounted () {
-    console.log(this.clock.timeFormat)
     this.$options.interval = setInterval(this.updateDateTime, 1000)
     this.loading = false
-    this.timeFormat = this.clock.timeFormat
-    this.showDay = this.clock.showDay
-    this.showDate = this.clock.showDate
   },
   beforeDestroy () {
     clearInterval(this.$options.interval)
@@ -117,7 +113,6 @@ export default {
   watch: {
     clock: function (newVal, oldVal) {
       console.log('Prop changed: ', newVal, ' | was: ', oldVal)
-      console.log('Prop changed: ', newVal.timeFormat, ' | was: ', oldVal.timeFormat)
       this.timeFormat = newVal.timeFormat
       this.showDay = newVal.showDay
       this.showDate = newVal.showDate
