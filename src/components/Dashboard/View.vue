@@ -15,26 +15,25 @@
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs"></component>
                           </div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotLeft2" v-bind="attributes.listOfAttrs"></component>
                           </div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotLeft3" v-bind="attributes.listOfAttrs"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted">
-                            <!-- <component v-bind:is="dashboard.slotCenter1" v-bind:allProps="dashboard.slotCenter1"></component> -->
-                            <component :is="dashboard.slotCenter1" v-bind="attributes.listOfAttrs"></component>
+                          <div>
+                            <component v-bind:is="dashboard.slotCenter1" v-bind="attributes.listOfAttrs"></component>
                           </div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotCenter2" v-bind="attributes.listOfAttrs"></component>
                           </div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotCenter3" v-bind="attributes.listOfAttrs"></component>
                           </div>
                         </div>
@@ -42,13 +41,13 @@
                       <v-flex xs3 class="rightBlock">
                         <div>
                           <div>
-                            <!-- <div class="innerDotted"><component v-bind:is="dashboard.slotRight1"></component></div> -->
+                            <!-- <div><component v-bind:is="dashboard.slotRight1"></component></div> -->
                             <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs"></component>
                           </div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotRight2" v-bind="attributes.listOfAttrs"></component>
                           </div>
-                          <div class="innerDotted">
+                          <div>
                             <component v-bind:is="dashboard.slotRight3" v-bind="attributes.listOfAttrs"></component>
                           </div>
                         </div>
@@ -57,7 +56,7 @@
                     <v-layout row class="pictureFrameFooter">
                       <v-flex xs12 class="dashedBorder footerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="dashboard.slotFooter"></component></div>
+                          <div><component v-bind:is="dashboard.slotFooter"></component></div>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -84,8 +83,7 @@ export default {
   data () {
     return {
       dashTitle: '',
-      deviceLocation: '',
-      slotLeft1: ''
+      deviceLocation: ''
     }
   },
   computed: {
@@ -156,9 +154,6 @@ export default {
     background: url(../../assets/img/bedroom1.jpg);
     background-size: cover;
   }
-  .dashedBorder {
-    border: 1px #fff dashed;
-  }
   .leftBlock {
     text-align: center;
   }
@@ -171,39 +166,4 @@ export default {
   .footerBlock {
     text-align: center;
   }
-  .innerDotted {
-    border: 1px gray dotted;
-    margin: 4px;
-    padding: 10px;
-  }
-  .pictureFrameData {
-    min-height: 800px;
-  }
-  .pictureFrameMain {
-    height: 90%;
-  }
-  .pictureFrameFooter {
-    height: 10%;
-  }
-  .picture-frame {
-  background-color:black;
-  border:black solid 40px;
-  -webkit-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
--moz-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
-  margin:40px;
-  min-height: 800px;
-}
-.matte {
-  background-color:#000;
-  height:100%;
-  -webkit-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
--moz-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
-}
-
-.art {
-  width:80%;
-  margin:10% 10% 10% 10%;
-}
 </style>
