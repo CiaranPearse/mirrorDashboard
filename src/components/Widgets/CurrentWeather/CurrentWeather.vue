@@ -11,7 +11,6 @@
 	  <strong>Long:</strong> {{ this.long }}<br />
   	<strong>Lat:</strong> {{ this.lat }}<br />
   	<strong>Lang:</strong> {{ this.language }}<br />
-  	<strong>Unit:</strong> {{ this.unit }}<br />
   	<strong>Current Temp: </strong> {{ this.currentTemp }} F&deg;
   	</div>
 </template>
@@ -25,10 +24,9 @@ export default {
       loading: true,
       edit: false,
       city: '',
-      lat: '',
-      long: '',
-      language: '',
-      unit: '',
+      lat: '19.040236',
+      long: '47.497913',
+      language: 'en',
       info: '',
       currentTemp: ''
     }
