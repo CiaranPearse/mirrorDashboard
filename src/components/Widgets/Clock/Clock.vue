@@ -50,7 +50,7 @@
 <script>
 import { getHourTime, getZeroPad } from './Filters'
 export default {
-  props: ['clock'],
+  props: ['clock', 'editDialog'],
   data () {
     return {
       loading: true,
@@ -76,6 +76,7 @@ export default {
   mounted () {
     this.$options.interval = setInterval(this.updateDateTime, 1000)
     this.loading = false
+    console.log('parent is: ', this.$parent.id)
   },
   beforeDestroy () {
     clearInterval(this.$options.interval)
@@ -95,7 +96,7 @@ export default {
       if ((this.hourtime === 'AM') && (this.timeFormat === '24Hour') && (this.hours <= 9)) {
         this.hours = ('0' + this.hours)
       }
-      if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour')) {
+      if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour') && (this.hours > 12)) {
         this.hours = (this.hours + 12)
       }
     },

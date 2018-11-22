@@ -46,7 +46,8 @@ export default {
       edit: false,
       randomNumber: 3,
       timer: 10000,
-      quoteType: this.quoted.quoteSubject,
+      quoteType: 'inspire',
+      // quoteType: this.quoted.quoteSubject,
       quotes: {
         inspire: [
           {

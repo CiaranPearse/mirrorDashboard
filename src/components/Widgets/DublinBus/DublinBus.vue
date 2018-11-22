@@ -23,7 +23,10 @@
           
         </div>
         <div v-else @click="onClickEdit" class="hoverCursor">
-          <div v-for="time in times">
+          <div v-if="error">
+            <p>There was an error with Dublin Bus</p>
+          </div>
+          <div v-else v-for="time in times">
             {{ time.route }} -- {{ time.destination }} -- {{ time.duetime }} min
           </div>
         </div>
@@ -39,6 +42,7 @@ export default {
   props: ['dublinBus'],
   data () {
     return {
+      error: false,
       edit: false,
       stop1: '2383',
       stop2: '2222',
@@ -69,9 +73,11 @@ export default {
     .then(response => {
       this.times = response.data.results
       this.loading = false
+      this.error = false
     })
     .catch(e => {
-      this.errors.push(e)
+      console.log('theres an error: ', e)
+      this.error = true
     })
   },
   beforeDestroy () {

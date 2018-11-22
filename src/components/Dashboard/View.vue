@@ -9,58 +9,58 @@
             :size="70"></v-progress-circular>
         </v-flex>
       </v-layout>
-      <v-layout row>
+      <v-layout row v-else>
         
-                <v-flex xs12 class="pictureFrameData">
-                    <v-layout row class="pictureFrameMain">
-                      <v-flex xs3 class="leftBlock">
-                        <div>
-                          <div>
-                            <component v-bind:is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                          <div>
-                            <component v-bind:is="dashboard.slotLeft2" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                          <div>
-                            <component v-bind:is="dashboard.slotLeft3" v-bind="attributes.listOfAttrs"></component></div>
-                        </div>
-                      </v-flex>
-                      <v-flex xs8 class="centerBlock">
-                        <div>
-                          <div>
-                            <component v-bind:is="dashboard.slotCenter1" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                          <div>
-                            <component v-bind:is="dashboard.slotCenter2" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                          <div>
-                            <component v-bind:is="dashboard.slotCenter3" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                        </div>
-                      </v-flex>
-                      <v-flex xs3 class="rightBlock">
-                        <div>
-                          <div>
-                            <!-- <div><component v-bind:is="dashboard.slotRight1"></component></div> -->
-                            <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                          <div>
-                            <component v-bind:is="dashboard.slotRight2" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                          <div>
-                            <component v-bind:is="dashboard.slotRight3" v-bind="attributes.listOfAttrs"></component>
-                          </div>
-                        </div>
-                      </v-flex>
-                    </v-layout>
-                    <v-layout row class="pictureFrameFooter">
-                      <v-flex xs12 class="dashedBorder footerBlock">
-                        <div>
-                          <div><component v-bind:is="dashboard.slotFooter"></component></div>
-                        </div>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
+        <v-flex xs12 class="pictureFrameData">
+            <v-layout row class="pictureFrameMain">
+              <v-flex xs3 class="leftBlock">
+                <div>
+                  <div>
+                    <component v-bind:is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                  <div>
+                    <component v-bind:is="dashboard.slotLeft2" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                  <div>
+                    <component v-bind:is="dashboard.slotLeft3" v-bind="attributes.listOfAttrs"></component></div>
+                </div>
+              </v-flex>
+              <v-flex xs8 class="centerBlock">
+                <div>
+                  <div>
+                    <component v-bind:is="dashboard.slotCenter1" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                  <div>
+                    <component v-bind:is="dashboard.slotCenter2" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                  <div>
+                    <component v-bind:is="dashboard.slotCenter3" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                </div>
+              </v-flex>
+              <v-flex xs3 class="rightBlock">
+                <div>
+                  <div>
+                    <!-- <div><component v-bind:is="dashboard.slotRight1"></component></div> -->
+                    <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                  <div>
+                    <component v-bind:is="dashboard.slotRight2" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                  <div>
+                    <component v-bind:is="dashboard.slotRight3" v-bind="attributes.listOfAttrs"></component>
+                  </div>
+                </div>
+              </v-flex>
+            </v-layout>
+            <v-layout row class="pictureFrameFooter">
+              <v-flex xs12 class="dashedBorder footerBlock">
+                <div>
+                  <div><component v-bind:is="dashboard.slotFooter"></component></div>
+                </div>
+              </v-flex>
+            </v-layout>
+        </v-flex>
                     
       </v-layout>
     </v-container>

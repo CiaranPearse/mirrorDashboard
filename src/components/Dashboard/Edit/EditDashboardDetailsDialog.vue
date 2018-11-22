@@ -10,243 +10,376 @@
             <v-card-title>Edit Dashboard</v-card-title>
           </v-flex>
         </v-layout>
-        <v-layout row>
+
+<!-- START TABS -->
+        <v-layout>
           <v-flex xs12>
-            <v-card-text>
-              <v-text-field
-                name="editedDashTitle"
-                label="Name this Dashboard"
-                id="editedDashTitle"
-                v-model="editedDashTitle"
-                :messages="['Give it a name so you know what it\'s for']"
-                required
-                >
-              </v-text-field>
-            </v-card-text>
-            <v-card-text>
-              <v-text-field
-                name="editedDeviceId"
-                label="Enter your Device ID"
-                id="editedDeviceId"
-                v-model="editedDeviceId"
-                :messages="['You can find this on a sticker on your device.']"
-                required
-                >
-              </v-text-field>
-            </v-card-text>
-            <v-card-text>
-              <v-text-field
-                name="Dashboard Location"
-                label="Where is your device located"
-                id="editedDeviceLocation"
-                v-model="editedDeviceLocation"
-                required
-                >
-              </v-text-field>
-            </v-card-text>
+             <v-tabs
+              centered
+              color="black"
+              dark
+              icons-and-text
+            >
+              <v-tabs-slider color="white"></v-tabs-slider>
+
+              <v-tab href="#tab-1">
+                Details
+                <v-icon>info</v-icon>
+              </v-tab>
+
+              <v-tab href="#tab-2">
+                Layout &amp; Device
+                <v-icon>line_style</v-icon>
+              </v-tab>
+
+              <v-tab href="#tab-3">
+                Widgets
+                <v-icon>art_track</v-icon>
+              </v-tab>
+
+              <!-- DETAILS TAB -->
+              <v-tab-item id="tab-1" key="1">
+                <v-card flat>
+                  <v-card-text>
+
+                    <v-layout row>
+                      <v-flex xs2></v-flex>
+                      <v-flex xs4>
+                        <v-card-text>
+                          <v-text-field
+                            name="editedDashTitle"
+                            label="Name this Dashboard"
+                            id="editedDashTitle"
+                            v-model="editedDashTitle"
+                            :messages="['Give it a name so you know what it\'s for']"
+                            required
+                            >
+                          </v-text-field>
+                        </v-card-text>
+                        <v-card-text>
+                          <v-text-field
+                            name="editedDeviceId"
+                            label="Enter your Device ID"
+                            id="editedDeviceId"
+                            v-model="editedDeviceId"
+                            :messages="['You can find this on a sticker on your device.']"
+                            required
+                            >
+                          </v-text-field>
+                        </v-card-text>
+                        <v-card-text>
+                          <v-text-field
+                            name="editedDeviceLocation"
+                            label="Where is your device located"
+                            id="editedDeviceLocation"
+                            v-model="editedDeviceLocation"
+                            required
+                            >
+                          </v-text-field>
+                        </v-card-text>
+                      </v-flex>
+                      <v-flex xs4>
+                        <p>This is where the layout chooser will go</p>
+                      </v-flex>
+                      <v-flex xs2></v-flex>
+                    </v-layout>
+
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+<!-- END DETAILS TAB -->
+
+
+<v-tab-item id="tab-2" key="2">
+                <v-card flat>
+                  <v-card-text>
+                    <v-layout row>
+                      <v-flex xs3>
+                        <p>{{this.deviceType}}</p>
+                        <v-radio-group v-model="deviceType" column>
+                          <v-radio value="tablet">
+                            <div slot="label">Tablet</strong></div>
+                          </v-radio>
+                          <v-radio value="monitor">
+                            <div slot="label">Monitor</div>
+                          </v-radio>
+                          <v-radio value="kiosk">
+                            <div slot="label">Kiosk</div>
+                          </v-radio>
+                          <v-radio value="mirror">
+                            <div slot="label">Mirror</div>
+                          </v-radio>
+                        </v-radio-group>
+                      </v-flex>
+<!-- TABLET LAYOUTS -->
+                      <v-flex xs9 v-if="deviceType === 'tablet'">
+                        <p>TABLET LAYOUTS</p>
+                        <v-radio-group v-model="deviceLayout" column>
+                          <v-radio value="l3m3r3b1">
+                            <div slot="label">3/3/3/1</strong></div>
+                          </v-radio>
+                          <v-radio value="l3m3b1">
+                            <div slot="label">3/3/1</div>
+                          </v-radio>
+                        </v-radio-group>
+                      </v-flex>
+<!-- END TABLET LAYOUTS -->
+
+<!-- MONITOR LAYOUTS -->
+                      <v-flex xs9 v-if="deviceType === 'monitor'">
+                        <p>MONITOR LAYOUTS</p>
+                        <v-radio-group v-model="deviceLayout" column>
+                          <v-radio value="l3m3r3b1">
+                            <div slot="label">3/3/3/1</strong></div>
+                          </v-radio>
+                          <v-radio value="l3m3b1">
+                            <div slot="label">2/2/1</div>
+                          </v-radio>
+                        </v-radio-group>
+                      </v-flex>
+<!-- END MONITOR LAYOUTS -->
+
+<!-- KIOSK LAYOUTS -->
+                      <v-flex xs9 v-if="deviceType === 'kiosk'">
+                        <p>KIOSK LAYOUTS</p>
+                        <v-radio-group v-model="deviceLayout" column>
+                          <v-radio value="l3m3r3b1">
+                            <div slot="label">3/3/3/1</strong></div>
+                          </v-radio>
+                          <v-radio value="l3m3b1">
+                            <div slot="label">3/3/1</div>
+                          </v-radio>
+                        </v-radio-group>
+                      </v-flex>
+<!-- END KIOSK LAYOUTS -->
+
+<!-- MIRROR LAYOUTS -->
+                      <v-flex xs9 v-if="deviceType === 'mirror'">
+                        <p>MIRROR LAYOUTS</p>
+                        <v-radio-group v-model="deviceLayout" column>
+                          <v-radio value="l3m3r3b1">
+                            <div slot="label">3/3/3/1</strong></div>
+                          </v-radio>
+                          <v-radio value="l3m3b1">
+                            <div slot="label">3/3/1</div>
+                          </v-radio>
+                        </v-radio-group>
+                      </v-flex>
+<!-- END MIRROR LAYOUTS -->
+                    </v-layout>
+
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+<!-- END LAYOUT TAB -->
+
+
+<!-- WIDGET TAB -->
+              <v-tab-item id="tab-3" key="3">
+                <v-card flat>
+                  <v-card-text>
+                    <v-layout row>
+                      <v-flex xs3 class="dashedBorder leftBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchLeft1"
+                              v-model="editedSlotLeft1"
+                              :key="editedSlotLeft1"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchLeft2"
+                              v-model="editedSlotLeft2"
+                              :key="editedSlotLeft2"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchLeft3"
+                              v-model="editedSlotLeft3"
+                              :key="editedSlotLeft3"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs8 class="dashedBorder centerBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchCenter1"
+                              v-model="editedSlotCenter1"
+                              :key="editedSlotCenter1"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchCenter2"
+                              v-model="editedSlotCenter2"
+                              :key="editedSlotCenter2"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchCenter3"
+                              v-model="editedSlotCenter3"
+                              :key="editedSlotCenter3"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs3 class="dashedBorder rightBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchRight1"
+                              v-model="editedSlotRight1"
+                              :key="editedSlotRight1"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchRight2"
+                              v-model="editedSlotRight2"
+                              :key="editedSlotRight2"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchRight3"
+                              v-model="editedSlotRight3"
+                              :key="editedSlotRight3"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                      <v-flex xs12 class="dashedBorder footerBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="loading"
+                              :items="items"
+                              :search-input.sync="searchFooter"
+                              v-model="editedSlotFooter"
+                              :key="editedSlotFooter"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+
+<!-- END WIDGET TAB -->
+            </v-tabs>
           </v-flex>
         </v-layout>
+
+<!-- END TABS -->
+
         <v-layout row wrap>
-          <v-flex xs12>
-            <v-container fluid fill-height>
-              <v-layout row>
-                <v-flex xs12>
-                  <h3>Design your Dashboard</h3>
-                  <v-layout row>
-                        <v-flex xs3 class="dashedBorder leftBlock">
-                          <div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchLeft1"
-                                v-model="editedSlotLeft1"
-                                :key="editedSlotLeft1"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchLeft2"
-                                v-model="editedSlotLeft2"
-                                :key="editedSlotLeft2"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchLeft3"
-                                v-model="editedSlotLeft3"
-                                :key="editedSlotLeft3"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                          </div>
-                        </v-flex>
-                        <v-flex xs8 class="dashedBorder centerBlock">
-                          <div>
-                            <div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchCenter1"
-                                v-model="editedSlotCenter1"
-                                :key="editedSlotCenter1"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchCenter2"
-                                v-model="editedSlotCenter2"
-                                :key="editedSlotCenter2"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchCenter3"
-                                v-model="editedSlotCenter3"
-                                :key="editedSlotCenter3"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                          </div>
-                          </div>
-                        </v-flex>
-                        <v-flex xs3 class="dashedBorder rightBlock">
-                          <div>
-                            <div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchRight1"
-                                v-model="editedSlotRight1"
-                                :key="editedSlotRight1"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchRight2"
-                                v-model="editedSlotRight2"
-                                :key="editedSlotRight2"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchRight3"
-                                v-model="editedSlotRight3"
-                                :key="editedSlotRight3"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                          </div>
-                          </div>
-                        </v-flex>
-                      </v-layout>
-                      <v-layout row>
-                        <v-flex xs12 class="dashedBorder footerBlock">
-                          <div>
-                            <div class="innerDotted">
-                              <v-autocomplete
-                                :loading="loading"
-                                :items="items"
-                                :search-input.sync="searchFooter"
-                                v-model="editedSlotFooter"
-                                :key="editedSlotFooter"
-                                cache-items
-                                class="mx-3"
-                                flat
-                                hide-no-data
-                                hide-details
-                                label="Search"
-                                solo-inverted
-                                clearable
-                              ></v-autocomplete>
-                            </div>
-                          </div>
-                        </v-flex>
-                      </v-layout>
-                      <v-layout row>
         <v-flex xs12>
           <div>
             <h2 style="text-align: center;">Preview for {{ this.editedDashTitle }}</h2>
@@ -257,23 +390,23 @@
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft1"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft2"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft3"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft1" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft2" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft3" v-bind="attributes.listOfAttrs"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" :pushedStuff="welcomeMessageData"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter2"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter3"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter2" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter3" v-bind="attributes.listOfAttrs"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs3 class="rightBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight1"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight2"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight3"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight1" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight2" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight3" v-bind="attributes.listOfAttrs"></component></div>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -352,10 +485,8 @@ export default {
       editedSlotRight3: this.dashboard.slotRight3,
       editedSlotFooter: this.dashboard.slotFooter,
       updated: null,
-      welcomeMessageData: [{
-        messageTitle: 'Placeholder Title',
-        messageSubtitle: 'Placeholder Subtitle'
-      }],
+      deviceType: this.dashboard.deviceType,
+      deviceLayout: this.dashboard.deviceLayout,
       widgets: [
         'BBCNews',
         'CNNWorldNews',
@@ -450,6 +581,7 @@ export default {
     }
   },
   mounted () {
+    console.log('called by: ', this.$parent.$vnode.tag)
     this.searchLeft1 = this.dashboard.slotLeft1
     this.searchLeft2 = this.dashboard.slotLeft2
     this.searchLeft3 = this.dashboard.slotLeft3
@@ -460,6 +592,37 @@ export default {
     this.searchRight2 = this.dashboard.slotRight2
     this.searchRight3 = this.dashboard.slotRight3
     this.searchFooter = this.dashboard.slotFooter
+  },
+  computed: {
+    attributes () {
+      let listOfAttrs = {'default': 'default'}
+      if (this.dashboard.allProps) {
+        if ((this.dashboard.allProps.welcomeMessage !== null) || (this.dashboard.allProps.welcomeMessage !== undefined)) {
+          var addMessage = {'message': this.dashboard.allProps.welcomeMessage}
+          Object.assign(listOfAttrs, addMessage)
+        }
+        if ((this.dashboard.allProps.cryptoRates !== null) || (this.dashboard.allProps.cryptoRates !== undefined)) {
+          var addRates = {'rates': this.dashboard.allProps.cryptoRates}
+          Object.assign(listOfAttrs, addRates)
+        }
+        if ((this.dashboard.allProps.dublinBus !== null) || (this.dashboard.allProps.dublinBus !== undefined)) {
+          var addDublinBus = {'dublinBus': this.dashboard.allProps.dublinBus}
+          Object.assign(listOfAttrs, addDublinBus)
+        }
+        if ((this.dashboard.allProps.clock !== null) || (this.dashboard.allProps.clock !== undefined)) {
+          var addClock = {'clock': this.dashboard.allProps.clock}
+          Object.assign(listOfAttrs, addClock)
+        }
+        if ((this.dashboard.allProps.quotes !== null) || (this.dashboard.allProps.quotes !== undefined)) {
+          var addQuotes = {'quoted': this.dashboard.allProps.quotes}
+          Object.assign(listOfAttrs, addQuotes)
+        }
+        console.log('THIS IS THE ATTRs: ', listOfAttrs)
+      }
+      return {
+        listOfAttrs
+      }
+    }
   }
 }
 </script>

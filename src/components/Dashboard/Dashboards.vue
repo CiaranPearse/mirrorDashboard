@@ -26,6 +26,9 @@
               <v-btn flat :to="'/dashboard/' + dashboard.id">
                 <v-icon left>edit</v-icon> Edit Dashboard
               </v-btn>
+              <v-btn flat :to="'/wizzard/' + dashboard.id">
+                <v-icon left>edit</v-icon> Wizzard
+              </v-btn>
               <v-btn flat>
                 <v-icon left>screen_share</v-icon> Change Screen
               </v-btn>

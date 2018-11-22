@@ -9,7 +9,7 @@
             :size="70"></v-progress-circular>
         </v-flex>
       </v-layout>
-      <v-layout row>
+      <v-layout row v-else>
         <v-flex xs12>
           <div>
             <h2 style="text-align: center;">Preview for {{ dashboard.dashTitle }}<br> {{ dashboard.deviceLocation}}</h2>
@@ -25,7 +25,15 @@
                       <v-flex xs3 class="leftBlock">
                         <div>
                           <div class="innerDotted">
-                            <component v-bind:is="dashboard.slotLeft1" v-on="listeners"></component>
+                            <span class="editButtons">
+                              <span class="left">
+                                <v-icon>close</v-icon>
+                              </span>
+                              <span class="right">
+                                <v-icon>edit</v-icon>
+                              </span>
+                            </span>
+                            <component v-bind:is="dashboard.slotLeft1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
                             <!-- <component v-bind:is="dashboard.slotLeft1" v-on="listeners" :class=" dashboard.slotLeft1" :props="dashboard.slotLeft1"></component> -->
                           </div>
                           <div class="innerDotted">
@@ -51,7 +59,7 @@
                       </v-flex>
                       <v-flex xs3 class="rightBlock">
                         <div>
-                          <div>
+                          <div class="innerDotted">
                             <!-- <div class="innerDotted"><component v-bind:is="dashboard.slotRight1"></component></div> -->
                             <component :is="dashboard.slotRight1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
                           </div>
@@ -178,7 +186,7 @@ export default {
   },
   methods: {
     handleWelcomeMessageEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
+      this.$store.dispatch('updateWidgetData', {
         id: this.dashboard.id,
         welcomeMessage: newData
       })
@@ -186,19 +194,19 @@ export default {
     handleCryptoRatesEvent () {
     },
     handleDublinBusEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
+      this.$store.dispatch('updateWidgetData', {
         id: this.dashboard.id,
         dublinBus: newData
       })
     },
     handleClockEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
+      this.$store.dispatch('updateWidgetData', {
         id: this.dashboard.id,
         clock: newData
       })
     },
     handleQuotesEvent (newData) {
-      this.$store.dispatch('updateDashboardData', {
+      this.$store.dispatch('updateWidgetData', {
         id: this.dashboard.id,
         quotes: newData
       })
@@ -273,4 +281,18 @@ box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
   width:80%;
   margin:10% 10% 10% 10%;
 }
+
+.editButtons{
+  border: 1px solid red;
+  position: relative;
+  display: block;
+
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+}
+
 </style>

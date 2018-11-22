@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <div v-if="loading">
+      <v-progress-circular
+      indeterminate
+      color="white"
+      ></v-progress-circular><br />
+      Loading Clock
+      </div>
+    </div>
+  <div v-else>
     <div v-if="edit">
       <form @submit.prevent="onChangeMessage">
           <v-text-field
@@ -30,6 +38,7 @@ export default {
   props: ['message'],
   data () {
     return {
+      loading: true,
       edit: false,
       messageTitle: 'Placeholder Title',
       messageSubtitle: 'Placeholder Subtitle'
@@ -48,6 +57,7 @@ export default {
     }
   },
   mounted () {
+    this.loading = false
     this.messageTitle = this.message.welcomeMessageTitle
     this.messageSubtitle = this.message.welcomeMessageSubtitle
   },

@@ -96,6 +96,17 @@ export const store = new Vuex.Store({
         dashboard.updated = payload.updated
       }
     },
+    updateWidget (state, payload) {
+      const dashboard = state.loadedDashboards.find(dashboard => {
+        return dashboard.id === payload.id
+      })
+      if (payload.allProps) {
+        dashboard.allProps = payload.allProps
+      }
+      if (payload.updated) {
+        dashboard.updated = payload.updated
+      }
+    },
     setUser (state, payload) {
       state.user = payload
     },
@@ -135,6 +146,8 @@ export const store = new Vuex.Store({
               slotFooter: obj[key].slotFooter,
               created: obj[key].created,
               allProps: obj[key].allProps,
+              deviceType: obj[key].deviceType,
+              deviceLayout: obj[key].deviceLayout,
               updated: obj[key].updated,
               creatorId: obj[key].creatorId
             })
@@ -143,41 +156,6 @@ export const store = new Vuex.Store({
           commit('setLoading', false)
         }
       })
-      // firebase.database().ref('dashboards').on('value')
-      // .then((data) => {
-      //   const dashboards = []
-      //   const obj = data.val()
-      //   for (let key in obj) {
-      //     dashboards.push({
-      //       id: key,
-      //       deviceId: obj[key].deviceId,
-      //       dashTitle: obj[key].dashTitle,
-      //       deviceLocation: obj[key].deviceLocation,
-      //       slotLeft1: obj[key].slotLeft1,
-      //       slotLeft2: obj[key].slotLeft2,
-      //       slotLeft3: obj[key].slotLeft3,
-      //       slotCenter1: obj[key].slotCenter1,
-      //       slotCenter2: obj[key].slotCenter2,
-      //       slotCenter3: obj[key].slotCenter3,
-      //       slotRight1: obj[key].slotRight1,
-      //       slotRight2: obj[key].slotRight2,
-      //       slotRight3: obj[key].slotRight3,
-      //       slotFooter: obj[key].slotFooter,
-      //       created: obj[key].created,
-      //       allProps: obj[key].allProps,
-      //       updated: obj[key].updated,
-      //       creatorId: obj[key].creatorId
-      //     })
-      //   }
-      //   commit('setLoadedDashboards', dashboards)
-      //   commit('setLoading', false)
-      // })
-      // .catch(
-      //   (error) => {
-      //     console.log(error)
-      //     commit('setLoading', true)
-      //   }
-      // )
     },
     createDashboard ({commit, getters}, payload) {
       console.log('from create Dashboard line 182: ', payload)
@@ -215,33 +193,53 @@ export const store = new Vuex.Store({
       }
       if (payload.slotLeft1) {
         updateObj.slotLeft1 = payload.slotLeft1
+      } else {
+        updateObj.slotLeft1 = null
       }
       if (payload.slotLeft2) {
         updateObj.slotLeft2 = payload.slotLeft2
+      } else {
+        updateObj.slotLeft2 = null
       }
       if (payload.slotLeft3) {
         updateObj.slotLeft3 = payload.slotLeft3
+      } else {
+        updateObj.slotLeft3 = null
       }
       if (payload.slotCenter1) {
         updateObj.slotCenter1 = payload.slotCenter1
+      } else {
+        updateObj.slotCenter1 = null
       }
       if (payload.slotCenter2) {
         updateObj.slotCenter2 = payload.slotCenter2
+      } else {
+        updateObj.slotCenter2 = null
       }
       if (payload.slotCenter3) {
         updateObj.slotCenter3 = payload.slotCenter3
+      } else {
+        updateObj.slotCenter3 = null
       }
       if (payload.slotRight1) {
         updateObj.slotRight1 = payload.slotRight1
+      } else {
+        updateObj.slotRight1 = null
       }
       if (payload.slotRight2) {
         updateObj.slotRight2 = payload.slotRight2
+      } else {
+        updateObj.slotRight2 = null
       }
       if (payload.slotRight3) {
         updateObj.slotRight3 = payload.slotRight3
+      } else {
+        updateObj.slotRight3 = null
       }
       if (payload.slotFooter) {
         updateObj.slotFooter = payload.slotFooter
+      } else {
+        updateObj.slotFooter = null
       }
       if (payload.welcomeMessage) {
         var welcomeMessage = payload.welcomeMessage
@@ -267,6 +265,39 @@ export const store = new Vuex.Store({
         commit('setLoading', false)
         console.log('This is the push of the payload', payload)
         commit('updateDashboard', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        commit('setLoading', false)
+      })
+    },
+    updateWidgetData ({commit}, payload) {
+      commit('setLoading', true)
+      const updateObj = {}
+      if (payload.welcomeMessage) {
+        var welcomeMessage = payload.welcomeMessage
+        updateObj['allProps/welcomeMessage'] = welcomeMessage
+      }
+      if (payload.dublinBus) {
+        var dublinBus = payload.dublinBus
+        updateObj['allProps/dublinBus'] = dublinBus
+      }
+      if (payload.clock) {
+        var clock = payload.clock
+        updateObj['allProps/clock'] = clock
+      }
+      if (payload.quotes) {
+        var quotes = payload.quotes
+        updateObj['allProps/quotes'] = quotes
+      }
+      if (payload.updated) {
+        updateObj.updated = payload.updated
+      }
+      firebase.database().ref('dashboards').child(payload.id).update(updateObj)
+      .then(() => {
+        commit('setLoading', false)
+        console.log('This is the push of the payload', payload)
+        commit('updateWidget', payload)
       })
       .catch(error => {
         console.log(error)
