@@ -1,18 +1,41 @@
 <template>
-    <weather 
-        api-key="3469e148ee58b9591f84c3244bad3199"
-        title="Weather"
-        :latitude=this.lat
-        :longitude=this.long
-        :updateInterval=this.updateInterval
-        :hideHeader=this.hideHeader
-        language="en"
-        bar-color="#fff"
-        text-color="#fff"
-        hide-header=true
-        update-interval=1000
-        units="uk">
-    </weather>
+<!-- LOAD THE WEATHER -->
+    <div v-if="loading">
+      Loading Weather
+    </div>
+<!-- END LOADING THE WEATHER -->
+    <div v-else>
+<!-- EDIT THE WEATHER DETAILS -->
+<div>
+      <div v-if="editWeather">
+        <form @submit.prevent="onChangeWeather">
+         <p>THis is the edit</p>
+          <v-btn color="red" @click="onCloseEdit">Close</v-btn>
+          <v-btn color="green" :disabled="!formIsValid" type="submit">Add Message</v-btn>
+        </form>
+      </div>
+<!-- END EDIT THE DETAILS -->
+
+<!-- SHOW THE WEATHER -->
+      <div v-else @click="onClickEdit">
+        <weather 
+            api-key="3469e148ee58b9591f84c3244bad3199"
+            title="Weather"
+            :latitude=this.lat
+            :longitude=this.long
+            :updateInterval=this.updateInterval
+            :hideHeader=this.hideHeader
+            :language=this.language
+            bar-color="#fff"
+            text-color="#fff"
+            hide-header=true
+            update-interval=10000
+            :units=this.unit>
+        </weather>
+      </div>
+    </div>
+<!-- END SHOW THE WEATHER -->
+    </div>
 </template>
  
 <script>
@@ -20,16 +43,63 @@ import VueWeatherWidget from 'vue-weather-widget'
 import 'vue-weather-widget/dist/css/vue-weather-widget.css'
 
 export default {
-  name: 'app',
+  props: ['weather'],
   components: {
     'Weather': VueWeatherWidget
   },
   data: () => ({
+    loading: false,
+    editWeather: false,
     lat: '53.350140',
     long: '-6.266155',
+    language: 'en',
+    unit: 'uk',
     hideHeader: true,
     updateInterval: 1000
-  })
+  }),
+  methods: {
+    onClickEdit () {
+      this.editWeather = true
+    },
+    onCloseEdit () {
+      this.editWeather = false
+    },
+    onChangeWeather (payload) {
+      console.log('Update weather')
+      console.log(this.consolidated)
+      // this.$emit('updateWeather', this.consolidated)
+      this.edit = false
+    }
+  },
+  mounted () {
+    this.loading = false
+    this.lat = this.weather.latitude
+    this.long = this.weather.longitude
+    this.language = this.weather.language
+    this.unit = this.weather.unit
+  },
+  watch: {
+    weather: function (newVal, oldVal) {
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      this.lat = this.weather.latitude
+      this.long = this.weather.longitude
+      this.language = this.weather.language
+      this.unit = this.weeather.unit
+    }
+  },
+  computed: {
+    formIsValid () {
+      return this.latitude !== '' && this.longitude !== '' && this.language !== '' && this.unit !== ''
+    },
+    consolidated () {
+      return {
+        latitude: this.lat,
+        longitude: this.long,
+        language: this.language,
+        unit: this.unit
+      }
+    }
+  }
 }
 </script> 
 

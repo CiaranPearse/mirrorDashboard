@@ -452,7 +452,7 @@ import CryptoTicker from '../../Widgets/CryptoTicker'
 import CurrencyTicker from '../../Widgets/CurrencyTicker'
 import DublinBus from '../../Widgets/DublinBus'
 import Quotes from '../../Widgets/Quotes'
-import Weather from '../../Widgets/Weather'
+import CurrentWeather from '../../Widgets/CurrentWeather'
 import WelcomeMessage from '../../Widgets/WelcomeMessage'
 export default {
   props: ['dashboard'],
@@ -495,7 +495,7 @@ export default {
         'CurrencyRates',
         'DublinBus',
         'RTENews',
-        'Weather',
+        'CurrentWeather',
         'Quotes',
         'WelcomeMessage'
       ]
@@ -510,7 +510,7 @@ export default {
     'RTENews': RTENews,
     'DublinBus': DublinBus,
     'Quotes': Quotes,
-    'Weather': Weather,
+    'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage
   },
   watch: {
@@ -576,6 +576,8 @@ export default {
         slotRight2: this.editedSlotRight2,
         slotRight3: this.editedSlotRight3,
         slotFooter: this.editedSlotFooter,
+        deviceType: this.deviceType,
+        deviceLayout: this.deviceLayout,
         updated: dateNow.toISOString()
       })
     }
@@ -592,6 +594,8 @@ export default {
     this.searchRight2 = this.dashboard.slotRight2
     this.searchRight3 = this.dashboard.slotRight3
     this.searchFooter = this.dashboard.slotFooter
+    this.deviceType = this.dashboard.deviceType
+    this.deviceLayout = this.dashboard.deviceLayout
   },
   computed: {
     attributes () {
@@ -616,6 +620,10 @@ export default {
         if ((this.dashboard.allProps.quotes !== null) || (this.dashboard.allProps.quotes !== undefined)) {
           var addQuotes = {'quoted': this.dashboard.allProps.quotes}
           Object.assign(listOfAttrs, addQuotes)
+        }
+        if ((this.dashboard.allProps.weather !== null) || (this.dashboard.allProps.weather !== undefined)) {
+          var addWeather = {'weather': this.dashboard.allProps.weather}
+          Object.assign(listOfAttrs, addWeather)
         }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }

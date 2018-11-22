@@ -3,9 +3,7 @@
       <v-progress-circular
       indeterminate
       color="white"
-      ></v-progress-circular><br />
-      Loading Clock
-      </div>
+      ></v-progress-circular>
     </div>
   <div v-else>
     <div v-if="edit">
@@ -52,7 +50,9 @@ export default {
       this.edit = false
     },
     onChangeMessage (payload) {
-      this.$emit('updateMessage', this.consolidated)
+      console.log('UPDDATE WEATHER')
+      console.log(this.consolidated)
+      // this.$emit('updateMessage', this.consolidated)
       this.edit = false
     }
   },

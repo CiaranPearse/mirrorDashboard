@@ -25,14 +25,6 @@
                       <v-flex xs3 class="leftBlock">
                         <div>
                           <div class="innerDotted">
-                            <span class="editButtons">
-                              <span class="left">
-                                <v-icon>close</v-icon>
-                              </span>
-                              <span class="right">
-                                <v-icon>edit</v-icon>
-                              </span>
-                            </span>
                             <component v-bind:is="dashboard.slotLeft1" v-on="listeners" v-bind="attributes.listOfAttrs"></component>
                             <!-- <component v-bind:is="dashboard.slotLeft1" v-on="listeners" :class=" dashboard.slotLeft1" :props="dashboard.slotLeft1"></component> -->
                           </div>
@@ -99,7 +91,7 @@ import CryptoTicker from '../Widgets/CryptoTicker'
 import CurrencyTicker from '../Widgets/CurrencyTicker'
 import DublinBus from '../Widgets/DublinBus'
 import Quotes from '../Widgets/Quotes'
-import Weather from '../Widgets/Weather'
+import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
   props: ['id'],
@@ -177,6 +169,10 @@ export default {
           var addQuotes = {'quoted': this.dashboard.allProps.quotes}
           Object.assign(listOfAttrs, addQuotes)
         }
+        if ((this.dashboard.allProps.weather !== null) || (this.dashboard.allProps.weather !== undefined)) {
+          var addWeather = {'weather': this.dashboard.allProps.weather}
+          Object.assign(listOfAttrs, addWeather)
+        }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }
       return {
@@ -210,6 +206,12 @@ export default {
         id: this.dashboard.id,
         quotes: newData
       })
+    },
+    handleWeatherEvent (newData) {
+      this.$store.dispatch('updateWidgetData', {
+        id: this.dashboard.id,
+        weather: newData
+      })
     }
   },
   components: {
@@ -221,7 +223,7 @@ export default {
     'RTENews': RTENews,
     'DublinBus': DublinBus,
     'Quotes': Quotes,
-    'Weather': Weather,
+    'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage
   }
 }

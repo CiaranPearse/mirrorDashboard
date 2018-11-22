@@ -76,7 +76,7 @@ import CryptoTicker from '../Widgets/CryptoTicker'
 import CurrencyTicker from '../Widgets/CurrencyTicker'
 import DublinBus from '../Widgets/DublinBus'
 import Quotes from '../Widgets/Quotes'
-import Weather from '../Widgets/Weather'
+import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
   props: ['id'],
@@ -144,7 +144,7 @@ export default {
     'RTENews': RTENews,
     'DublinBus': DublinBus,
     'Quotes': Quotes,
-    'Weather': Weather,
+    'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage
   }
 }

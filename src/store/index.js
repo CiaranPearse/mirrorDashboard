@@ -89,6 +89,12 @@ export const store = new Vuex.Store({
       if (payload.slotFooter) {
         dashboard.slotFooter = payload.slotFooter
       }
+      if (payload.deviceType) {
+        dashboard.deviceType = payload.deviceType
+      }
+      if (payload.deviceLayout) {
+        dashboard.deviceLayout = payload.deviceLayout
+      }
       if (payload.allProps) {
         dashboard.allProps = payload.allProps
       }
@@ -182,6 +188,7 @@ export const store = new Vuex.Store({
     updateDashboardData ({commit}, payload) {
       commit('setLoading', true)
       const updateObj = {}
+      console.log('PAYLOAD', payload)
       if (payload.dashTitle) {
         updateObj.dashTitle = payload.dashTitle
       }
@@ -240,6 +247,16 @@ export const store = new Vuex.Store({
         updateObj.slotFooter = payload.slotFooter
       } else {
         updateObj.slotFooter = null
+      }
+      if (payload.deviceType) {
+        updateObj.deviceType = payload.deviceType
+      } else {
+        updateObj.deviceType = null
+      }
+      if (payload.deviceLayout) {
+        updateObj.deviceLayout = payload.deviceLayout
+      } else {
+        updateObj.deviceLayout = null
       }
       if (payload.welcomeMessage) {
         var welcomeMessage = payload.welcomeMessage
