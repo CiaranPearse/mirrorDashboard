@@ -12,7 +12,7 @@
   	<strong>Lat:</strong> {{ this.lat }}<br />
   	<strong>Lang:</strong> {{ this.language }}<br />
   	<strong>Unit:</strong> {{ this.unit }}<br />
-  	<strong>Current Temp: </strong> {{ this.currentTemp }}
+  	<strong>Current Temp: </strong> {{ this.currentTemp }} F&deg;
   	</div>
 </template>
 
@@ -24,11 +24,11 @@ export default {
     return {
       loading: true,
       edit: false,
-      city: 'Budapest',
-      lat: '19.040236',
-      long: '47.497913',
-      language: 'this is the language',
-      unit: 'this is the unit',
+      city: '',
+      lat: '',
+      long: '',
+      language: '',
+      unit: '',
       info: '',
       currentTemp: ''
     }
@@ -54,6 +54,7 @@ export default {
       this.currentTemp = response.data.currently.temperature
       this.city = response.data.timezone
     })
+    this.loading = false
   },
   watch: {
     weather: function (newVal, oldVal) {
