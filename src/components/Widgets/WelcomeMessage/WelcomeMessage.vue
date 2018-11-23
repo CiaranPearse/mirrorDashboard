@@ -33,7 +33,7 @@
 <script>
 
 export default {
-  props: ['message'],
+  props: ['message', 'theId'],
   data () {
     return {
       loading: true,
@@ -50,9 +50,12 @@ export default {
       this.edit = false
     },
     onChangeMessage (payload) {
-      console.log('UPDDATE WEATHER')
-      console.log(this.consolidated)
-      // this.$emit('updateMessage', this.consolidated)
+      console.log('Clock changed', payload)
+      console.log('Consolidated: ', this.consolidated)
+      this.$store.dispatch('updateWidgetData', {
+        id: this.theId,
+        welcomeMessage: this.consolidated
+      })
       this.edit = false
     }
   },

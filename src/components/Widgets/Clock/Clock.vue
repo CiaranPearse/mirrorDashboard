@@ -77,7 +77,6 @@ export default {
   mounted () {
     this.$options.interval = setInterval(this.updateDateTime, 1000)
     this.loading = false
-    console.log('parent is: ', this.$parent.id)
   },
   beforeDestroy () {
     clearInterval(this.$options.interval)
