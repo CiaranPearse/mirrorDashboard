@@ -1,7 +1,7 @@
-<template >
+<template>
 	
 	<div v-if="!loading">
-    <v-container>
+    <v-container fluid>
   	  <v-layout row>
   		  <v-flex xs12>
   			  <h4>Dashboard Wizzard</h4>
@@ -680,7 +680,7 @@ export default {
 	width: 100px;
 }
   .pictureFrameData {
-    background: url(../../assets/img/bedroom1.jpg);
+    background: url(../../assets/img/field.jpg);
     background-size: cover;
   }
   .dashedBorder {
@@ -745,5 +745,8 @@ box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
   .right {
     float: right;
   }
+}
+.editPane {
+
 }
 </style>

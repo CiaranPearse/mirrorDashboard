@@ -308,6 +308,10 @@ export const store = new Vuex.Store({
         var quotes = payload.quotes
         updateObj['allProps/quotes'] = quotes
       }
+      if (payload.weather) {
+        var weather = payload.weather
+        updateObj['allProps/weather'] = weather
+      }
       if (payload.updated) {
         updateObj.updated = payload.updated
       }
