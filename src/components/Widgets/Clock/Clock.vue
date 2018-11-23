@@ -107,6 +107,7 @@ export default {
       this.edit = false
     },
     onChangeClock (payload) {
+      console.log('Clock changed', payload)
       this.$emit('updateClock', this.consolidated)
       this.edit = false
     }

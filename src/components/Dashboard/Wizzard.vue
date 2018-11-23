@@ -1,8 +1,6 @@
-<template>
-	<div v-if="loading">
-		<h1>PAGE IS LOADING</h1>
-	</div>
-	<div v-else>
+<template >
+	
+	<div v-if="!loading">
     <v-container>
   	  <v-layout row>
   		  <v-flex xs12>
@@ -35,12 +33,12 @@
 
 					    <v-stepper-items>
 					    	<form @submit.prevent="onWizzardSave">
+<!-- CONTENT FOR STEP 1 -->
 					      <v-stepper-content step="1">
 					        <v-card
 					          class="mb-5"
 					        >
-<!-- CONTENT FOR STEP 1 -->
-									<h3>Dashboard Details</h3>
+						      <h3>Dashboard Details</h3>
 									<v-layout>
 										<v-flex xs3></v-flex>
                       <v-flex xs4>
@@ -78,7 +76,7 @@
                         </v-card-text>
 										</v-flex>
 									</v-layout>
-<!-- END CONTENT FOR STEP 1 -->
+
 					        </v-card>
 
 					        <v-btn
@@ -90,11 +88,12 @@
 
 					        <v-btn flat>Cancel</v-btn>
 					      </v-stepper-content>
-
+<!-- END CONTENT FOR STEP 1 -->					      
+<!-- CONTENT FOR STEP 2 -->
 					      <v-stepper-content step="2">
 					        <v-card
 					        >
-<!-- CONTENT FOR STEP 2 -->
+
 										<v-layout>
 											<v-flex xs1></v-flex>
 											<v-flex xs3>
@@ -138,7 +137,7 @@
 											</v-flex>
 										</v-layout>
     
-<!-- END CONTENT FOR STEP 2 -->
+
 					        	
 					        </v-card>
 
@@ -160,16 +159,207 @@
 					          flat
 					          color="red">Cancel</v-btn>
 					      </v-stepper-content>
-
+<!-- END CONTENT FOR STEP 2 -->
+<!-- CONTENT FOR STEP 3 -->
 					      <v-stepper-content step="3">
 					        <v-card
 					          class="mb-5"
 					          height="200px"
 					        >
-<!-- CONTENT FOR STEP 3 -->
-<h3>This is the content or step 3</h3>
-<!-- END CONTENT FOR STEP 3 -->
-					        </v-card>
+                    <v-layout row>
+                      <v-flex xs3 class="dashedBorder leftBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchLeft1"
+                              v-model="editedSlotLeft1"
+                              :key="editedSlotLeft1"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchLeft2"
+                              v-model="editedSlotLeft2"
+                              :key="editedSlotLeft2"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchLeft3"
+                              v-model="editedSlotLeft3"
+                              :key="editedSlotLeft3"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs8 class="dashedBorder centerBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchCenter1"
+                              v-model="editedSlotCenter1"
+                              :key="editedSlotCenter1"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchCenter2"
+                              v-model="editedSlotCenter2"
+                              :key="editedSlotCenter2"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchCenter3"
+                              v-model="editedSlotCenter3"
+                              :key="editedSlotCenter3"
+                              :value="editedSlotCenter3"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs3 class="dashedBorder rightBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchRight1"
+                              v-model="editedSlotRight1"
+                              :key="editedSlotRight1"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchRight2"
+                              v-model="editedSlotRight2"
+                              :key="editedSlotRight2"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchRight3"
+                              v-model="editedSlotRight3"
+                              :key="editedSlotRight3"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                      <v-flex xs12 class="dashedBorder footerBlock">
+                        <div>
+                          <div class="innerDotted">
+                            <v-autocomplete
+                              :loading="selectLoading"
+                              :items="items"
+                              :search-input.sync="searchFooter"
+                              v-model="editedSlotFooter"
+                              :key="editedSlotFooter"
+                              cache-items
+                              class="mx-3"
+                              flat
+                              hide-no-data
+                              hide-details
+                              label="Search"
+                              solo-inverted
+                              clearable
+                            ></v-autocomplete>
+                          </div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                  </v-card-text>
+                </v-card>
+
 					        <p>You must save your changes here before you can modify your widgets</p>
 					        <v-btn
 					          outline
@@ -188,15 +378,59 @@
 
 					        <v-btn flat>Cancel</v-btn>
 					      </v-stepper-content>
-
+<!-- END CONTENT FOR STEP 3 -->
+<!-- CONTENT FOR STEP 4 -->
 					      <v-stepper-content step="4">
 					        <v-card
 					          class="mb-5"
-					          height="200px"
 					        >
-<!-- CONTENT FOR STEP 4 -->
-<h3>This is the content or step 4</h3>
-<!-- END CONTENT FOR STEP 4 -->
+
+									<v-layout row wrap>
+        <v-flex xs12>
+          <div>
+            <h2 style="text-align: center;">Preview for {{ this.editedDashTitle }}</h2>
+            <div class="picture-frame">
+            <div class="matte">
+              <v-layout row>
+                <v-flex xs12 class="pictureFrameData">
+                    <v-layout row class="pictureFrameMain">
+                      <v-flex xs3 class="leftBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft1" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft2" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft3" v-bind="attributes.listOfAttrs"></component></div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs8 class="centerBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter2" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter3" v-bind="attributes.listOfAttrs"></component></div>
+                        </div>
+                      </v-flex>
+                      <v-flex xs3 class="rightBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight1" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight2" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight3" v-bind="attributes.listOfAttrs"></component></div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout row class="pictureFrameFooter">
+                      <v-flex xs12 class="dashedBorder footerBlock">
+                        <div>
+                          <div class="innerDotted"><component v-bind:is="this.searchFooter"></component></div>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                </v-flex>
+              </v-layout>
+            </div>
+          </div>
+          </div>
+        </v-flex>
+      </v-layout>
+
 					        </v-card>
 					        <v-btn
 					          outline
@@ -214,6 +448,7 @@
 
 					        <v-btn flat>Cancel</v-btn>
 					      </v-stepper-content>
+<!-- END CONTENT FOR STEP 4 -->
 					      </form>
 					    </v-stepper-items>
 
@@ -223,27 +458,119 @@
 	    </div>
     </v-container>
   </div>
+  <div v-else>
+		<h1>PAGE IS LOADING</h1>
+	</div>
 </template>
 
 <script>
+import BBCNews from '../Widgets/BBCNews'
+import CNNWorldNews from '../Widgets/CNNWorldNews'
+import RTENews from '../Widgets/RTENews'
+import Clock from '../Widgets/Clock'
+import CryptoTicker from '../Widgets/CryptoTicker'
+import CurrencyTicker from '../Widgets/CurrencyTicker'
+import DublinBus from '../Widgets/DublinBus'
+import Quotes from '../Widgets/Quotes'
+import CurrentWeather from '../Widgets/CurrentWeather'
+import WelcomeMessage from '../Widgets/WelcomeMessage'
 export default {
   props: ['id'],
   data () {
     return {
-      loading: false,
+      loading: true,
+      selectLoading: false,
       edit: false,
       e1: 0,
+      items: [],
       dashboardTitle: '',
       dashboardId: '',
       dashboardLocation: '',
       dashboardLayout: '',
       dashboardDevice: '',
-      updated: null
+      searchLeft1: null,
+      searchLeft2: null,
+      searchLeft3: null,
+      searchCenter1: null,
+      searchCenter2: null,
+      searchCenter3: null,
+      searchRight1: null,
+      searchRight2: null,
+      searchRight3: null,
+      searchFooter: null,
+      editedSlotLeft1: '',
+      editedSlotLeft2: '',
+      editedSlotLeft3: '',
+      editedSlotCenter1: '',
+      editedSlotCenter2: '',
+      editedSlotCenter3: '',
+      editedSlotRight1: '',
+      editedSlotRight2: '',
+      editedSlotRight3: '',
+      editedSlotFooter: '',
+      updated: null,
+      widgets: [
+        'BBCNews',
+        'CNNWorldNews',
+        'ClockDigital',
+        'CryptoRates',
+        'CurrencyRates',
+        'DublinBus',
+        'RTENews',
+        'CurrentWeather',
+        'Quotes',
+        'WelcomeMessage'
+      ]
     }
+  },
+  components: {
+    'BBCNews': BBCNews,
+    'CNNWorldNews': CNNWorldNews,
+    'ClockDigital': Clock,
+    'CryptoRates': CryptoTicker,
+    'CurrencyRates': CurrencyTicker,
+    'RTENews': RTENews,
+    'DublinBus': DublinBus,
+    'Quotes': Quotes,
+    'CurrentWeather': CurrentWeather,
+    'WelcomeMessage': WelcomeMessage
   },
   computed: {
     dashboard () {
       return this.$store.getters.loadedDashboard(this.id)
+    },
+    attributes () {
+      let listOfAttrs = {'default': 'default'}
+      if (this.dashboard.allProps) {
+        if ((this.dashboard.allProps.welcomeMessage !== null) || (this.dashboard.allProps.welcomeMessage !== undefined)) {
+          var addMessage = {'message': this.dashboard.allProps.welcomeMessage}
+          Object.assign(listOfAttrs, addMessage)
+        }
+        if ((this.dashboard.allProps.cryptoRates !== null) || (this.dashboard.allProps.cryptoRates !== undefined)) {
+          var addRates = {'rates': this.dashboard.allProps.cryptoRates}
+          Object.assign(listOfAttrs, addRates)
+        }
+        if ((this.dashboard.allProps.dublinBus !== null) || (this.dashboard.allProps.dublinBus !== undefined)) {
+          var addDublinBus = {'dublinBus': this.dashboard.allProps.dublinBus}
+          Object.assign(listOfAttrs, addDublinBus)
+        }
+        if ((this.dashboard.allProps.clock !== null) || (this.dashboard.allProps.clock !== undefined)) {
+          var addClock = {'clock': this.dashboard.allProps.clock}
+          Object.assign(listOfAttrs, addClock)
+        }
+        if ((this.dashboard.allProps.quotes !== null) || (this.dashboard.allProps.quotes !== undefined)) {
+          var addQuotes = {'quoted': this.dashboard.allProps.quotes}
+          Object.assign(listOfAttrs, addQuotes)
+        }
+        if ((this.dashboard.allProps.weather !== null) || (this.dashboard.allProps.weather !== undefined)) {
+          var addWeather = {'weather': this.dashboard.allProps.weather}
+          Object.assign(listOfAttrs, addWeather)
+        }
+        console.log('THIS IS THE ATTRs: ', listOfAttrs)
+      }
+      return {
+        listOfAttrs
+      }
     }
   },
   mounted () {
@@ -252,33 +579,96 @@ export default {
     this.dashboardLocation = this.dashboard.deviceLocation
     this.dashboardLayout = this.dashboard.deviceLayout
     this.dashboardDevice = this.dashboard.deviceType
+    this.searchLeft1 = this.dashboard.slotLeft1
+    this.searchLeft2 = this.dashboard.slotLeft2
+    this.searchLeft3 = this.dashboard.slotLeft3
+    this.searchCenter1 = this.dashboard.slotCenter1
+    this.searchCenter2 = this.dashboard.slotCenter2
+    this.searchCenter3 = this.dashboard.slotCenter3
+    this.searchRight1 = this.dashboard.slotRight1
+    this.searchRight2 = this.dashboard.slotRight2
+    this.searchRight3 = this.dashboard.slotRight3
+    this.searchFooter = this.dashboard.slotFooter
+    this.editedSlotLeft1 = this.dashboard.slotLeft1
+    this.editedSlotLeft2 = this.dashboard.slotLeft2
+    this.editedSlotLeft3 = this.dashboard.slotLeft3
+    this.editedSlotCenter1 = this.dashboard.slotCenter1
+    this.editedSlotCenter2 = this.dashboard.slotCenter2
+    this.editedSlotCenter3 = this.dashboard.slotCenter3
+    this.editedSlotRight1 = this.dashboard.slotRight1
+    this.editedSlotRight2 = this.dashboard.slotRight2
+    this.editedSlotRight3 = this.dashboard.slotRight3
+    this.editedSlotFooter = this.dashboard.slotFooter
+    this.deviceType = this.dashboard.deviceType
+    this.loading = false
   },
   methods: {
+    querySelections (v) {
+      this.selectLoading = true
+      // Simulated ajax query
+      setTimeout(() => {
+        this.items = this.widgets.filter(e => {
+          return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+        })
+        this.selectLoading = false
+      }, 500)
+    },
     onWizzardSave () {
       if (this.dashboardTitle.trim() === '' || this.dashboardLocation.trim() === '' || this.dashboardId.trim() === '') {
       }
-      console.log('Submit Form')
       this.editDialog = false
-      // const dateNow = new Date()
-      // this.$store.dispatch('updateDashboardData', {
-      //   id: this.dashboard.id,
-      //   dashTitle: this.dashboardTitle,
-      //   deviceId: this.dashboardId,
-      //   deviceLocation: this.dashboardLocation,
-      //   deviceLocation: this.dashboardLayout,
-      //   deviceLocation: this.dashboardDevice,
-      //   // slotLeft1: this.editedSlotLeft1,
-      //   // slotLeft2: this.editedSlotLeft2,
-      //   // slotLeft3: this.editedSlotLeft3,
-      //   // slotCenter1: this.editedSlotCenter1,
-      //   // slotCenter2: this.editedSlotCenter2,
-      //   // slotCenter3: this.editedSlotCenter3,
-      //   // slotRight1: this.editedSlotRight1,
-      //   // slotRight2: this.editedSlotRight2,
-      //   // slotRight3: this.editedSlotRight3,
-      //   // slotFooter: this.editedSlotFooter,
-      //   updated: dateNow.toISOString()
-      // })
+      const dateNow = new Date()
+      this.$store.dispatch('updateDashboardData', {
+        id: this.dashboard.id,
+        dashTitle: this.dashboardTitle,
+        deviceId: this.dashboardId,
+        deviceLocation: this.dashboardLocation,
+        deviceLayout: this.dashboardLayout,
+        deviceType: this.dashboardDevice,
+        slotLeft1: this.editedSlotLeft1,
+        slotLeft2: this.editedSlotLeft2,
+        slotLeft3: this.editedSlotLeft3,
+        slotCenter1: this.editedSlotCenter1,
+        slotCenter2: this.editedSlotCenter2,
+        slotCenter3: this.editedSlotCenter3,
+        slotRight1: this.editedSlotRight1,
+        slotRight2: this.editedSlotRight2,
+        slotRight3: this.editedSlotRight3,
+        slotFooter: this.editedSlotFooter,
+        updated: dateNow.toISOString()
+      })
+    }
+  },
+  watch: {
+    searchLeft1 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchLeft2 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchLeft3 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchCenter1 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchCenter2 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchCenter3 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchRight1 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchRight2 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchRight3 (val) {
+      val && val !== this.select && this.querySelections(val)
+    },
+    searchFooter (val) {
+      val && val !== this.select && this.querySelections(val)
     }
   }
 }
@@ -287,5 +677,72 @@ export default {
 <style>
 .layoutImg {
 	width: 100px;
+}
+  .pictureFrameData {
+    background: url(../../assets/img/bedroom1.jpg);
+    background-size: cover;
+  }
+  .dashedBorder {
+    border: 1px #fff dashed;
+  }
+  .leftBlock {
+    text-align: center;
+  }
+  .centerBlock {
+    text-align: center;
+  }
+  .rightBlock {
+    text-align: center;
+  }
+  .footerBlock {
+    text-align: center;
+  }
+  .innerDotted {
+    border: 1px gray dotted;
+    margin: 4px;
+    padding: 10px;
+  }
+  .pictureFrameData {
+    min-height: 800px;
+  }
+  .pictureFrameMain {
+    height: 90%;
+  }
+  .pictureFrameFooter {
+    height: 10%;
+  }
+  .picture-frame {
+  background-color:black;
+  border:black solid 40px;
+  -webkit-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
+-moz-box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
+box-shadow: 4px 13px 59px 8px rgba(0,0,0,0.75);
+  margin:40px;
+  min-height: 800px;
+}
+.matte {
+  background-color:#000;
+  height:100%;
+  -webkit-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
+box-shadow: inset 10px 10px 37px 0px rgba(0,0,0,0.75);
+}
+
+.art {
+  width:80%;
+  margin:10% 10% 10% 10%;
+}
+
+.editButtons{
+  border: 1px solid red;
+  position: relative;
+  display: block;
+
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
 }
 </style>
