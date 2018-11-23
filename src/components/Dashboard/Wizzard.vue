@@ -396,30 +396,30 @@
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft1" v-bind="attributes.listOfAttrs"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft2" v-bind="attributes.listOfAttrs"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft3" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft1" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft2" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft3" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" v-bind="attributes.listOfAttrs"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter2" v-bind="attributes.listOfAttrs"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter3" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter2" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter3" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs3 class="rightBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight1" v-bind="attributes.listOfAttrs"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight2" v-bind="attributes.listOfAttrs"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight3" v-bind="attributes.listOfAttrs"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight1" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight2" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight3" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
                         </div>
                       </v-flex>
                     </v-layout>
                     <v-layout row class="pictureFrameFooter">
                       <v-flex xs12 class="dashedBorder footerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchFooter"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchFooter" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -483,6 +483,7 @@ export default {
       edit: false,
       e1: 0,
       items: [],
+      theId: this.id,
       dashboardTitle: '',
       dashboardId: '',
       dashboardLocation: '',
@@ -574,6 +575,7 @@ export default {
     }
   },
   mounted () {
+    this.theId = this.dashboard.id
     this.dashboardTitle = this.dashboard.dashTitle
     this.dashboardId = this.dashboard.deviceId
     this.dashboardLocation = this.dashboard.deviceLocation

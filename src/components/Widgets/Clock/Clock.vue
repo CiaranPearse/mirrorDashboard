@@ -7,6 +7,7 @@
       Loading Clock
       </div>
     </div>
+
     <div v-else>
       <div v-if="edit">
         <h4>Configure Clock</h4>
@@ -50,7 +51,7 @@
 <script>
 import { getHourTime, getZeroPad } from './Filters'
 export default {
-  props: ['clock', 'editDialog'],
+  props: ['clock', 'theId'],
   data () {
     return {
       loading: true,
@@ -108,7 +109,11 @@ export default {
     },
     onChangeClock (payload) {
       console.log('Clock changed', payload)
-      this.$emit('updateClock', this.consolidated)
+      console.log('Consolidated: ', this.consolidated)
+      this.$store.dispatch('updateWidgetData', {
+        id: this.theId,
+        clock: this.consolidated
+      })
       this.edit = false
     }
   },

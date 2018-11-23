@@ -198,6 +198,16 @@ export const store = new Vuex.Store({
       if (payload.deviceLocation) {
         updateObj.deviceLocation = payload.deviceLocation
       }
+      if (payload.deviceType) {
+        updateObj.deviceType = payload.deviceType
+      } else {
+        updateObj.deviceType = null
+      }
+      if (payload.deviceLayout) {
+        updateObj.deviceLayout = payload.deviceLayout
+      } else {
+        updateObj.deviceLayout = null
+      }
       if (payload.slotLeft1) {
         updateObj.slotLeft1 = payload.slotLeft1
       } else {
@@ -248,16 +258,6 @@ export const store = new Vuex.Store({
       } else {
         updateObj.slotFooter = null
       }
-      if (payload.deviceType) {
-        updateObj.deviceType = payload.deviceType
-      } else {
-        updateObj.deviceType = null
-      }
-      if (payload.deviceLayout) {
-        updateObj.deviceLayout = payload.deviceLayout
-      } else {
-        updateObj.deviceLayout = null
-      }
       if (payload.welcomeMessage) {
         var welcomeMessage = payload.welcomeMessage
         updateObj['allProps/welcomeMessage'] = welcomeMessage
@@ -289,6 +289,7 @@ export const store = new Vuex.Store({
       })
     },
     updateWidgetData ({commit}, payload) {
+      console.log('updating widget data: ', payload)
       commit('setLoading', true)
       const updateObj = {}
       if (payload.welcomeMessage) {
