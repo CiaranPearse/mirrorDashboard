@@ -24,14 +24,13 @@
       ></v-text-field>
       <v-radio-group v-model="unit" row>
          <v-radio label="C" value="c"></v-radio>
-                <v-radio label="F" value="f"></v-radio>
-              </v-radio-group>
-  			<v-select
-  			  item-text="name"
-  			  item-value="nameICO"
-  			  v-model="defaultSelected"
-  			  :items="languages"
-  			></v-select>
+          <v-radio label="F" value="f"></v-radio>
+      </v-radio-group>
+      <v-radio-group v-model="days" row>
+         <v-radio label="Today" value="1"></v-radio>
+          <v-radio label="3 Day" value="3"></v-radio>
+          <v-radio label="5 Day" value="5"></v-radio>
+      </v-radio-group>
         <v-btn color="red" @click="onCloseEdit">Close</v-btn>
         <v-btn color="green" :disabled="!formIsValid" type="submit">Update</v-btn>
       </form>
@@ -55,7 +54,7 @@
            <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup></span>
            <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup></span>
         </div>
-        <strong>Sunrise {{ this.sunRise }}/ Sunset {{ this.sunSet }}</strong><br />
+        <strong><img src="../../../assets/img/weatherIcons/sunrise.png" /> {{ this.sunRise | moment("HH:mm") }}/ <img src="../../../assets/img/weatherIcons/sunset.png" /> {{ this.sunSet | moment("HH:mm")}}</strong><br />
         <strong>High {{ this.todayHigh }}/ Low {{ this.todayLow }}</strong><br />
         <strong>Wind Speed {{ this.currentWind }}/ Direction{{ this.currentWindDirection }}</strong><br />
         <strong>Warnings</strong><br />
@@ -84,7 +83,6 @@ export default {
       city: '',
       lat: '',
       long: '',
-      language: '',
       currentIcon: '',
       info: '',
       sunRise: '',
@@ -94,195 +92,18 @@ export default {
       todayHigh: '',
       todayLow: '',
       currentWind: '',
+      showDays: '',
       currentWindDirection: '',
       unit: 'c',
-      defaultSelected: {
-        name: 'English',
-        nameICO: 'en'
-      },
-      languages: [
-        {
-          nameICO: 'ar',
-          name: 'Arabic'
-        },
-        {
-          nameICO: 'az',
-          name: 'Azerbaijani'
-        },
-        {
-          nameICO: 'be',
-          name: 'Belarusian'
-        },
-        {
-          nameICO: 'bg',
-          name: 'Bulgarian'
-        },
-        {
-          nameICO: 'bs',
-          name: 'Bosnian'
-        },
-        {
-          nameICO: 'ca',
-          name: 'Catalan'
-        },
-        {
-          nameICO: 'cs',
-          name: 'Czech'
-        },
-        {
-          nameICO: 'da',
-          name: 'Danish'
-        },
-        {
-          nameICO: 'de',
-          name: 'German'
-        },
-        {
-          nameICO: 'el',
-          name: 'Greek'
-        },
-        {
-          nameICO: 'en',
-          name: 'English'
-        },
-        {
-          nameICO: 'es',
-          name: 'Spanish'
-        },
-        {
-          nameICO: 'et',
-          name: 'Estonian'
-        },
-        {
-          nameICO: 'fi',
-          name: 'Finnish'
-        },
-        {
-          nameICO: 'fr',
-          name: 'French'
-        },
-        {
-          nameICO: 'he',
-          name: 'Hebrew'
-        },
-        {
-          nameICO: 'hr',
-          name: 'Croatian'
-        },
-        {
-          nameICO: 'hu',
-          name: 'Hungarian'
-        },
-        {
-          nameICO: 'id',
-          name: 'Indonesian'
-        },
-        {
-          nameICO: 'is',
-          name: 'Icelandic'
-        },
-        {
-          nameICO: 'it',
-          name: 'Italian'
-        },
-        {
-          nameICO: 'ja',
-          name: 'Japanese'
-        },
-        {
-          nameICO: 'ka',
-          name: 'Georgian'
-        },
-        {
-          nameICO: 'ko',
-          name: 'Korean'
-        },
-        {
-          nameICO: 'kw',
-          name: 'Cornish'
-        },
-        {
-          nameICO: 'lv',
-          name: 'Latvian'
-        },
-        {
-          nameICO: 'nb',
-          name: 'Norwegian Bokmål'
-        },
-        {
-          nameICO: 'nl',
-          name: 'Dutch'
-        },
-        {
-          nameICO: 'no',
-          name: 'Norwegian Bokmål'
-        },
-        {
-          nameICO: 'pl',
-          name: 'Polish'
-        },
-        {
-          nameICO: 'pt',
-          name: 'Portuguese'
-        },
-        {
-          nameICO: 'ro',
-          name: 'Romanian'
-        },
-        {
-          nameICO: 'ru',
-          name: 'Russian'
-        },
-        {
-          nameICO: 'sk',
-          name: 'Slovak'
-        },
-        {
-          nameICO: 'sl',
-          name: 'Slovenian'
-        },
-        {
-          nameICO: 'sr',
-          name: 'Serbian'
-        },
-        {
-          nameICO: 'sv',
-          name: 'Swedish'
-        },
-        {
-          nameICO: 'tet',
-          name: 'Tetum'
-        },
-        {
-          nameICO: 'tr',
-          name: 'Turkish'
-        },
-        {
-          nameICO: 'uk',
-          name: 'Ukrainian'
-        },
-        {
-          nameICO: 'x-pig-latin',
-          name: 'Igpay Atinlay'
-        },
-        {
-          nameICO: 'zh',
-          name: 'simplified Chinese'
-        },
-        {
-          nameICO: 'zh-tw',
-          name: 'traditional Chinese'
-        }
-      ]
+      days: '1'
     }
   },
   mounted () {
-    this.loading = false
     this.location = this.weather.location
     this.lat = this.weather.latitude
     this.long = this.weather.longitude
-    this.language = this.weather.language
     this.unit = this.weather.unit
+    this.days = this.weather.days
     var queryString = this.weather.latitude + ',' + this.weather.longitude
     console.log('First is Long then Lat: ', queryString)
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
@@ -332,7 +153,7 @@ export default {
       this.long = this.weather.longitude
       this.location = this.weather.location
       this.city = this.weather.city
-      this.language = this.weather.language
+      this.days = this.weather.days
       this.unit = this.weather.unit
     }
   },
@@ -345,7 +166,7 @@ export default {
         location: this.location,
         latitude: this.lat,
         longitude: this.long,
-        language: this.language,
+        days: this.days,
         unit: this.unit
       }
     }
