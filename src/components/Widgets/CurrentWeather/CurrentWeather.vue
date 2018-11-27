@@ -107,11 +107,45 @@
           <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
         </div>
         <div class="weatherCurrentTemp">
-          <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup></span>
-          <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup></span>
-          <span class="summary">
-            <p>{{ this.summary }}</p>
-          </span>
+          <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup> <p class="summary">{{ this.summary }}</p> </span>
+          <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup> <p class="summary">{{ this.summary }}</p> </span>
+        </div>
+      </div>
+      <div class="forecast">
+        <div class="forecastDay" v-for="(day, index) in forecast" :key="`day-${index}`">
+          <div class="dayName">
+            <span class="fullDay">{{ moment(day.time).add(index, 'd').format('dddd') }}</span>
+            <span class="shortDay">{{ moment(day.time).add(index, 'd').format('dd') }}</span>
+          </div>
+          <div class="dayIcon">
+            <img v-if="day.icon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
+            <img v-if="day.icon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
+            <img v-if="day.icon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
+            <img v-if="day.icon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
+            <img v-if="day.icon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
+            <img v-if="day.icon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
+            <img v-if="day.icon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
+            <img v-if="day.icon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
+            <img v-if="day.icon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
+            <img v-if="day.icon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+          </div>
+          <div class="dayTemps" v-if="unit == 'f'">
+            <span class="dayHigh">
+              {{ day.temperatureHigh.toFixed(0) }}
+            </span> / 
+            <span class="dayLow">
+              {{ day.temperatureLow.toFixed(0) }}
+            </span>
+          </div>
+          <div class="dayTemps" v-else>
+            <span class="dayHigh">
+              {{ ((day.temperatureHigh - 32) * (5 / 9)).toFixed(0) }}
+            </span> / 
+            <span class="dayLow">
+              {{ ((day.temperatureLow - 32) * (5 / 9)).toFixed(0) }}
+            </span>
+          </div>
+            
         </div>
       </div>
 
@@ -122,6 +156,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import axios from 'axios'
 export default {
   props: ['weather', 'theId'],
@@ -135,19 +170,16 @@ export default {
       summary: '',
       currentIcon: '',
       info: '',
-      sunRise: '',
-      sunSet: '',
       currentTempC: '',
       currentTempF: '',
       todayHigh: '',
       todayLow: '',
       todayHighC: '',
       todayLowC: '',
-      currentWind: '',
       showDays: '',
-      currentWindDirection: '',
       unit: 'c',
-      days: '1'
+      days: '1',
+      forecast: ''
     }
   },
   mounted () {
@@ -172,17 +204,14 @@ export default {
       var currentTempC = ((currentTemp - 32) * (5 / 9))
       this.currentTempC = currentTempC.toFixed(0)
       this.summary = response.data.currently.summary
-      this.sunRise = response.data.daily.data[0].sunriseTime
-      this.sunSet = response.data.daily.data[0].sunsetTime
       this.todayHigh = response.data.daily.data[0].temperatureHigh.toFixed(0)
       var todayHighCel = ((this.todayHigh - 32) * (5 / 9))
       this.todayHighC = todayHighCel.toFixed(0)
       this.todayLow = response.data.daily.data[0].temperatureLow.toFixed(0)
       var todayLowCel = ((this.todayLow - 32) * (5 / 9))
       this.todayLowC = todayLowCel.toFixed(0)
-      this.currentWind = response.data.currently.windSpeed.toFixed(0)
-      this.currentWindDirection = response.data.currently.windBearing
       this.currentIcon = response.data.currently.icon
+      this.forecast = response.data.daily.data
     })
     this.loading = false
   },
@@ -200,6 +229,9 @@ export default {
         weather: this.consolidated
       })
       this.edit = false
+    },
+    moment: function () {
+      return moment()
     }
   },
   watch: {
@@ -306,7 +338,7 @@ export default {
 </script>
 <style scoped>
   .weatherHeader {
-    border: 1px solid red;
+    
   }
   .weatherHeader .location {
     width: 100%;
@@ -316,21 +348,96 @@ export default {
     margin-bottom: 0px;
   }
 
+  .weatherHeader .icon {
+    width: 45%;
+    float: left;
+  }
+  .weatherHeader .icon  img {
+    width: 100%;
+  }
+  .weatherHeader .weatherCurrentTemp {
+    width: 50%;
+    float: right;
+    top: -7px;
+    position: relative;
+  }
+  .weatherHeader .weatherCurrentTemp .currentTemp {
+    font-size: 4vw;
+  }
+  .weatherHeader .weatherCurrentTemp .currentTemp sup {
+    font-size: 2vw;
+    position: relative;
+    top: -25px;
+    left: -8px;
+  }
+
+  .weatherHeader .weatherCurrentTemp .currentTemp .summary {
+    font-size: 1vw;
+    margin: 0px;
+    position: relative;
+    top: -17px;
+    left: -12px;
+  }
+
+  .forecast .forecastDay {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .forecast .forecastDay .dayName {
+    width: 40%;
+    float: left;
+    text-align: left;
+    padding-top: 8px;
+    font-size: 1.12vw;
+  }
+  .forecast .forecastDay .dayName .fullDay {
+    display: block;
+  }
+  .forecast .forecastDay .dayName .shortDay {
+    display: none;
+  }
+  .forecast .forecastDay .dayIcon {
+    width: 30%;
+    float: left;
+  }
+  .forecast .forecastDay .dayTemps {
+    width: 30%;
+    float: left;
+    padding-top: 8px;
+  }
+  .forecast .forecastDay .dayTemps .dayHigh {
+    font-size: 1.2vw;
+  }
+  .forecast .forecastDay .dayTemps .dayLow {
+    font-size: 1.2vw;
+  }
+
+
+  .forecast .forecastDay .dayIcon img {
+    max-width: 40px;
+  }
+
+
 
 
 
   
 
   .centerBlock .weatherHeader {
-    border: 1px solid red;
+    
   }
   .centerBlock .weatherHeader .location {
     width: 33%;
     float: left;
+    margin-top: 18px;
   }
   .centerBlock .weatherHeader .icon {
     width: 33%;
     float: left;
+  }
+  .centerBlock .weatherHeader .icon img {
+    width: 50%;
   }
   .centerBlock .weatherHeader .weatherCurrentTemp {
     width: 33%;
@@ -339,6 +446,119 @@ export default {
   .centerBlock .weatherHeader .location p.subhead {
     font-size: 1.1rem;
     margin-bottom: 0px;
+  }
+
+  .centerBlock .forecast {
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  .centerBlock .forecast .forecastDay {
+    display: inline-block;
+    width: 12%;
+    float: left;
+  }
+
+  .centerBlock .forecast .forecastDay .dayName {
+    width: 100%;
+    float: left;
+    padding-top: 8px;
+    font-size: 1.12vw;
+  }
+  .centerBlock .forecast .forecastDay .dayName .fullDay {
+    display: none;
+  }
+  .centerBlock .forecast .forecastDay .dayName .shortDay {
+    display: block;
+    text-align: center;
+  }
+  .centerBlock .forecast .forecastDay .dayIcon {
+    width: 100%;
+  }
+  .centerBlock .forecast .forecastDay .dayTemps {
+    width: 100%;
+    padding-top: 8px;
+  }
+  .centerBlock .forecast .forecastDay .dayTemps .dayHigh {
+    font-size: 1.2vw;
+  }
+  .centerBlock .forecast .forecastDay .dayTemps .dayLow {
+    font-size: 1.2vw;
+  }
+
+
+  .centerBlock .forecast .forecastDay .dayIcon img {
+    max-width: 40px;
+  }
+
+  .footerBlock .weatherHeader {
+    width: 50%;
+    float: left;
+  }
+  .footerBlock .weatherHeader .location {
+    width: 33%;
+    float: left;
+    margin-top: 18px;
+  }
+  .footerBlock .weatherHeader .icon {
+    width: 33%;
+    float: left;
+  }
+  .footerBlock .weatherHeader .icon img {
+    width: 50%;
+  }
+  .footerBlock .weatherHeader .weatherCurrentTemp {
+    width: 33%;
+    float: left;
+  }
+  .footerBlock .weatherHeader .location p.subhead {
+    font-size: 1.1rem;
+    margin-bottom: 0px;
+  }
+
+  .footerBlock .forecast {
+    width: 48%;
+    float: right;
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  .footerBlock .forecast .forecastDay {
+    display: inline-block;
+    width: 12%;
+    float: left;
+  }
+
+  .footerBlock .forecast .forecastDay .dayName {
+    width: 100%;
+    float: left;
+    padding-top: 8px;
+    font-size: 1.12vw;
+  }
+  .footerBlock .forecast .forecastDay .dayName .fullDay {
+    display: none;
+  }
+  .footerBlock .forecast .forecastDay .dayName .shortDay {
+    display: block;
+    text-align: center;
+  }
+  .footerBlock .forecast .forecastDay .dayIcon {
+    width: 100%;
+  }
+  .footerBlock .forecast .forecastDay .dayTemps {
+    width: 100%;
+    padding-top: 8px;
+  }
+  .footerBlock .forecast .forecastDay .dayTemps .dayHigh {
+    font-size: 1.2vw;
+  }
+  .footerBlock .forecast .forecastDay .dayTemps .dayLow {
+    font-size: 1.2vw;
+  }
+
+
+  .footerBlock .forecast .forecastDay .dayIcon img {
+    max-width: 40px;
   }
 
 
@@ -359,6 +579,10 @@ export default {
     top: -29px;
     left: -8px;
   }
+
+
+
+
   .windIcon img {
     width: 34px;
   }
