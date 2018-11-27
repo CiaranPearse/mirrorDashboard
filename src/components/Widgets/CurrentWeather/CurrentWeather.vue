@@ -36,23 +36,25 @@
       </form>
 		</div>
 		<div v-else @click="onClickEdit">
-      <h2>{{ this.location }}</h2>
-      <div class="weatherTemps">
-        <div class="weatherIcon">
-          <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
-          <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
-          <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
-          <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
-          <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
-          <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
-          <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
-          <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
-          <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
-          <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
-        </div>
-        <div class="weatherTemp">
-           <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup></span>
-           <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup></span>
+      <!-- <div class="weatherTemps">
+        <div class="weatherIconTemp">
+
+          <div class="weatherIcon">
+            <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
+            <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
+            <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
+            <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
+            <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
+            <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
+            <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
+            <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
+            <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
+            <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+          </div>
+          <div class="weatherTemp">
+             <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup></span>
+             <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup></span>
+          </div>
         </div>
         <div class="weatherDetails">
           <div class="weatherSuns">
@@ -68,7 +70,7 @@
               <img src="../../../assets/img/weatherIcons/tempHigh.png" /> 
               <p v-if="unit=='f'" >{{ this.todayHigh }}&deg;</p>
               <p v-else >{{ this.todayHighC }}&deg;</p>
-            </span>
+            </span><br />
             <span class="weatherLow">
               <img src="../../../assets/img/weatherIcons/tempLow.png" /> 
               <p v-if="unit=='f'">{{ this.todayLow }}&deg;</p>
@@ -83,9 +85,38 @@
               <img src="../../../assets/img/weatherIcons/windArrow.png" :class="this.currentWindDeg" /> 
             </span>
           </div>
-          <div class="superClear"></div>
+          
+        </div>
+        <div class="superClear"></div>
+      </div> -->
+      <div class="weatherHeader">
+        <div class="location">
+          <h2>{{ this.location }}</h2>
+          <p class="subhead">Weather Forecast</p>
+        </div>
+        <div class="icon">
+          <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
+          <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
+          <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
+          <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
+          <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
+          <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
+          <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
+          <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
+          <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
+          <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+        </div>
+        <div class="weatherCurrentTemp">
+          <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup></span>
+          <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup></span>
+          <span class="summary">
+            <p>{{ this.summary }}</p>
+          </span>
         </div>
       </div>
+
+      </div>
+      <div class="superClear"></div>
     </div>
   </div>
 </template>
@@ -99,9 +130,9 @@ export default {
       loading: true,
       edit: false,
       location: '',
-      city: '',
       lat: '',
       long: '',
+      summary: '',
       currentIcon: '',
       info: '',
       sunRise: '',
@@ -140,7 +171,7 @@ export default {
       this.currentTempF = currentTemp.toFixed(0)
       var currentTempC = ((currentTemp - 32) * (5 / 9))
       this.currentTempC = currentTempC.toFixed(0)
-      this.city = response.data.timezone
+      this.summary = response.data.currently.summary
       this.sunRise = response.data.daily.data[0].sunriseTime
       this.sunSet = response.data.daily.data[0].sunsetTime
       this.todayHigh = response.data.daily.data[0].temperatureHigh.toFixed(0)
@@ -274,6 +305,43 @@ export default {
 }
 </script>
 <style scoped>
+  .weatherHeader {
+    border: 1px solid red;
+  }
+  .weatherHeader .location {
+    width: 100%;
+  }
+  .weatherHeader .location p.subhead {
+    font-size: 1.1rem;
+    margin-bottom: 0px;
+  }
+
+
+
+
+  
+
+  .centerBlock .weatherHeader {
+    border: 1px solid red;
+  }
+  .centerBlock .weatherHeader .location {
+    width: 33%;
+    float: left;
+  }
+  .centerBlock .weatherHeader .icon {
+    width: 33%;
+    float: left;
+  }
+  .centerBlock .weatherHeader .weatherCurrentTemp {
+    width: 33%;
+    float: left;
+  }
+  .centerBlock .weatherHeader .location p.subhead {
+    font-size: 1.1rem;
+    margin-bottom: 0px;
+  }
+
+
   .weatherIcon {
     float: left;
     width: 40%;
@@ -441,5 +509,15 @@ export default {
   }
   .superClear {
     clear: both;
+  }
+
+  .centerBlock .weatherIconTemp {
+      width: 40%;
+      float: left;
+  }
+  .centerBlock .weatherDetails {
+    width: 60%;
+    margin-top: 10px;
+    float: right;
   }
 </style>

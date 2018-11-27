@@ -391,7 +391,7 @@
             <div class="picture-frame">
             <div class="matte">
               <v-layout row>
-                <v-flex xs12 class="pictureFrameData">
+                <v-flex xs12 class="pictureFrameDataField">
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
@@ -676,10 +676,10 @@ export default {
 </script>
 
 <style>
-.layoutImg {
-	width: 100px;
-}
-  .pictureFrameData {
+  .layoutImg {
+	  width: 100px;
+  }
+  .pictureFrameDataField {
     background: url(../../assets/img/field.jpg);
     background-size: cover;
   }
