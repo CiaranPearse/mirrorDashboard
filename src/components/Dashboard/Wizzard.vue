@@ -473,6 +473,7 @@ import DublinBus from '../Widgets/DublinBus'
 import Quotes from '../Widgets/Quotes'
 import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
+import Uber from '../Widgets/Uber'
 export default {
   props: ['id'],
   data () {
@@ -519,7 +520,8 @@ export default {
         'RTENews',
         'CurrentWeather',
         'Quotes',
-        'WelcomeMessage'
+        'WelcomeMessage',
+        'Uber'
       ]
     }
   },
@@ -533,7 +535,8 @@ export default {
     'DublinBus': DublinBus,
     'Quotes': Quotes,
     'CurrentWeather': CurrentWeather,
-    'WelcomeMessage': WelcomeMessage
+    'WelcomeMessage': WelcomeMessage,
+    'Uber': Uber
   },
   computed: {
     dashboard () {
@@ -565,6 +568,10 @@ export default {
         if ((this.dashboard.allProps.weather !== null) || (this.dashboard.allProps.weather !== undefined)) {
           var addWeather = {'weather': this.dashboard.allProps.weather}
           Object.assign(listOfAttrs, addWeather)
+        }
+        if ((this.dashboard.allProps.uber !== null) || (this.dashboard.allProps.uber !== undefined)) {
+          var addUber = {'uber': this.dashboard.allProps.uber}
+          Object.assign(listOfAttrs, addUber)
         }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }

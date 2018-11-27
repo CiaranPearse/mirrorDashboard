@@ -101,15 +101,10 @@ export default {
       this.seconds = getZeroPad(now.getSeconds())
       this.hourtime = getHourTime(this.hours)
       this.hours = this.hours % 12 || 12
-      console.log(this.hours)
-      console.log(this.hourtime)
-      console.log(this.timeFormat)
       if ((this.hourtime === 'AM') && (this.timeFormat === '24Hour') && (this.hours <= 9)) {
-        console.log('thinks its AM and 24Hour AND hours is <= 9')
         this.hours = ('0' + this.hours)
       }
       if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour')) {
-        console.log('SHOULD ADD 12')
         this.hours = (this.hours + 12)
       }
     },
@@ -120,8 +115,6 @@ export default {
       this.edit = false
     },
     onChangeClock (payload) {
-      console.log('Clock changed', payload)
-      console.log('Consolidated: ', this.consolidated)
       this.$store.dispatch('updateWidgetData', {
         id: this.theId,
         clock: this.consolidated
@@ -131,7 +124,6 @@ export default {
   },
   watch: {
     clock: function (newVal, oldVal) {
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.timeFormat = newVal.timeFormat
       this.showDay = newVal.showDay
       this.showDate = newVal.showDate

@@ -274,6 +274,10 @@ export const store = new Vuex.Store({
         var quotes = payload.quotes
         updateObj['allProps/quotes'] = quotes
       }
+      if (payload.uber) {
+        var uber = payload.uber
+        updateObj['allProps/uber'] = uber
+      }
       if (payload.updated) {
         updateObj.updated = payload.updated
       }
@@ -311,6 +315,10 @@ export const store = new Vuex.Store({
       if (payload.weather) {
         var weather = payload.weather
         updateObj['allProps/weather'] = weather
+      }
+      if (payload.uber) {
+        var uber = payload.uber
+        updateObj['allProps/uber'] = uber
       }
       if (payload.updated) {
         updateObj.updated = payload.updated
