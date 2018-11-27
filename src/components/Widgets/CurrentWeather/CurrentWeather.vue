@@ -131,6 +131,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.loading)
     this.location = this.weather.location
     this.lat = this.weather.latitude
     this.long = this.weather.longitude

@@ -42,7 +42,7 @@ export default {
   props: ['quoted'],
   data () {
     return {
-      loading: false,
+      loading: true,
       edit: false,
       randomNumber: 3,
       timer: 10000,
