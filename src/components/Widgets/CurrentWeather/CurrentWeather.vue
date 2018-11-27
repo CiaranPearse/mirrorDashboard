@@ -28,67 +28,15 @@
       </v-radio-group>
       <v-radio-group v-model="days" row>
          <v-radio label="Today" value="1"></v-radio>
-          <v-radio label="3 Day" value="3"></v-radio>
-          <v-radio label="5 Day" value="5"></v-radio>
+          <v-radio label="3 Day" value="4"></v-radio>
+          <v-radio label="5 Day" value="6"></v-radio>
+          <v-radio label="7 Day" value="8"></v-radio>
       </v-radio-group>
         <v-btn color="red" @click="onCloseEdit">Close</v-btn>
         <v-btn color="green" :disabled="!formIsValid" type="submit">Update</v-btn>
       </form>
 		</div>
 		<div v-else @click="onClickEdit">
-      <!-- <div class="weatherTemps">
-        <div class="weatherIconTemp">
-
-          <div class="weatherIcon">
-            <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
-            <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
-            <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
-            <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
-            <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
-            <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
-            <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
-            <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
-            <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
-            <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
-          </div>
-          <div class="weatherTemp">
-             <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup></span>
-             <span v-else class="currentTemp">{{ this.currentTempC }} <sup>C&deg;</sup></span>
-          </div>
-        </div>
-        <div class="weatherDetails">
-          <div class="weatherSuns">
-            <span class="sunRiseTime">
-              <img src="../../../assets/img/weatherIcons/sunrise.png" /> {{ this.sunRise | moment("HH:mm") }}
-            </span>
-            <span class="sunSetTime">
-              <img src="../../../assets/img/weatherIcons/sunset.png" /> {{ this.sunSet | moment("HH:mm")}}
-            </span>
-          </div>
-          <div class="weatherHighLow">
-            <span class="weatherHigh">
-              <img src="../../../assets/img/weatherIcons/tempHigh.png" /> 
-              <p v-if="unit=='f'" >{{ this.todayHigh }}&deg;</p>
-              <p v-else >{{ this.todayHighC }}&deg;</p>
-            </span><br />
-            <span class="weatherLow">
-              <img src="../../../assets/img/weatherIcons/tempLow.png" /> 
-              <p v-if="unit=='f'">{{ this.todayLow }}&deg;</p>
-              <p v-else >{{ this.todayLowC }}&deg;</p>
-            </span>
-          </div>
-          <div class="weatherWinds">
-            <span class="windSpeed">
-              {{ this.currentWind }} MPH
-            </span>
-            <span class="windIcon">
-              <img src="../../../assets/img/weatherIcons/windArrow.png" :class="this.currentWindDeg" /> 
-            </span>
-          </div>
-          
-        </div>
-        <div class="superClear"></div>
-      </div> -->
       <div class="weatherHeader">
         <div class="location">
           <h2>{{ this.location }}</h2>
@@ -112,7 +60,7 @@
         </div>
       </div>
       <div class="forecast">
-        <div class="forecastDay" v-for="(day, index) in forecast" :key="`day-${index}`">
+        <div class="forecastDay" v-for="(day, index) in forecast" :key="`day-${index}`"  v-if="index < days">
           <div class="dayName">
             <span class="fullDay">{{ moment(day.time).add(index, 'd').format('dddd') }}</span>
             <span class="shortDay">{{ moment(day.time).add(index, 'd').format('dd') }}</span>
@@ -248,81 +196,6 @@ export default {
   computed: {
     formIsValid () {
       return this.long !== '' && this.lat !== ''
-    },
-    currentWindDeg () {
-      if (this.currentWindDirection >= 0 && this.currentWindDirection < 10) {
-        return 'deg5'
-      } else if (this.currentWindDirection >= 10 && this.currentWindDirection <= 20) {
-        return 'deg15'
-      } else if (this.currentWindDirection >= 21 && this.currentWindDirection <= 30) {
-        return 'deg25'
-      } else if (this.currentWindDirection >= 31 && this.currentWindDirection <= 40) {
-        return 'deg35'
-      } else if (this.currentWindDirection >= 41 && this.currentWindDirection <= 50) {
-        return 'deg45'
-      } else if (this.currentWindDirection >= 51 && this.currentWindDirection <= 60) {
-        return 'deg55'
-      } else if (this.currentWindDirection >= 61 && this.currentWindDirection <= 70) {
-        return 'deg65'
-      } else if (this.currentWindDirection >= 71 && this.currentWindDirection <= 80) {
-        return 'deg75'
-      } else if (this.currentWindDirection >= 81 && this.currentWindDirection <= 90) {
-        return 'deg85'
-      } else if (this.currentWindDirection >= 91 && this.currentWindDirection <= 100) {
-        return 'deg95'
-      } else if (this.currentWindDirection >= 101 && this.currentWindDirection <= 110) {
-        return 'deg105'
-      } else if (this.currentWindDirection >= 111 && this.currentWindDirection <= 120) {
-        return 'deg115'
-      } else if (this.currentWindDirection >= 121 && this.currentWindDirection <= 130) {
-        return 'deg125'
-      } else if (this.currentWindDirection >= 131 && this.currentWindDirection <= 140) {
-        return 'deg135'
-      } else if (this.currentWindDirection >= 141 && this.currentWindDirection <= 150) {
-        return 'deg145'
-      } else if (this.currentWindDirection >= 151 && this.currentWindDirection <= 160) {
-        return 'deg155'
-      } else if (this.currentWindDirection >= 161 && this.currentWindDirection <= 170) {
-        return 'deg165'
-      } else if (this.currentWindDirection >= 171 && this.currentWindDirection <= 180) {
-        return 'deg175'
-      } else if (this.currentWindDirection >= 181 && this.currentWindDirection <= 190) {
-        return 'deg185'
-      } else if (this.currentWindDirection >= 191 && this.currentWindDirection <= 200) {
-        return 'deg195'
-      } else if (this.currentWindDirection >= 201 && this.currentWindDirection <= 210) {
-        return 'deg205'
-      } else if (this.currentWindDirection >= 211 && this.currentWindDirection <= 220) {
-        return 'deg215'
-      } else if (this.currentWindDirection >= 221 && this.currentWindDirection <= 230) {
-        return 'deg225'
-      } else if (this.currentWindDirection >= 231 && this.currentWindDirection <= 240) {
-        return 'deg235'
-      } else if (this.currentWindDirection >= 241 && this.currentWindDirection <= 250) {
-        return 'deg245'
-      } else if (this.currentWindDirection >= 251 && this.currentWindDirection <= 260) {
-        return 'deg255'
-      } else if (this.currentWindDirection >= 261 && this.currentWindDirection <= 270) {
-        return 'deg265'
-      } else if (this.currentWindDirection >= 271 && this.currentWindDirection <= 280) {
-        return 'deg275'
-      } else if (this.currentWindDirection >= 281 && this.currentWindDirection <= 290) {
-        return 'deg285'
-      } else if (this.currentWindDirection >= 291 && this.currentWindDirection <= 300) {
-        return 'deg295'
-      } else if (this.currentWindDirection >= 301 && this.currentWindDirection <= 310) {
-        return 'deg305'
-      } else if (this.currentWindDirection >= 311 && this.currentWindDirection <= 320) {
-        return 'deg315'
-      } else if (this.currentWindDirection >= 321 && this.currentWindDirection <= 330) {
-        return 'deg325'
-      } else if (this.currentWindDirection >= 331 && this.currentWindDirection <= 340) {
-        return 'deg335'
-      } else if (this.currentWindDirection >= 341 && this.currentWindDirection <= 350) {
-        return 'deg345'
-      } else {
-        return 'deg255'
-      }
     },
     consolidated () {
       return {
