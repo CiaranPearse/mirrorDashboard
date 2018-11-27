@@ -34,7 +34,7 @@
 					    <v-stepper-items>
 					    	<form @submit.prevent="onWizzardSave">
 <!-- CONTENT FOR STEP 1 -->
-					      <v-stepper-content step="4">
+					      <v-stepper-content step="1">
 					        <v-card
 					          class="mb-5"
 					        >
@@ -380,7 +380,7 @@
 					      </v-stepper-content>
 <!-- END CONTENT FOR STEP 3 -->
 <!-- CONTENT FOR STEP 4 -->
-					      <v-stepper-content step="1">
+					      <v-stepper-content step="4">
 					        <v-card
 					          class="mb-5"
 					        >
