@@ -17,11 +17,15 @@
                 <v-radio label="24 Hour" value="24Hour"></v-radio>
               </v-radio-group>
               <v-switch
-                :label="`Show Day: ${showDay.toString()}`"
+                label="Show Seconds"
+                v-model="showSeconds"
+              ></v-switch>
+              <v-switch
+                label="Show Day"
                 v-model="showDay"
               ></v-switch>
               <v-switch
-                :label="`Show Date: ${showDate.toString()}`"
+                label="Show Date"
                 v-model="showDate"
               ></v-switch>
 
@@ -33,8 +37,11 @@
         <div class="clock" v-if="hourtime != ''">
           <div class="time">
               {{ this.hours }}:{{ this.minutes }}
-            <span class="showSeconds" v-if="showSeconds != 'false'">
+            <span class="showSeconds" v-if="showSeconds != false">
               {{ this.seconds }} <span v-if="timeFormat == '12Hour'" class="showAmPm">{{ this.hourtime }}</span>
+            </span>
+            <span v-else>
+              <span v-if="timeFormat == '12Hour'" class="showAmPmLarge">{{ this.hourtime }}</span>
             </span>
         	</div>
         	<div class="dayName" v-if="this.showDay != false">
@@ -62,6 +69,7 @@ export default {
       dayName: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       monthName: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       hours: 0,
+      milHours: 0,
       minutes: 0,
       seconds: 0,
       UStime: 0,
@@ -93,10 +101,15 @@ export default {
       this.seconds = getZeroPad(now.getSeconds())
       this.hourtime = getHourTime(this.hours)
       this.hours = this.hours % 12 || 12
+      console.log(this.hours)
+      console.log(this.hourtime)
+      console.log(this.timeFormat)
       if ((this.hourtime === 'AM') && (this.timeFormat === '24Hour') && (this.hours <= 9)) {
+        console.log('thinks its AM and 24Hour AND hours is <= 9')
         this.hours = ('0' + this.hours)
       }
-      if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour') && (this.hours > 12)) {
+      if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour')) {
+        console.log('SHOULD ADD 12')
         this.hours = (this.hours + 12)
       }
     },
@@ -145,6 +158,7 @@ export default {
 }
 .time { 
     font-size: 3rem;
+    max-height: 54px;
 }
 .time div {
 	display: inline-block;
