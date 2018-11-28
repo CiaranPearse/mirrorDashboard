@@ -5,9 +5,9 @@
     </div>
   </div>
 
-  <div v-else @click="onClickEdit" class="hoverCursor">
+  <div v-else>
     <strong>Uber Live Wait Times</strong> 
-    <div v-if="edit">
+    <div v-if="editUber == true">
       <form @submit.prevent="onChangeUber">
         <v-text-field
           v-model="lat"
@@ -18,11 +18,11 @@
           label="Longitude"
         ></v-text-field>
 
-        <v-btn color="red" @click="onCloseEdit">Close</v-btn>
+        <v-btn color="red" @click="onCloseUber">Close</v-btn>
         <v-btn color="green" :disabled="!formIsValid" type="submit">Update</v-btn>
       </form>
     </div>
-    <div v-else>
+    <div v-else @click="onClickEdit" class="hoverCursor">
       <div v-for="cars in rides">
         <strong>{{ cars.display_name}}</strong> - {{ cars.estimate / 60}} minutes
       </div>
@@ -33,12 +33,12 @@
 <script>
 import axios from 'axios'
 export default {
-  props: ['uber', 'theId'],
+  props: ['uber', 'dashInfo'],
   data () {
     return {
       loading: false,
-      edit: false,
-      test: 'THis is test text',
+      editUber: false,
+      test: 'This is test text',
       lat: '',
       long: '',
       rides: ''
@@ -47,6 +47,8 @@ export default {
   // Fetches posts when the component is created.
   created () {
     console.log('created Uber')
+    this.lat = this.dashInfo.latitude
+    this.long = this.dashInfo.longitude
   },
   mounted () {
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
@@ -65,10 +67,11 @@ export default {
   },
   methods: {
     onClickEdit () {
-      this.edit = true
+      this.editUber = true
     },
-    onCloseEdit () {
-      this.edit = false
+    onCloseUber () {
+      console.log('clicked close edit')
+      this.editUber = false
     },
     onChangeUber (payload) {
       console.log('Consolidated: ', this.consolidated)
@@ -76,7 +79,7 @@ export default {
         id: this.theId,
         uber: this.consolidated
       })
-      this.edit = false
+      this.editUber = false
     }
   },
   computed: {

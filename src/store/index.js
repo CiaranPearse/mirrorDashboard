@@ -59,6 +59,12 @@ export const store = new Vuex.Store({
       if (payload.deviceLocation) {
         dashboard.deviceLocation = payload.deviceLocation
       }
+      if (payload.longitude) {
+        dashboard.longitude = payload.longitude
+      }
+      if (payload.latitude) {
+        dashboard.latitude = payload.latitude
+      }
       if (payload.slotLeft1) {
         dashboard.slotLeft1 = payload.slotLeft1
       }
@@ -140,6 +146,8 @@ export const store = new Vuex.Store({
               deviceId: obj[key].deviceId,
               dashTitle: obj[key].dashTitle,
               deviceLocation: obj[key].deviceLocation,
+              longitude: obj[key].longitude,
+              latitude: obj[key].latitude,
               slotLeft1: obj[key].slotLeft1,
               slotLeft2: obj[key].slotLeft2,
               slotLeft3: obj[key].slotLeft3,
@@ -169,6 +177,8 @@ export const store = new Vuex.Store({
         dashTitle: payload.dashTitle,
         deviceId: payload.deviceId,
         deviceLocation: payload.deviceLocation,
+        longitude: payload.longitude,
+        latitude: payload.latitude,
         created: payload.created,
         updated: payload.updated,
         creatorId: getters.user.id
@@ -197,6 +207,12 @@ export const store = new Vuex.Store({
       }
       if (payload.deviceLocation) {
         updateObj.deviceLocation = payload.deviceLocation
+      }
+      if (payload.longitude) {
+        updateObj.longitude = payload.longitude
+      }
+      if (payload.latitude) {
+        updateObj.latitude = payload.latitude
       }
       if (payload.deviceType) {
         updateObj.deviceType = payload.deviceType

@@ -74,6 +74,26 @@
                             >
                           </v-text-field>
                         </v-card-text>
+                        <v-card-text>
+                          <v-text-field
+                            name="longitude"
+                            label="Where is your dashboard located?"
+                            id="longitude"
+                            v-model="longitude"
+                            required
+                            >
+                          </v-text-field>
+                        </v-card-text>
+                        <v-card-text>
+                          <v-text-field
+                            name="latitude"
+                            label="Where is your dashboard located?"
+                            id="latitude"
+                            v-model="latitude"
+                            required
+                            >
+                          </v-text-field>
+                        </v-card-text>
 										</v-flex>
 									</v-layout>
 
@@ -395,30 +415,30 @@
                     <v-layout row class="pictureFrameMain">
                       <v-flex xs3 class="leftBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft1" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft2" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchLeft3" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft1" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft2" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchLeft3" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs8 class="centerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter2" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchCenter3" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter1" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter2" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchCenter3" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
                         </div>
                       </v-flex>
                       <v-flex xs3 class="rightBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight1" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight2" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
-                          <div class="innerDotted"><component v-bind:is="this.searchRight3" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight1" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight2" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchRight3" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
                         </div>
                       </v-flex>
                     </v-layout>
                     <v-layout row class="pictureFrameFooter">
                       <v-flex xs12 class="dashedBorder footerBlock">
                         <div>
-                          <div class="innerDotted"><component v-bind:is="this.searchFooter" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
+                          <div class="innerDotted"><component v-bind:is="this.searchFooter" v-bind="attributes.listOfAttrs" :theId="this.id" :dashInfo="this.dashInfo"></component></div>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -484,11 +504,14 @@ export default {
       e1: 0,
       items: [],
       theId: this.id,
+      dashInfo: {},
       dashboardTitle: '',
       dashboardId: '',
       dashboardLocation: '',
       dashboardLayout: '',
       dashboardDevice: '',
+      longitude: '',
+      latitude: '',
       searchLeft1: null,
       searchLeft2: null,
       searchLeft3: null,
@@ -586,6 +609,8 @@ export default {
     this.dashboardId = this.dashboard.deviceId
     this.dashboardLocation = this.dashboard.deviceLocation
     this.dashboardLayout = this.dashboard.deviceLayout
+    this.longitude = this.dashboard.longitude
+    this.latitude = this.dashboard.latitude
     this.dashboardDevice = this.dashboard.deviceType
     this.searchLeft1 = this.dashboard.slotLeft1
     this.searchLeft2 = this.dashboard.slotLeft2
@@ -608,6 +633,7 @@ export default {
     this.editedSlotRight3 = this.dashboard.slotRight3
     this.editedSlotFooter = this.dashboard.slotFooter
     this.deviceType = this.dashboard.deviceType
+    this.dashInfo = {'dashId': this.id, 'longitude': this.dashboard.longitude, 'latitude': this.dashboard.latitude}
     this.loading = false
   },
   methods: {
@@ -632,6 +658,8 @@ export default {
         deviceId: this.dashboardId,
         deviceLocation: this.dashboardLocation,
         deviceLayout: this.dashboardLayout,
+        longitude: this.longitude,
+        latitude: this.latitude,
         deviceType: this.dashboardDevice,
         slotLeft1: this.editedSlotLeft1,
         slotLeft2: this.editedSlotLeft2,
