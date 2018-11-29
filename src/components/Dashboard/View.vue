@@ -129,9 +129,13 @@ export default {
           var addWeather = {'weather': this.dashboard.allProps.weather}
           Object.assign(listOfAttrs, addWeather)
         }
-        if ((this.dashboard.allProps.uber !== null) || (this.dashboard.allProps.uber !== undefined)) {
+        if ((this.dashboard.allProps.currency !== null) || (this.dashboard.allProps.currency !== undefined)) {
           var addUber = {'uber': this.dashboard.allProps.uber}
           Object.assign(listOfAttrs, addUber)
+        }
+        if ((this.dashboard.allProps.currency !== null) || (this.dashboard.allProps.currency !== undefined)) {
+          var addCurrencyTicker = {'currency': this.dashboard.allProps.currency}
+          Object.assign(listOfAttrs, addCurrencyTicker)
         }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }

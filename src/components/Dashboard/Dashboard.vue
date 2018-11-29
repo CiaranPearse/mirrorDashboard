@@ -178,6 +178,10 @@ export default {
           var addUber = {'uber': this.dashboard.allProps.uber}
           Object.assign(listOfAttrs, addUber)
         }
+        if ((this.dashboard.allProps.currency !== null) || (this.dashboard.allProps.currency !== undefined)) {
+          var addCurrencyTicker = {'currency': this.dashboard.allProps.currency}
+          Object.assign(listOfAttrs, addCurrencyTicker)
+        }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }
       return {

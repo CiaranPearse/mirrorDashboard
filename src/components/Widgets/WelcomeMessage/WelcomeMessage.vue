@@ -50,8 +50,6 @@ export default {
       this.edit = false
     },
     onChangeMessage (payload) {
-      console.log('Clock changed', payload)
-      console.log('Consolidated: ', this.consolidated)
       this.$store.dispatch('updateWidgetData', {
         id: this.theId,
         welcomeMessage: this.consolidated

@@ -34,7 +34,7 @@
 					    <v-stepper-items>
 					    	<form @submit.prevent="onWizzardSave">
 <!-- CONTENT FOR STEP 1 -->
-					      <v-stepper-content step="1">
+					      <v-stepper-content step="4">
 					        <v-card
 					          class="mb-5"
 					        >
@@ -400,7 +400,7 @@
 					      </v-stepper-content>
 <!-- END CONTENT FOR STEP 3 -->
 <!-- CONTENT FOR STEP 4 -->
-					      <v-stepper-content step="4">
+					      <v-stepper-content step="1">
 					        <v-card
 					          class="mb-5"
 					        >
@@ -596,6 +596,10 @@ export default {
           var addUber = {'uber': this.dashboard.allProps.uber}
           Object.assign(listOfAttrs, addUber)
         }
+        if ((this.dashboard.allProps.currency !== null) || (this.dashboard.allProps.currency !== undefined)) {
+          var addCurrency = {'currency': this.dashboard.allProps.currency}
+          Object.assign(listOfAttrs, addCurrency)
+        }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }
       return {
@@ -715,8 +719,8 @@ export default {
 	  width: 100px;
   }
   .pictureFrameDataField {
-    background: url(../../assets/img/field.jpg);
-    background-size: cover;
+    // background: url(../../assets/img/field.jpg);
+    // background-size: cover;
   }
   .dashedBorder {
     border: 1px #fff dashed;
