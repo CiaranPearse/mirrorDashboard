@@ -34,7 +34,7 @@
 					    <v-stepper-items>
 					    	<form @submit.prevent="onWizzardSave">
 <!-- CONTENT FOR STEP 1 -->
-					      <v-stepper-content step="4">
+					      <v-stepper-content step="1">
 					        <v-card
 					          class="mb-5"
 					        >
@@ -400,7 +400,7 @@
 					      </v-stepper-content>
 <!-- END CONTENT FOR STEP 3 -->
 <!-- CONTENT FOR STEP 4 -->
-					      <v-stepper-content step="1">
+					      <v-stepper-content step="4">
 					        <v-card
 					          class="mb-5"
 					        >
@@ -493,6 +493,7 @@ import DublinBus from '../Widgets/DublinBus'
 import Quotes from '../Widgets/Quotes'
 import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
+import PeopleInSpace from '../Widgets/PeopleInSpace'
 import Uber from '../Widgets/Uber'
 export default {
   props: ['id'],
@@ -544,6 +545,7 @@ export default {
         'CurrentWeather',
         'Quotes',
         'WelcomeMessage',
+        'PeopleInSpace',
         'Uber'
       ]
     }
@@ -559,6 +561,7 @@ export default {
     'Quotes': Quotes,
     'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage,
+    'PeopleInSpace': PeopleInSpace,
     'Uber': Uber
   },
   computed: {
