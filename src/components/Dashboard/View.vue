@@ -1,17 +1,47 @@
 <template>
   <v-container fluid fill-height class="theContainer">
       <v-layout row v-if="loading">
-        <v-flex xs12 class="text-xs-center">
+        <v-flex xs12 class="text-xs-center" align-self-center>
           <v-progress-circular
             indeterminate
-            class="primary--text"
+            color="white"
             :width="7"
             :size="70"></v-progress-circular>
+            <p class="title">Loading ...</p>
         </v-flex>
       </v-layout>
       <v-layout row v-else>
         
-        <v-flex xs12 class="pictureFrameData">
+<!-- pleasing LAYOUT -->
+      <v-flex xs12 id="pleasingLayout" v-if="this.dashboard.deviceLayout === 'pleasing'">
+        <v-layout id="topBlock">
+          <v-flex xs5 class="leftBlock">
+            Block 1
+          </v-flex>
+          <v-flex xs5 offset-xs2 class="rightBlock">
+            <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
+          </v-flex>
+        </v-layout>
+        <v-layout id="topCenterBlock">
+          <v-flex xs12 align-self-center>
+            <component v-bind:is="dashboard.slotCenter1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
+          </v-flex>
+        </v-layout>
+        <v-layout id="bottomCenterBlock">
+          <v-flex xs12 align-self-center>
+           
+          </v-flex>
+        </v-layout>
+        <v-layout id="footerBlock">
+          <v-flex xs12 align-self-end>
+           <component v-bind:is="dashboard.slotCenter2" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+<!-- END pleaseing Layout -->
+
+<!-- l3m3r3b1 LAYOUT -->
+        <v-flex xs12 class="pictureFrameData" v-else>
             <v-layout row class="pictureFrameMain">
               <v-flex xs3 class="leftBlock">
                 <div>
@@ -60,6 +90,7 @@
               </v-flex>
             </v-layout>
         </v-flex>
+<!-- END l3m3r3b1 LAYOUT -->
                     
       </v-layout>
     </v-container>
@@ -164,10 +195,65 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .theContainer {
-
+  padding: 20px;
+ background: url('https://www.blasketislands.ie/images/blasketislands/kerrywhalewatching_2016-03-07_at_16.16.50.jpg');
+ background-repeat: no-repeat;
+ background-position: center;
+ background-size: cover;
 }
+
+/* PLEASING LAYOUT */
+
+#pleasingLayout {
+  #topBlock {
+    height: 10%;
+    .leftBlock {
+      text-align: left;
+    }
+    .rightBlock {
+      text-align: right;
+      .weather {
+        .city {
+          font-size: 1rem;
+        }
+        .degrees {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+  #topCenterBlock {
+    height: 80%;
+    bottom: 0;
+    .flex {
+      text-align: center;
+      .time{
+        font-size: 14rem;
+      }
+    }
+  }
+  #bottomCenterBlock {
+    .flex {
+      text-align: center;
+    }
+  }
+  #footerBlock {
+    height: 10%;
+  }
+}
+
+
+
+
+
+
+
+.redborder {
+  border: 1px solid red;
+}
+
   .pictureFrameData {
     padding: 20px;
   }

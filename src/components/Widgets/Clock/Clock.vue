@@ -35,21 +35,20 @@
       </div>
       <div v-else @click="onClickEdit" class="hoverCursor">
         <div class="clock" v-if="hourtime != ''">
-          <div class="time">
+          <div class="time ts">
               {{ this.hours }}:{{ this.minutes }}
-            <span class="showSeconds" v-if="showSeconds != false">
-              {{ this.seconds }} <span v-if="timeFormat == '12Hour'" class="showAmPm">{{ this.hourtime }}</span>
+            <span class="showSeconds ts" v-if="showSeconds != false">
+              {{ this.seconds }} <span v-if="timeFormat == '12Hour'" class="showAmPm ts">{{ this.hourtime }}</span>
             </span>
             <span v-else>
-              <span v-if="timeFormat == '12Hour'" class="showAmPmLarge">{{ this.hourtime }}</span>
+              <span v-if="timeFormat == '12Hour'" class="showAmPmLarge ts">{{ this.hourtime }}</span>
             </span>
         	</div>
-          <div class="clearboth"></div>
           <div class="dateday">
-          	<div class="dayName" v-if="this.showDay != false">
-          		{{ this.dayName[dayNumber - 1] }}
+          	<div class="dayName ts" v-if="this.showDay != false">
+          		{{ this.dayName[dayNumber - 1] }}, 
           	</div>
-          	<div class="date" v-if="this.showDate != false">
+          	<div class="date ts" v-if="this.showDate != false">
           		{{ this.monthName[month] }} {{ this.thedate }}
           	</div>
           </div>
@@ -151,85 +150,119 @@ export default {
 }
 </script>
 
-<style>
-.clearboth {
-  clear: both;
-}
-.clock {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100;
-    color: #ffffff;
-    text-align: right;
-    width: 200px;
-    float: right;
-}
-.time { 
-    font-size: 3rem;
-    max-height: 54px;
-}
-.time div {
-	display: inline-block;
-}
-.date {
-    font-size: 18px;
-}
-.dayName {
-	font-size: 18px;
-}
-.showSeconds {
-  font-size: 1.7rem;
-  position: relative;
-  top: -12px;
-}
-.showAmPm {
-  position: relative;
-  top: -21px;
-  font-size: 1.3rem;
-  display: block;
+<style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+#pleasingLayout {
+  .clock {
+    .time {
+      margin: 0 auto 0 70px;
+      font-size: 8rem;
+      font-weight: 200;
+      line-height: 7rem;
+      .showSeconds {
+        font-size: 3.7rem;
+        position: relative;
+        top: -42px;
+        left: -14px;
+      }
+      .showAmPm {
+        position: relative;
+        top: 36px;
+        font-size: 3rem;
+        left: -74px;
+      }
+    }
+    .date {
+      font-size: 2.2rem;
+      display: inline-block;
+      font-weight: 200;
+    }
+    .dayName {
+      font-size: 2.2rem;
+      display: inline-block;
+      font-weight: 200;
+    }
+  }
 }
 
-.leftBlock .clock {
-  text-align: left;
-  float: left;
-}
-.leftBlock .showAmPm {
-  left: 86px;
-}
 
-.centerBlock .clock {
-  margin: 0 auto;
-  text-align: center;
-  float: none;
-  width: 40%;
-  min-height: 144px;
-}
+#l3m3r3b1 {
+  .clock {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 100;
+      color: #ffffff;
+      text-align: right;
+      width: 200px;
+      float: right;
+  }
+  .time { 
+      font-size: 3rem;
+      max-height: 54px;
+  }
+  .time div {
+  	display: inline-block;
+  }
+  .date {
+      font-size: 18px;
+  }
+  .dayName {
+  	font-size: 18px;
+  }
+  .showSeconds {
+    font-size: 1.7rem;
+    position: relative;
+    top: -12px;
+  }
+  .showAmPm {
+    position: relative;
+    top: -21px;
+    font-size: 1.3rem;
+    display: block;
+  }
 
-.centerBlock .time {
-    font-size: 6rem;
-}
-
-.centerBlock .showSeconds {
-    font-size: 2.7rem;
-    top: -30px;
-}
-
-.centerBlock .showAmPm {
-    font-size: 2.3rem;
+  .leftBlock .clock {
+    text-align: left;
+    float: left;
+  }
+  .leftBlock .showAmPm {
     left: 86px;
-    top: -40px;
-}
+  }
 
-.centerBlock .dateday {
-  position: relative;
-  top: 48px;
-}
-
-.centerBlock .date {
+  .centerBlock .clock {
+    margin: 0 auto;
+    text-align: center;
     float: none;
-  display: inline-block;
-}
-.centerBlock .dayName {
-  float: none;
-  display: inline-block;
+    width: 40%;
+    min-height: 144px;
+  }
+
+  .centerBlock .time {
+      font-size: 6rem;
+  }
+
+  .centerBlock .showSeconds {
+      font-size: 2.7rem;
+      top: -30px;
+  }
+
+  .centerBlock .showAmPm {
+      font-size: 2.3rem;
+      left: 86px;
+      top: -40px;
+  }
+
+  .centerBlock .dateday {
+    position: relative;
+    top: 48px;
+  }
+
+  .centerBlock .date {
+      float: none;
+    display: inline-block;
+  }
+  .centerBlock .dayName {
+    float: none;
+    display: inline-block;
+  }
 }
 </style>

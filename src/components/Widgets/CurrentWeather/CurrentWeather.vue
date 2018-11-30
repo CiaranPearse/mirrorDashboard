@@ -1,5 +1,5 @@
 <template>
-	<div v-if="loading">
+	<div v-if="currentTempC === ''">
 		<v-progress-circular
 	      indeterminate
 	      color="white"
@@ -37,7 +37,36 @@
       </form>
 		</div>
 		<div v-else @click="onClickEdit">
-      <div class="weatherHeader">
+      <div class="weather">
+        <div class="today">
+          <div class="current">
+            <div class="icon">
+              <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
+              <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
+              <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
+              <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
+              <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
+              <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
+              <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
+              <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
+              <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
+              <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+            </div>
+            <div class="temp">
+              <p v-if="unit === 'f'" class="ts">{{ this.currentTempF }} <sup>F&deg;</sup></p>
+              <p v-else class="ts">{{ this.currentTempC }} <sup>C&deg;</sup></p>
+            </div>
+          </div>
+          <div class="location">
+            <p class="summary ts">{{ this.summary }}</p>
+            <p class="body-2 ts">{{ this.location }}</p>
+          </div>
+        </div>
+        <!-- <div class="forecast">
+          Forecast
+        </div> -->
+      </div>
+      <!-- <div class="weatherHeader">
         <div class="location">
           <h2>{{ this.location }}</h2>
           <p class="subhead">Weather Forecast</p>
@@ -98,7 +127,7 @@
       </div>
 
       </div>
-      <div class="superClear"></div>
+      <div class="superClear"></div> -->
     </div>
   </div>
 </template>
@@ -210,9 +239,8 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
   .weatherHeader {
-    
   }
   .weatherHeader .location {
     width: 100%;
@@ -453,121 +481,6 @@ export default {
     top: -29px;
     left: -8px;
   }
-
-
-
-
-  .windIcon img {
-    width: 34px;
-  }
-  .deg5 {
-    transform: rotate(5deg);
-  }
-  .deg15 {
-    transform: rotate(15deg);
-  }
-  .deg25 {
-    transform: rotate(25deg);
-  }
-  .deg35 {
-    transform: rotate(35deg);
-  }
-  .deg45 {
-    transform: rotate(45deg);
-  }
-  .deg55 {
-    transform: rotate(55deg);
-  }
-  .deg65 {
-    transform: rotate(65deg);
-  }
-  .deg75 {
-    transform: rotate(75deg);
-  }
-  .deg85 {
-    transform: rotate(85deg);
-  }
-  .deg95 {
-    transform: rotate(95deg);
-  }
-  .deg105 {
-    transform: rotate(105deg);
-  }
-  .deg115 {
-    transform: rotate(115deg);
-  }
-  .deg125 {
-    transform: rotate(125deg);
-  }
-  .deg135 {
-    transform: rotate(135deg);
-  }
-  .deg145 {
-    transform: rotate(145deg);
-  }
-  .deg155 {
-    transform: rotate(155deg);
-  }
-  .deg165 {
-    transform: rotate(165deg);
-  }
-  .deg175 {
-    transform: rotate(175deg);
-  }
-  .deg185 {
-    transform: rotate(185deg);
-  }
-  .deg195 {
-    transform: rotate(195deg);
-  }
-  .deg205 {
-    transform: rotate(205deg);
-  }
-  .deg215 {
-    transform: rotate(215deg);
-  }
-  .deg225 {
-    transform: rotate(225deg);
-  }
-  .deg235 {
-    transform: rotate(235deg);
-  }
-  .deg245 {
-    transform: rotate(245deg);
-  }
-  .deg255 {
-    transform: rotate(255deg);
-  }
-  .deg265 {
-    transform: rotate(265deg);
-  }
-  .deg275 {
-    transform: rotate(275deg);
-  }
-  .deg285 {
-    transform: rotate(285deg);
-  }
-  .deg295 {
-    transform: rotate(295deg);
-  }
-  .deg305 {
-    transform: rotate(305deg);
-  }
-  .deg315 {
-    transform: rotate(315deg);
-  }
-  .deg325 {
-    transform: rotate(325deg);
-  }
-  .deg335 {
-    transform: rotate(335deg);
-  }
-  .deg345 {
-    transform: rotate(345deg);
-  }
-  .deg355 {
-    transform: rotate(355deg);
-  }
   .weatherHighLow p {
     display: inline-block;
     font-size: 2rem;
@@ -617,5 +530,44 @@ export default {
     width: 60%;
     margin-top: 10px;
     float: right;
+  }
+
+
+  #pleasingLayout {
+    .weather {
+      float: right;
+      .subhead {
+        display: none;
+      }
+      .today {
+        .current {
+          display: flex;
+          .icon {
+            float: left;
+            img {
+              width: 46px;
+            }
+          }
+          .temp{
+            font-size: 2rem;
+            float: right;
+            p {
+              margin: 0px;
+            }
+            sup {
+              font-size: 50%;
+              top: -0.75rem;
+            }
+          }
+        }
+      }
+      .location {
+        display: block;
+        font-size: 1rem;
+        p {
+          margin-bottom: 0px;
+        }
+      }
+    }
   }
 </style>

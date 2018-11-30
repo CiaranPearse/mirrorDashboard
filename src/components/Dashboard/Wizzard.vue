@@ -137,17 +137,17 @@
 											<v-flex xs8>
 												<h3>Layout</h3>
 												<v-radio-group v-model="dashboardLayout" row>
-													<v-radio value="l3m3r3b1" v-if="dashboardDevice == 'monitor' || dashboardDevice == 'kiosk' || dashboardDevice == 'mirror'">
+													<v-radio value="pleasing" v-if="dashboardDevice == 'monitor' || dashboardDevice == 'kiosk' || dashboardDevice == 'mirror'">
 														<div slot="label">
 															<img src="../../assets/img/layouts/layout1.png" class="layoutImg">
 														</div>	
 													</v-radio>
-													<v-radio value="222" v-if="dashboardDevice == 'monitor' || dashboardDevice == 'kiosk' || dashboardDevice == 'mirror'">
+													<v-radio value="l3m3r3b1" v-if="dashboardDevice == 'monitor' || dashboardDevice == 'kiosk' || dashboardDevice == 'mirror'">
 														<div slot="label">
 													 		<img src="../../assets/img/layouts/layout2.png" class="layoutImg">
 													 	</div>
 													</v-radio>
-													<v-radio value="111">
+													<v-radio value="bliss">
 														<div slot="label">
 													 		<img src="../../assets/img/layouts/layout3.png" class="layoutImg">
 													 	</div>

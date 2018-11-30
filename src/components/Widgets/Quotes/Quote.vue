@@ -668,17 +668,18 @@ export default {
 .quotes{
   margin-top: -10px;
   font-family: 'Roboto', sans-serif;
-  font-weight: 100;
   color: #ffffff;
   text-align: center;
 }
 
 .quote{
   font-size: 20px;
+  font-weight: 300;
   margin: 0px;
 }
 .author{
   font-size: 14px;
+  font-weight: 400;
   margin: 0px;
 }
 </style>
