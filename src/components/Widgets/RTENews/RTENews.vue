@@ -1,10 +1,10 @@
 <template>
   <div>
   <div id="rte-news">
-    <strong>RTE News</strong>
+    <p class="title">RTE News</p>
     <ul v-if="posts && topItems.length">
       <li v-for="post of topItems">
-        <p>{{ post.pubDate[0] | moment("HH:mm") }}: {{post.title[0]}}</p>
+        <span class="body-2">{{ post.pubDate[0] | moment("HH:mm") }}:</span> <span class="body-1">{{post.title[0]}}</span></p>
       </li>
     </ul>
   </div>

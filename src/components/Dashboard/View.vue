@@ -51,8 +51,8 @@
                   </div>
                 </div>
               </v-flex>
-            </v-layout>
-            <v-layout row class="pictureFrameFooter">
+            </v-layout >
+            <v-layout align-end row class="pictureFrameFooter">
               <v-flex xs12 class="dashedBorder footerBlock">
                 <div>
                   <div><component v-bind:is="dashboard.slotFooter" v-bind="attributes.listOfAttrs" :theId="this.id"></component></div>
@@ -78,6 +78,7 @@ import Quotes from '../Widgets/Quotes'
 import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 import Uber from '../Widgets/Uber'
+import PeopleInSpace from '../Widgets/PeopleInSpace'
 export default {
   props: ['id'],
   data () {
@@ -158,7 +159,8 @@ export default {
     'Quotes': Quotes,
     'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage,
-    'Uber': Uber
+    'Uber': Uber,
+    'PeopleInSpace': PeopleInSpace
   }
 }
 </script>
@@ -167,8 +169,7 @@ export default {
 
 }
   .pictureFrameData {
-    background: url(../../assets/img/field.jpg);
-    background-size: cover;
+    padding: 20px;
   }
   .leftBlock {
     text-align: center;

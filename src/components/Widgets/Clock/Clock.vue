@@ -1,5 +1,5 @@
 <template>
-    <div v-if="loading">
+    <div v-if="loading === true">
       <v-progress-circular
       indeterminate
       color="white"
@@ -44,14 +44,18 @@
               <span v-if="timeFormat == '12Hour'" class="showAmPmLarge">{{ this.hourtime }}</span>
             </span>
         	</div>
-        	<div class="dayName" v-if="this.showDay != false">
-        		{{ this.dayName[dayNumber - 1] }}
-        	</div>
-        	<div class="date" v-if="this.showDate != false">
-        		{{ this.monthName[month] }} {{ this.thedate }}
-        	</div>
+          <div class="clearboth"></div>
+          <div class="dateday">
+          	<div class="dayName" v-if="this.showDay != false">
+          		{{ this.dayName[dayNumber - 1] }}
+          	</div>
+          	<div class="date" v-if="this.showDate != false">
+          		{{ this.monthName[month] }} {{ this.thedate }}
+          	</div>
+          </div>
         </div>
       </div>
+      <div class="clearboth"></div>
   </div>
 </template>
 
@@ -78,12 +82,16 @@ export default {
       showDate: true,
       hourtime: '',
       edit: false,
-      timeFormat: '24Hour',
+      timeFormat: '',
       switch1: true
     }
   },
   mounted () {
     this.$options.interval = setInterval(this.updateDateTime, 1000)
+    this.timeFormat = this.clock.timeFormat
+    this.showDay = this.clock.showDay
+    this.showDate = this.clock.showDate
+    this.showSeconds = this.clock.showSeconds
     this.loading = false
   },
   beforeDestroy () {
@@ -127,6 +135,7 @@ export default {
       this.timeFormat = newVal.timeFormat
       this.showDay = newVal.showDay
       this.showDate = newVal.showDate
+      this.showSeconds = newVal.showSeconds
     }
   },
   computed: {
@@ -134,7 +143,8 @@ export default {
       return {
         timeFormat: this.timeFormat,
         showDay: this.showDay,
-        showDate: this.showDate
+        showDate: this.showDate,
+        showSeconds: this.showSeconds
       }
     }
   }
@@ -142,11 +152,16 @@ export default {
 </script>
 
 <style>
+.clearboth {
+  clear: both;
+}
 .clock {
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
     color: #ffffff;
     text-align: right;
+    width: 200px;
+    float: right;
 }
 .time { 
     font-size: 3rem;
@@ -171,5 +186,50 @@ export default {
   top: -21px;
   font-size: 1.3rem;
   display: block;
+}
+
+.leftBlock .clock {
+  text-align: left;
+  float: left;
+}
+.leftBlock .showAmPm {
+  left: 86px;
+}
+
+.centerBlock .clock {
+  margin: 0 auto;
+  text-align: center;
+  float: none;
+  width: 40%;
+  min-height: 144px;
+}
+
+.centerBlock .time {
+    font-size: 6rem;
+}
+
+.centerBlock .showSeconds {
+    font-size: 2.7rem;
+    top: -30px;
+}
+
+.centerBlock .showAmPm {
+    font-size: 2.3rem;
+    left: 86px;
+    top: -40px;
+}
+
+.centerBlock .dateday {
+  position: relative;
+  top: 48px;
+}
+
+.centerBlock .date {
+    float: none;
+  display: inline-block;
+}
+.centerBlock .dayName {
+  float: none;
+  display: inline-block;
 }
 </style>

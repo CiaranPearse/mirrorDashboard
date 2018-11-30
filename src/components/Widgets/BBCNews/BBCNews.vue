@@ -1,10 +1,10 @@
 <template>
   <div>
   <div id="bbc-news">
-    <strong>BBC News (UK)</strong>
+    <p class="title">BBC News (UK)</p>
     <ul v-if="posts && topItems.length">
       <li v-for="post of topItems">
-        <p>{{ post.pubDate[0] | moment("HH:mm") }}: {{post.title[0]}}</p>
+        <span class="body-2">{{ post.pubDate[0] | moment("HH:mm") }}:</span> <span class="body-1">{{post.title[0]}}</span></p>
       </li>
     </ul>
   </div>

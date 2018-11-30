@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading">
+  <div v-if="loading == 'true'">
     <div id="uberRealWaitTime">
       <strong>Loading</strong>  
     </div>
@@ -36,7 +36,7 @@ export default {
   props: ['uber', 'dashInfo'],
   data () {
     return {
-      loading: false,
+      loading: true,
       editUber: false,
       test: 'This is test text',
       lat: '',

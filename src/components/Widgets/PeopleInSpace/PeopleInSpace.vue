@@ -6,11 +6,14 @@
   </div>
 
   <div v-else>
-    <strong>People in space</strong> 
-    <div>
-      <div v-for="person in people">
-        <strong>{{ person.name}}</strong> - {{ person.craft }}
-      </div>
+    <div id="peopleInSpace">
+    <p class="title">There are {{ this.people.length }} people in space</p> 
+      <table>
+        <tr v-for="person in people">
+          <td><p class="text-sm-left body-2">{{ person.name}}</p></td>
+          <td><p class="text-sm-right body-1 pl-3">{{ person.craft }}</p></td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -37,8 +40,24 @@ export default {
 </script>
 
 <style>
-#uberRealWaitTime{
+#peopleInSpace{
   border: 1px solid red;
+}
+
+.centerBlock #peopleInSpace table{
+      margin: 0 auto;
+}
+
+.footerBlock #peopleInSpace table{
+      margin: 0 auto;
+}
+
+.rightBlock #peopleInSpace{
+   text-align: right;
+}
+.rightBlock #peopleInSpace table{
+   margin-right: 0px;
+    margin-left: auto;
 }
 
 
