@@ -80,11 +80,8 @@
             <p class="body-2 ts">{{ this.location }}</p>
           </div>
         </div>
-        <!-- <div class="forecast">
-          Forecast
-        </div> -->
       </div>
-      <!-- <div class="weatherHeader">
+      <div class="weatherHeader">
         <div class="location">
           <h2>{{ this.location }}</h2>
           <p class="subhead">Weather Forecast</p>
@@ -108,11 +105,15 @@
       </div>
       <div class="forecast">
         <div class="forecastDay" v-for="(day, index) in forecast" :key="`day-${index}`"  v-if="index < days">
-          <div class="dayName">
-            <span class="fullDay">{{ moment(day.time).add(index, 'd').format('dddd') }}</span>
-            <span class="shortDay">{{ moment(day.time).add(index, 'd').format('dd') }}</span>
+          <div v-if="index === 0" class="dayName">
+            <span class="fullDay ts">Today</span>
+            <span class="shortDay ts">Today</span>
           </div>
-          <div class="dayIcon">
+          <div v-else class="dayName">
+            <span class="fullDay ts">{{ moment(day.time).add(index, 'd').format('dddd') }}</span>
+            <span class="shortDay ts">{{ moment(day.time).add(index, 'd').format('dd') }}</span>
+          </div>
+          <div class="dayIcon ts">
             <img v-if="day.icon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
             <img v-if="day.icon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
             <img v-if="day.icon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
@@ -125,18 +126,18 @@
             <img v-if="day.icon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
           </div>
           <div class="dayTemps" v-if="unit == 'f'">
-            <span class="dayHigh">
+            <span class="dayHigh ts">
               {{ day.temperatureHigh.toFixed(0) }}
             </span> / 
-            <span class="dayLow">
+            <span class="dayLow ts">
               {{ day.temperatureLow.toFixed(0) }}
             </span>
           </div>
           <div class="dayTemps" v-else>
-            <span class="dayHigh">
+            <span class="dayHigh ts">
               {{ ((day.temperatureHigh - 32) * (5 / 9)).toFixed(0) }}
             </span> / 
-            <span class="dayLow">
+            <span class="dayLow ts">
               {{ ((day.temperatureLow - 32) * (5 / 9)).toFixed(0) }}
             </span>
           </div>
@@ -145,7 +146,7 @@
       </div>
 
       </div>
-      <div class="superClear"></div> -->
+      <div class="superClear"></div>
     </div>
   </div>
 </template>
@@ -258,85 +259,85 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .weatherHeader {
-  }
-  .weatherHeader .location {
-    width: 100%;
-  }
-  .weatherHeader .location p.subhead {
-    font-size: 1.1rem;
-    margin-bottom: 0px;
-  }
+  // .weatherHeader {
+  // }
+  // .weatherHeader .location {
+  //   width: 100%;
+  // }
+  // .weatherHeader .location p.subhead {
+  //   font-size: 1.1rem;
+  //   margin-bottom: 0px;
+  // }
 
-  .weatherHeader .icon {
-    width: 45%;
-    float: left;
-  }
-  .weatherHeader .icon  img {
-    width: 100%;
-  }
-  .weatherHeader .weatherCurrentTemp {
-    width: 50%;
-    float: right;
-    top: -7px;
-    position: relative;
-  }
-  .weatherHeader .weatherCurrentTemp .currentTemp {
-    font-size: 4vw;
-  }
-  .weatherHeader .weatherCurrentTemp .currentTemp sup {
-    font-size: 2vw;
-    position: relative;
-    top: -25px;
-    left: -8px;
-  }
+  // .weatherHeader .icon {
+  //   width: 45%;
+  //   float: left;
+  // }
+  // .weatherHeader .icon  img {
+  //   width: 100%;
+  // }
+  // .weatherHeader .weatherCurrentTemp {
+  //   width: 50%;
+  //   float: right;
+  //   top: -7px;
+  //   position: relative;
+  // }
+  // .weatherHeader .weatherCurrentTemp .currentTemp {
+  //   font-size: 4vw;
+  // }
+  // .weatherHeader .weatherCurrentTemp .currentTemp sup {
+  //   font-size: 2vw;
+  //   position: relative;
+  //   top: -25px;
+  //   left: -8px;
+  // }
 
-  .weatherHeader .weatherCurrentTemp .currentTemp .summary {
-    font-size: 1vw;
-    margin: 0px;
-    position: relative;
-    top: -17px;
-    left: -12px;
-  }
+  // .weatherHeader .weatherCurrentTemp .currentTemp .summary {
+  //   font-size: 1vw;
+  //   margin: 0px;
+  //   position: relative;
+  //   top: -17px;
+  //   left: -12px;
+  // }
 
-  .forecast .forecastDay {
-    display: inline-block;
-    width: 100%;
-  }
+  // .forecast .forecastDay {
+  //   display: inline-block;
+  //   width: 100%;
+  // }
 
-  .forecast .forecastDay .dayName {
-    width: 40%;
-    float: left;
-    text-align: left;
-    padding-top: 8px;
-    font-size: 1.12vw;
-  }
-  .forecast .forecastDay .dayName .fullDay {
-    display: block;
-  }
-  .forecast .forecastDay .dayName .shortDay {
-    display: none;
-  }
-  .forecast .forecastDay .dayIcon {
-    width: 30%;
-    float: left;
-  }
-  .forecast .forecastDay .dayTemps {
-    width: 30%;
-    float: left;
-    padding-top: 8px;
-  }
-  .forecast .forecastDay .dayTemps .dayHigh {
-    font-size: 1.2vw;
-  }
-  .forecast .forecastDay .dayTemps .dayLow {
-    font-size: 1.2vw;
-  }
+  // .forecast .forecastDay .dayName {
+  //   width: 40%;
+  //   float: left;
+  //   text-align: left;
+  //   padding-top: 8px;
+  //   font-size: 1.12vw;
+  // }
+  // .forecast .forecastDay .dayName .fullDay {
+  //   display: block;
+  // }
+  // .forecast .forecastDay .dayName .shortDay {
+  //   display: none;
+  // }
+  // .forecast .forecastDay .dayIcon {
+  //   width: 30%;
+  //   float: left;
+  // }
+  // .forecast .forecastDay .dayTemps {
+  //   width: 30%;
+  //   float: left;
+  //   padding-top: 8px;
+  // }
+  // .forecast .forecastDay .dayTemps .dayHigh {
+  //   font-size: 1.2vw;
+  // }
+  // .forecast .forecastDay .dayTemps .dayLow {
+  //   font-size: 1.2vw;
+  // }
 
 
-  .forecast .forecastDay .dayIcon img {
-    max-width: 40px;
-  }
+  // .forecast .forecastDay .dayIcon img {
+  //   max-width: 40px;
+  // }
 
 
 
@@ -344,248 +345,282 @@ export default {
 
   
 
-  .centerBlock .weatherHeader {
+  // .centerBlock .weatherHeader {
     
-  }
-  .centerBlock .weatherHeader .location {
-    width: 33%;
-    float: left;
-    margin-top: 18px;
-  }
-  .centerBlock .weatherHeader .icon {
-    width: 33%;
-    float: left;
-  }
-  .centerBlock .weatherHeader .icon img {
-    width: 50%;
-  }
-  .centerBlock .weatherHeader .weatherCurrentTemp {
-    width: 33%;
-    float: left;
-  }
-  .centerBlock .weatherHeader .location p.subhead {
-    font-size: 1.1rem;
-    margin-bottom: 0px;
-  }
+  // }
+  // .centerBlock .weatherHeader .location {
+  //   width: 33%;
+  //   float: left;
+  //   margin-top: 18px;
+  // }
+  // .centerBlock .weatherHeader .icon {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .centerBlock .weatherHeader .icon img {
+  //   width: 50%;
+  // }
+  // .centerBlock .weatherHeader .weatherCurrentTemp {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .centerBlock .weatherHeader .location p.subhead {
+  //   font-size: 1.1rem;
+  //   margin-bottom: 0px;
+  // }
 
-  .centerBlock .forecast {
-    display: inline-block;
-    margin-left: 10px;
-  }
+  // .centerBlock .forecast {
+  //   display: inline-block;
+  //   margin-left: 10px;
+  // }
 
-  .centerBlock .forecast .forecastDay {
-    display: inline-block;
-    width: 12%;
-    float: left;
-  }
+  // .centerBlock .forecast .forecastDay {
+  //   display: inline-block;
+  //   width: 12%;
+  //   float: left;
+  // }
 
-  .centerBlock .forecast .forecastDay .dayName {
-    width: 100%;
-    float: left;
-    padding-top: 8px;
-    font-size: 1.12vw;
-  }
-  .centerBlock .forecast .forecastDay .dayName .fullDay {
-    display: none;
-  }
-  .centerBlock .forecast .forecastDay .dayName .shortDay {
-    display: block;
-    text-align: center;
-  }
-  .centerBlock .forecast .forecastDay .dayIcon {
-    width: 100%;
-  }
-  .centerBlock .forecast .forecastDay .dayTemps {
-    width: 100%;
-    padding-top: 8px;
-  }
-  .centerBlock .forecast .forecastDay .dayTemps .dayHigh {
-    font-size: 1.2vw;
-  }
-  .centerBlock .forecast .forecastDay .dayTemps .dayLow {
-    font-size: 1.2vw;
-  }
-
-
-  .centerBlock .forecast .forecastDay .dayIcon img {
-    max-width: 40px;
-  }
-
-  .footerBlock .weatherHeader {
-    width: 50%;
-    float: left;
-  }
-  .footerBlock .weatherHeader .location {
-    width: 33%;
-    float: left;
-    margin-top: 18px;
-  }
-  .footerBlock .weatherHeader .icon {
-    width: 33%;
-    float: left;
-  }
-  .footerBlock .weatherHeader .icon img {
-    width: 50%;
-  }
-  .footerBlock .weatherHeader .weatherCurrentTemp {
-    width: 33%;
-    float: left;
-  }
-  .footerBlock .weatherHeader .location p.subhead {
-    font-size: 1.1rem;
-    margin-bottom: 0px;
-  }
-
-  .footerBlock .forecast {
-    width: 48%;
-    float: right;
-    display: inline-block;
-    margin-left: 10px;
-  }
-
-  .footerBlock .forecast .forecastDay {
-    display: inline-block;
-    width: 12%;
-    float: left;
-  }
-
-  .footerBlock .forecast .forecastDay .dayName {
-    width: 100%;
-    float: left;
-    padding-top: 8px;
-    font-size: 1.12vw;
-  }
-  .footerBlock .forecast .forecastDay .dayName .fullDay {
-    display: none;
-  }
-  .footerBlock .forecast .forecastDay .dayName .shortDay {
-    display: block;
-    text-align: center;
-  }
-  .footerBlock .forecast .forecastDay .dayIcon {
-    width: 100%;
-  }
-  .footerBlock .forecast .forecastDay .dayTemps {
-    width: 100%;
-    padding-top: 8px;
-  }
-  .footerBlock .forecast .forecastDay .dayTemps .dayHigh {
-    font-size: 1.2vw;
-  }
-  .footerBlock .forecast .forecastDay .dayTemps .dayLow {
-    font-size: 1.2vw;
-  }
+  // .centerBlock .forecast .forecastDay .dayName {
+  //   width: 100%;
+  //   float: left;
+  //   padding-top: 8px;
+  //   font-size: 1.12vw;
+  // }
+  // .centerBlock .forecast .forecastDay .dayName .fullDay {
+  //   display: none;
+  // }
+  // .centerBlock .forecast .forecastDay .dayName .shortDay {
+  //   display: block;
+  //   text-align: center;
+  // }
+  // .centerBlock .forecast .forecastDay .dayIcon {
+  //   width: 100%;
+  // }
+  // .centerBlock .forecast .forecastDay .dayTemps {
+  //   width: 100%;
+  //   padding-top: 8px;
+  // }
+  // .centerBlock .forecast .forecastDay .dayTemps .dayHigh {
+  //   font-size: 1.2vw;
+  // }
+  // .centerBlock .forecast .forecastDay .dayTemps .dayLow {
+  //   font-size: 1.2vw;
+  // }
 
 
-  .footerBlock .forecast .forecastDay .dayIcon img {
-    max-width: 40px;
-  }
+  // .centerBlock .forecast .forecastDay .dayIcon img {
+  //   max-width: 40px;
+  // }
+
+  // .footerBlock .weatherHeader {
+  //   width: 50%;
+  //   float: left;
+  // }
+  // .footerBlock .weatherHeader .location {
+  //   width: 33%;
+  //   float: left;
+  //   margin-top: 18px;
+  // }
+  // .footerBlock .weatherHeader .icon {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .footerBlock .weatherHeader .icon img {
+  //   width: 50%;
+  // }
+  // .footerBlock .weatherHeader .weatherCurrentTemp {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .footerBlock .weatherHeader .location p.subhead {
+  //   font-size: 1.1rem;
+  //   margin-bottom: 0px;
+  // }
+
+  // .footerBlock .forecast {
+  //   width: 48%;
+  //   float: right;
+  //   display: inline-block;
+  //   margin-left: 10px;
+  // }
+
+  // .footerBlock .forecast .forecastDay {
+  //   display: inline-block;
+  //   width: 12%;
+  //   float: left;
+  // }
+
+  // .footerBlock .forecast .forecastDay .dayName {
+  //   width: 100%;
+  //   float: left;
+  //   padding-top: 8px;
+  //   font-size: 1.12vw;
+  // }
+  // .footerBlock .forecast .forecastDay .dayName .fullDay {
+  //   display: none;
+  // }
+  // .footerBlock .forecast .forecastDay .dayName .shortDay {
+  //   display: block;
+  //   text-align: center;
+  // }
+  // .footerBlock .forecast .forecastDay .dayIcon {
+  //   width: 100%;
+  // }
+  // .footerBlock .forecast .forecastDay .dayTemps {
+  //   width: 100%;
+  //   padding-top: 8px;
+  // }
+  // .footerBlock .forecast .forecastDay .dayTemps .dayHigh {
+  //   font-size: 1.2vw;
+  // }
+  // .footerBlock .forecast .forecastDay .dayTemps .dayLow {
+  //   font-size: 1.2vw;
+  // }
 
 
-  .weatherIcon {
-    float: left;
-    width: 40%;
-  }
-  .weatherIcon img {
-    width: 100%;
-    position: relative;
-  }
-  .currentTemp {
-    font-size: 5vw
-  }
-  .currentTemp sup {
-    font-size: 2rem;
-    position: relative;
-    top: -29px;
-    left: -8px;
-  }
-  .weatherHighLow p {
-    display: inline-block;
-    font-size: 2rem;
-    margin-bottom: 0px;
-  }
-  .weatherHigh img {
-    width: 24px;
-  }
-  .weatherLow img {
-    width: 24px;
-  }
-  .weatherDetails {
-    display: block;
-  }
-  .weatherSuns {
-    width: 33%;
-    float: left;
-  }
-  .weatherHighLow {
-    width: 33%;
-    float: left;
-  }
-  .weatherWinds {
-    width: 33%;
-    float: left;
-  }
-  .sunRiseTime {
-    margin-bottom: 10px;
-    display: block;
-    margin-top: 4px;
-  }
-  .windSpeed {
-    font-size: 16px;
-    margin-top: 4px;
-    display: block;
-    margin-bottom: 16px;
-  }
-  .superClear {
-    clear: both;
-  }
+  // .footerBlock .forecast .forecastDay .dayIcon img {
+  //   max-width: 40px;
+  // }
 
-  .centerBlock .weatherIconTemp {
-      width: 40%;
-      float: left;
-  }
-  .centerBlock .weatherDetails {
-    width: 60%;
-    margin-top: 10px;
-    float: right;
-  }
+
+  // .weatherIcon {
+  //   float: left;
+  //   width: 40%;
+  // }
+  // .weatherIcon img {
+  //   width: 100%;
+  //   position: relative;
+  // }
+  // .currentTemp {
+  //   font-size: 5vw
+  // }
+  // .currentTemp sup {
+  //   font-size: 2rem;
+  //   position: relative;
+  //   top: -29px;
+  //   left: -8px;
+  // }
+  // .weatherHighLow p {
+  //   display: inline-block;
+  //   font-size: 2rem;
+  //   margin-bottom: 0px;
+  // }
+  // .weatherHigh img {
+  //   width: 24px;
+  // }
+  // .weatherLow img {
+  //   width: 24px;
+  // }
+  // .weatherDetails {
+  //   display: block;
+  // }
+  // .weatherSuns {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .weatherHighLow {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .weatherWinds {
+  //   width: 33%;
+  //   float: left;
+  // }
+  // .sunRiseTime {
+  //   margin-bottom: 10px;
+  //   display: block;
+  //   margin-top: 4px;
+  // }
+  // .windSpeed {
+  //   font-size: 16px;
+  //   margin-top: 4px;
+  //   display: block;
+  //   margin-bottom: 16px;
+  // }
+  // .superClear {
+  //   clear: both;
+  // }
+
+  // .centerBlock .weatherIconTemp {
+  //     width: 40%;
+  //     float: left;
+  // }
+  // .centerBlock .weatherDetails {
+  //   width: 60%;
+  //   margin-top: 10px;
+  //   float: right;
+  // }
 
 
   #pleasingLayout {
     .weather {
+      width: 100%;
       float: right;
       .subhead {
         display: none;
       }
       .today {
+        float: right;
         .current {
           display: flex;
+          float: right;
           .icon {
             float: left;
+            padding-right: 10px;
             img {
-              width: 46px;
+              width: 66px;
             }
           }
           .temp{
-            font-size: 2rem;
+            font-size: 3.1rem;
             float: right;
             p {
               margin: 0px;
             }
             sup {
               font-size: 50%;
-              top: -0.75rem;
+              top: -1.1rem;
+            }
+          }
+        }
+        .location {
+          float: left;
+          font-size: 1rem;
+          padding-right: 10px;
+          p {
+            margin-bottom: 0px;
+            &.body-2 {
+              font-size: 1.7rem!important;
             }
           }
         }
       }
-      .location {
-        display: block;
-        font-size: 1rem;
-        p {
-          margin-bottom: 0px;
+      
+    }
+    .forecast {
+      display: block;
+      float: right;
+      max-width: 100%;
+      .forecastDay {
+        float: left;
+        width: 50px;
+        text-align: center;
+        .fullDay {
+          display: none;
+        }
+        .dayIcon {
+          img {
+            width: 38px;
+          }
+        }
+        .dayTemps {
+          font-size: 1rem;
         }
       }
+
+    }
+    .weatherHeader {
+      display: none;
     }
   }
 </style>
