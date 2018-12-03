@@ -25,3 +25,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 DEPLOY INSTRUCTIONS
 https://medium.com/@ShayneOSullivan/deploy-a-vue-js-app-with-firebase-hosting-3fc420cf3998
+
+
+Images:
+https://interfacelift.com/wallpaper/details/4200/twilight_islands.html

@@ -1,5 +1,7 @@
 <template>
-  <v-container fluid fill-height class="theContainer">
+  <!-- <v-container fluid fill-height class="theContainer" :style="{ backgroundImage: `url('${backgroundImg}')` }"> -->
+    <v-container fluid fill-height class="theContainer" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/mymirrordashboard.appspot.com/o/wallpapers%2F04199_lonelyisland_2880x1800.jpg?alt=media&token=7ebc95fe-9595-4818-8823-950439a5c2e6')">
+    
       <v-layout row v-if="loading">
         <v-flex xs12 class="text-xs-center" align-self-center>
           <v-progress-circular
@@ -16,7 +18,7 @@
       <v-flex xs12 id="pleasingLayout" v-if="this.dashboard.deviceLayout === 'pleasing'">
         <v-layout id="topBlock">
           <v-flex xs5 class="leftBlock">
-            Block 1
+            <component :is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
           </v-flex>
           <v-flex xs5 offset-xs2 class="rightBlock">
             <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
@@ -34,7 +36,7 @@
         </v-layout>
         <v-layout id="footerBlock">
           <v-flex xs12 align-self-end>
-           <component v-bind:is="dashboard.slotCenter2" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
+           <component v-bind:is="dashboard.slotFooter" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -98,6 +100,7 @@
 
 
 <script>
+import axios from 'axios'
 import BBCNews from '../Widgets/BBCNews'
 import CNNWorldNews from '../Widgets/CNNWorldNews'
 import RTENews from '../Widgets/RTENews'
@@ -115,8 +118,22 @@ export default {
   data () {
     return {
       dashTitle: '',
-      deviceLocation: ''
+      deviceLocation: '',
+      backgroundImg: ''
     }
+  },
+  mounted () {
+    axios.get('https://www.reddit.com/r/EarthPorn/top/.json', {
+    })
+    .then(response => {
+      var responseLength = response.data.data.children.length
+      console.log(responseLength)
+      var randomnumber = Math.floor(Math.random() * (responseLength - 0)) + 0
+      console.log(randomnumber)
+      console.log(response.data.data.children[randomnumber].data.url)
+      this.backgroundImg = response.data.data.children[randomnumber].data.url
+    })
+    this.loading = false
   },
   computed: {
     dashboard () {

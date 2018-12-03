@@ -6,23 +6,30 @@
   </div>
 
   <div v-else>
-    <strong>Uber Live Wait Times</strong> 
-    <div v-if="editUber == true">
-      <form @submit.prevent="onChangeUber">
-        <v-text-field
-          v-model="lat"
-          label="Latitude"
-        ></v-text-field>
-        <v-text-field
-          v-model="long"
-          label="Longitude"
-        ></v-text-field>
 
-        <v-btn color="red" @click="onCloseUber">Close</v-btn>
-        <v-btn color="green" :disabled="!formIsValid" type="submit">Update</v-btn>
-      </form>
-    </div>
-    <div v-else @click="onClickEdit" class="hoverCursor">
+    <v-dialog v-model="editUber" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">Configure Uber</v-card-title>
+        <v-card-text>
+          <h4>You can get your Longitude/Latitude <a href="https://www.latlong.net/" target="_blank">here</a></h4>
+          <v-text-field
+            v-model="lat"
+            label="Latitude"
+          ></v-text-field>
+            <v-text-field
+              v-model="long"
+              label="Longitude"
+            ></v-text-field>
+      </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click="editUber = false">Close</v-btn>
+          <v-btn color="green darken-1" flat @click="onChangeUber">Update Uber</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <div @click="editUber = true" class="hoverCursor">
       <div v-for="cars in rides">
         <strong>{{ cars.display_name}}</strong> - {{ cars.estimate / 60}} minutes
       </div>
@@ -47,8 +54,8 @@ export default {
   // Fetches posts when the component is created.
   created () {
     console.log('created Uber')
-    this.lat = this.dashInfo.latitude
-    this.long = this.dashInfo.longitude
+    this.lat = this.uber.latitude
+    this.long = this.uber.longitude
   },
   mounted () {
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
@@ -66,13 +73,6 @@ export default {
     this.loading = false
   },
   methods: {
-    onClickEdit () {
-      this.editUber = true
-    },
-    onCloseUber () {
-      console.log('clicked close edit')
-      this.editUber = false
-    },
     onChangeUber (payload) {
       console.log('Consolidated: ', this.consolidated)
       this.$store.dispatch('updateWidgetData', {

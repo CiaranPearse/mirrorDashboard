@@ -9,9 +9,12 @@
     </div>
 
     <div v-else>
-      <div v-if="edit">
-        <h4>Configure Clock</h4>
-            <form @submit.prevent="onChangeClock">
+
+      <v-dialog v-model="edit" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">Configure Clock</v-card-title>
+        <v-card-text>
+          <form>
               <v-radio-group v-model="timeFormat">
                 <v-radio label="12 Hour" value="12Hour"></v-radio>
                 <v-radio label="24 Hour" value="24Hour"></v-radio>
@@ -29,11 +32,20 @@
                 v-model="showDate"
               ></v-switch>
 
-          <v-btn color="red" @click="onCloseEdit">Close</v-btn>
-          <v-btn color="green" type="submit">Update Clock</v-btn>
-          </form>
-      </div>
-      <div v-else @click="onClickEdit" class="hoverCursor">
+          <!-- <v-btn color="red" @click="onCloseEdit">Close</v-btn>
+          <v-btn color="green" type="submit">Update Clock</v-btn> -->
+          </form></v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click="edit = false">Close</v-btn>
+
+          <v-btn color="green darken-1" flat @click="onChangeClock">Update Clock</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+      <div @click="edit = true" class="hoverCursor">
         <div class="clock" v-if="hourtime != ''">
           <div class="time ts">
               {{ this.hours }}:{{ this.minutes }}
@@ -46,7 +58,7 @@
         	</div>
           <div class="dateday">
           	<div class="dayName ts" v-if="this.showDay != false">
-          		{{ this.dayName[dayNumber - 1] }}, 
+          		{{ this.dayName[dayNumber - 1] }} <span v-if="this.showDate != false">, </span>
           	</div>
           	<div class="date ts" v-if="this.showDate != false">
           		{{ this.monthName[month] }} {{ this.thedate }}
@@ -164,6 +176,7 @@ export default {
         position: relative;
         top: -42px;
         left: -14px;
+        font-weight: 300;
       }
       .showAmPm {
         position: relative;
@@ -175,12 +188,12 @@ export default {
     .date {
       font-size: 2.2rem;
       display: inline-block;
-      font-weight: 200;
+      font-weight: 300;
     }
     .dayName {
       font-size: 2.2rem;
       display: inline-block;
-      font-weight: 200;
+      font-weight: 300;
     }
   }
 }

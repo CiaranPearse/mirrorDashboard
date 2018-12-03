@@ -7,36 +7,54 @@
 	      <p>Loading Weather</p>
 	</div>
 	<div v-else>
-		<div v-if="edit" class="editPane">
-      <h4>You can get your Longitude/Latitude <a href="https://www.latlong.net/" target="_blank">here</a></h4>
-      <form @submit.prevent="onChangeWeather">
-        <v-text-field
-        v-model="location"
-        label="location"
-      ></v-text-field>
-      <v-text-field
-        v-model="lat"
-        label="Latitude"
-      ></v-text-field>
-      <v-text-field
-        v-model="long"
-        label="Longitude"
-      ></v-text-field>
-      <v-radio-group v-model="unit" row>
-         <v-radio label="C" value="c"></v-radio>
-          <v-radio label="F" value="f"></v-radio>
-      </v-radio-group>
-      <v-radio-group v-model="days" row>
-         <v-radio label="Today" value="1"></v-radio>
-          <v-radio label="3 Day" value="4"></v-radio>
-          <v-radio label="5 Day" value="6"></v-radio>
-          <v-radio label="7 Day" value="8"></v-radio>
-      </v-radio-group>
-        <v-btn color="red" @click="onCloseEdit">Close</v-btn>
-        <v-btn color="green" :disabled="!formIsValid" type="submit">Update</v-btn>
-      </form>
-		</div>
-		<div v-else @click="onClickEdit">
+		
+
+
+
+    <v-dialog v-model="edit" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">Configure Weather</v-card-title>
+        <v-card-text>
+          <h4>You can get your Longitude/Latitude <a href="https://www.latlong.net/" target="_blank">here</a></h4>
+          <form>
+            <v-text-field
+            v-model="location"
+            label="location"
+          ></v-text-field>
+          <v-text-field
+            v-model="lat"
+            label="Latitude"
+          ></v-text-field>
+          <v-text-field
+            v-model="long"
+            label="Longitude"
+          ></v-text-field>
+          <v-radio-group v-model="unit" row>
+             <v-radio label="C" value="c"></v-radio>
+              <v-radio label="F" value="f"></v-radio>
+          </v-radio-group>
+          <v-radio-group v-model="days" row>
+             <v-radio label="Today" value="1"></v-radio>
+              <v-radio label="3 Day" value="4"></v-radio>
+              <v-radio label="5 Day" value="6"></v-radio>
+              <v-radio label="7 Day" value="8"></v-radio>
+          </v-radio-group>
+          </form>
+      </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click="edit = false">Close</v-btn>
+          <v-btn color="green darken-1" flat @click="onChangeWeather">Update Weather</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+
+
+
+
+		<div @click="edit = true" class="hoverCursor">
       <div class="weather">
         <div class="today">
           <div class="current">

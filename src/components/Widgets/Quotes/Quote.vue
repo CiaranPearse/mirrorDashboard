@@ -8,9 +8,12 @@
     </div>
   </div>
   <div v-else>
-    <div v-if="edit">
-      <h4>Configure Quotes</h4>
-        <form @submit.prevent="onChangeQuotes">
+
+    <v-dialog v-model="edit" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">Configure Quotes</v-card-title>
+        <v-card-text>
+          <form>
         <v-radio-group v-model="quoteType">
           <v-radio label="Inspirational" value="inspire"></v-radio>
           <v-radio label="Drinking" value="beer"></v-radio>
@@ -19,11 +22,17 @@
           <v-radio label="10 Seconds" value="10000"></v-radio>
           <v-radio label="20 Seconds" value="20000"></v-radio>
         </v-radio-group>
-          <v-btn color="red" @click="onCloseEdit" type="submit">Close</v-btn>
-          <v-btn color="green" type="submit">Update Quotes</v-btn>
         </form>
-    </div>
-    <div v-else @click="onClickEdit" class="quotes">
+      </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click="edit = false">Close</v-btn>
+          <v-btn color="green darken-1" flat @click="onChangeQuotes">Update Quotes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    
+    <div @click="edit = true" class="quotes hoverCursor">
       <div v-if="quoteType == 'inspire'">
         <p class="quote">{{ this.quotes.inspire[this.randomNumber].quote }}</p>
         <p class="author">{{ this.quotes.inspire[this.randomNumber].author }}</p> 
