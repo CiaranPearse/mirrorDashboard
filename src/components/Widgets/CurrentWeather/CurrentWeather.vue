@@ -553,27 +553,97 @@ export default {
 
 
   #pleasingLayout {
+    .leftBlock {
+      .weather {
+        float: left;
+        .today {
+          float: left;
+          .current {
+            float: left;
+            .icon {
+              float: right;
+              padding-left: 10px;
+            }
+            .temp {
+              float: left;
+            }
+          }
+        }
+        .location {
+          float: right;
+          padding-left: 10px;
+        }
+      }
+      .forecast {
+        float: left;
+        .forecastDay {
+          float: right;
+          @media screen and (max-width: 959px) {
+            &:nth-of-type(n+4) {
+              display: none;
+            }
+          }
+        }
+      }
+      @media screen and (max-width: 959px) {
+        .location {
+          clear: both;
+        }
+      }
+    }
+    .rightBlock {
+      .weather {
+        float: right;
+        .today {
+          float: right;
+          .current {
+            float: right;
+            .icon {
+              float: left;
+              padding-right: 10px;
+            }
+            .temp {
+              float: right;
+            }
+          }
+        }
+        .location {
+          float: left;
+          padding-right: 10px;
+        }
+      }
+      .forecast {
+        float: right;
+        .forecastDay {
+          float: left;
+          @media screen and (max-width: 959px) {
+            &:nth-of-type(n+4) {
+              display: none;
+            }
+          }
+        }
+      }
+      @media screen and (max-width: 959px) {
+        .location {
+          clear: both;
+        }
+      }
+    }
     .weather {
       width: 100%;
-      float: right;
       .subhead {
         display: none;
       }
       .today {
-        float: right;
         .current {
           display: flex;
-          float: right;
           .icon {
-            float: left;
-            padding-right: 10px;
             img {
               width: 66px;
             }
           }
           .temp{
             font-size: 3.1rem;
-            float: right;
             p {
               margin: 0px;
             }
@@ -584,9 +654,7 @@ export default {
           }
         }
         .location {
-          float: left;
           font-size: 1rem;
-          padding-right: 10px;
           p {
             margin-bottom: 0px;
             &.body-2 {
@@ -599,10 +667,8 @@ export default {
     }
     .forecast {
       display: block;
-      float: right;
       max-width: 100%;
       .forecastDay {
-        float: left;
         width: 50px;
         text-align: center;
         .fullDay {

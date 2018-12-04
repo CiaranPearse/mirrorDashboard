@@ -45,7 +45,6 @@ export default {
     return {
       loading: true,
       editUber: false,
-      test: 'This is test text',
       lat: '',
       long: '',
       rides: ''
