@@ -59,10 +59,10 @@
       
     </div>
     <div v-else @click="onClickEdit">
-      <h1>This is Currency Ticker</h1>
+      <p>Currency Rates</p>
       <div v-for="(value, key, index) in allRates">
         <div class="theCurrency">
-          <div class="baseCurrency">
+          <div class="baseCurrency" v-if="showFlag === true">
             <div class="flag" v-if="base == 'USD'"><img src="../../../assets/img/flags/USD.png"/></div>
             <div class="flag" v-if="base == 'EUR'"><img src="../../../assets/img/flags/EUR.png"/></div>
             <div class="flag" v-if="base == 'BGN'"><img src="../../../assets/img/flags/BGN.png"/></div>
@@ -95,43 +95,13 @@
             <div class="flag" v-if="base == 'SGD'"><img src="../../../assets/img/flags/SGD.png"/></div>
             <div class="flag" v-if="base == 'CHF'"><img src="../../../assets/img/flags/CHF.png"/></div>
             <div class="flag" v-if="base == 'INR'"><img src="../../../assets/img/flags/INR.png"/></div>
-            <div class="baseSymbol"><span>{{ base }}</span>
-              <div class="baseDesc" v-if="base == 'USD'">US Dollar</div>
-              <div class="baseDesc" v-if="base == 'EUR'">Euro</div>
-              <div class="baseDesc" v-if="base == 'BGN'">Bulgarian lev</div>
-              <div class="baseDesc" v-if="base == 'BRL'">Brazilian Real</div>
-              <div class="baseDesc" v-if="base == 'HUF'">Hungarian Forint</div>
-              <div class="baseDesc" v-if="base == 'DKK'">Danish Krone</div>
-              <div class="baseDesc" v-if="base == 'JPY'">Japanese Yen</div>
-              <div class="baseDesc" v-if="base == 'ILS'">Israeli Shekel</div>
-              <div class="baseDesc" v-if="base == 'TRY'">Turkish Lira</div>
-              <div class="baseDesc" v-if="base == 'RON'">Romanian Leu</div>
-              <div class="baseDesc" v-if="base == 'GBP'">British Pound</div>
-              <div class="baseDesc" v-if="base == 'PHP'">Philippine Peso</div>
-              <div class="baseDesc" v-if="base == 'HRK'">Croatian Kuna</div>
-              <div class="baseDesc" v-if="base == 'NOK'">Norwegian Krone</div>
-              <div class="baseDesc" v-if="base == 'MXN'">Mexican Peso</div>
-              <div class="baseDesc" v-if="base == 'AUD'">Australian Dollar</div>
-              <div class="baseDesc" v-if="base == 'IDR'">Indonesian Rupiah</div>
-              <div class="baseDesc" v-if="base == 'KRW'">South Korean Won</div>
-              <div class="baseDesc" v-if="base == 'HKD'">Hong Kong Dollar</div>
-              <div class="baseDesc" v-if="base == 'ZAR'">South African Rand</div>
-              <div class="baseDesc" v-if="base == 'ISK'">Icelandic Krona</div>
-              <div class="baseDesc" v-if="base == 'CZK'">Czech Koruna</div>
-              <div class="baseDesc" v-if="base == 'THB'">Thai Bhat</div>
-              <div class="baseDesc" v-if="base == 'MYR'">Malaysian Ringgit</div>
-              <div class="baseDesc" v-if="base == 'NZD'">New Zealand Dollar</div>
-              <div class="baseDesc" v-if="base == 'PLN'">Polish Zloty</div>
-              <div class="baseDesc" v-if="base == 'SEK'">Swedish Krona</div>
-              <div class="baseDesc" v-if="base == 'RUB'">Russian Ruble</div>
-              <div class="baseDesc" v-if="base == 'CNY'">Chinese Yuan</div>
-              <div class="baseDesc" v-if="base == 'SGD'">Singapore Dollar</div>
-              <div class="baseDesc" v-if="base == 'CHF'">Swiss Franc</div>
-              <div class="baseDesc" v-if="base == 'INR'">Indian Rupee</div>
-            </div>
           </div>
+          <div class="baseSymbol" v-if="showFlag === false"><span>{{ base }}</span>
+            
+          </div>
+          <div class="arrow"><v-icon>arrow_right_alt</v-icon></div>
           <div class="toCurrency">
-            <div class="flag" :class="key">
+            <div class="flag" :class="key" v-if="showFlag === true">
               <div class="flag" v-if="key == 'USD'"><img src="../../../assets/img/flags/USD.png"/></div>
               <div class="flag" v-if="key == 'EUR'"><img src="../../../assets/img/flags/EUR.png"/></div>
               <div class="flag" v-if="key == 'BGN'"><img src="../../../assets/img/flags/BGN.png"/></div>
@@ -165,39 +135,7 @@
               <div class="flag" v-if="key == 'CHF'"><img src="../../../assets/img/flags/CHF.png"/></div>
               <div class="flag" v-if="key == 'INR'"><img src="../../../assets/img/flags/INR.png"/></div>
             </div>
-            <div class="toSymbol"><span>{{ key }}</span>
-              <div class="toDesc" v-if="key == 'USD'">US Dollar</div>
-              <div class="toDesc" v-if="key == 'EUR'">Euro</div>
-              <div class="toDesc" v-if="key == 'BGN'">Bulgarian lev</div>
-              <div class="toDesc" v-if="key == 'BRL'">Brazilian Real</div>
-              <div class="toDesc" v-if="key == 'HUF'">Hungarian Forint</div>
-              <div class="toDesc" v-if="key == 'DKK'">Danish Krone</div>
-              <div class="toDesc" v-if="key == 'JPY'">Japanese Yen</div>
-              <div class="toDesc" v-if="key == 'ILS'">Israeli Shekel</div>
-              <div class="toDesc" v-if="key == 'TRY'">Turkish Lira</div>
-              <div class="toDesc" v-if="key == 'RON'">Romanian Leu</div>
-              <div class="toDesc" v-if="key == 'GBP'">British Pound</div>
-              <div class="toDesc" v-if="key == 'PHP'">Philippine Peso</div>
-              <div class="toDesc" v-if="key == 'HRK'">Croatian Kuna</div>
-              <div class="toDesc" v-if="key == 'NOK'">Norwegian Krone</div>
-              <div class="toDesc" v-if="key == 'MXN'">Mexican Peso</div>
-              <div class="toDesc" v-if="key == 'AUD'">Australian Dollar</div>
-              <div class="toDesc" v-if="key == 'IDR'">Indonesian Rupiah</div>
-              <div class="toDesc" v-if="key == 'KRW'">South Korean Won</div>
-              <div class="toDesc" v-if="key == 'HKD'">Hong Kong Dollar</div>
-              <div class="toDesc" v-if="key == 'ZAR'">South African Rand</div>
-              <div class="toDesc" v-if="key == 'ISK'">Icelandic Krona</div>
-              <div class="toDesc" v-if="key == 'CZK'">Czech Koruna</div>
-              <div class="toDesc" v-if="key == 'THB'">Thai Bhat</div>
-              <div class="toDesc" v-if="key == 'MYR'">Malaysian Ringgit</div>
-              <div class="toDesc" v-if="key == 'NZD'">New Zealand Dollar</div>
-              <div class="toDesc" v-if="key == 'PLN'">Polish Zloty</div>
-              <div class="toDesc" v-if="key == 'SEK'">Swedish Krona</div>
-              <div class="toDesc" v-if="key == 'RUB'">Russian Ruble</div>
-              <div class="toDesc" v-if="key == 'CNY'">Chinese Yuan</div>
-              <div class="toDesc" v-if="key == 'SGD'">Singapore Dollar</div>
-              <div class="toDesc" v-if="key == 'CHF'">Swiss Franc</div>
-              <div class="toDesc" v-if="key == 'INR'">Indian Rupee</div>
+            <div class="toSymbol" v-if="showFlag === false"><span>{{ key }}</span>
             </div>
           </div>
           <div class="rate">
@@ -222,7 +160,8 @@ export default {
       base: 'EUR',
       selectedCurrencies: ['EUR'],
       currency5Rate: '',
-      allRates: ''
+      allRates: '',
+      showFlag: true
     }
   },
   created () {
@@ -267,58 +206,207 @@ export default {
 }
 </script>
 
-<style>
-.theCurrency {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 10px;
-}
-.baseCurrency {
-  float: left;
-  width: 30%;
-}
-.toCurrency {
-  float: left;
-  width: 30%;
-}
-.rate {
-  float: left;
-  width: 30%;
-}
-.flag img {
-  width: 42px;
-  float: left;
-}
-.baseSymbol {
-  text-align: left;
-  margin-left: 10px;
-}
-.baseSymbol span {
-  font-size: 1.4vw;
-  padding-left: 10px;
-}
-.baseDesc {
-  position: relative;
-    top: -8px;
-    left: 10px;
-    font-size: .8vw;
-}
-.toSymbol {
-  text-align: left;
-}
-.toSymbol span {
-  font-size: 1.4vw;
-  padding-left: 10px;
-}
-.toDesc {
-  position: relative;
-    top: -8px;
-    left: 10px;
-    font-size: .8vw;
-}
-.rate {
-  font-size: 2rem;
-  text-align: left;
+<style lang="scss" scoped>
+// .theCurrency {
+//   display: inline-block;
+//   width: 100%;
+//   margin-bottom: 10px;
+// }
+// .baseCurrency {
+//   float: left;
+//   width: 30%;
+// }
+// .toCurrency {
+//   float: left;
+//   width: 30%;
+// }
+// .rate {
+//   float: left;
+//   width: 30%;
+// }
+// .flag img {
+//   width: 42px;
+//   float: left;
+// }
+// .baseSymbol {
+//   text-align: left;
+//   margin-left: 10px;
+// }
+// .baseSymbol span {
+//   font-size: 1.4vw;
+//   padding-left: 10px;
+// }
+// .baseDesc {
+//   position: relative;
+//     top: -8px;
+//     left: 10px;
+//     font-size: .8vw;
+// }
+// .toSymbol {
+//   text-align: left;
+// }
+// .toSymbol span {
+//   font-size: 1.4vw;
+//   padding-left: 10px;
+// }
+// .toDesc {
+//   position: relative;
+//     top: -8px;
+//     left: 10px;
+//     font-size: .8vw;
+// }
+// .rate {
+//   font-size: 2rem;
+//   text-align: left;
+// }
+
+#pleasingLayout {
+  .flag {
+    img {
+     width: 20px;
+   }
+  }
+  #leftBlock {
+    .theCurrency {
+      clear: both;
+      display: block;
+      float: left;
+      text-align: left;
+      display: flex;
+      .toDesc {
+        display: none;
+      }
+      .baseCurrency {
+        width: 44px;
+        text-align: center;
+        .baseSymbol {
+          span {
+            font-weight: bold;
+          }
+        }
+        .baseDesc {
+          display: none;
+        }
+      }
+      .toCurrency {
+        width: 44px;
+        text-align: center;
+        .toSymbol {
+          span {
+            font-weight: bold;
+          }
+        }
+        .toDesc {
+          display: none;
+        }
+      }
+      .baseSymbol {
+        padding-right: 8px;
+      }
+      .rate {
+        font-weight: bold;
+        text-align: right;
+        width: 80px;
+        font-size: 1.2rem;
+        position: relative;
+        top: -4px;
+      }
+    }
+  }
+  #rightBlock {
+    .theCurrency {
+      clear: both;
+      display: block;
+      float: right;
+      text-align: left;
+      display: flex;
+      p {
+        text-align: right;
+      }
+      .baseCurrency {
+        width: 44px;
+        text-align: center;
+        .baseSymbol {
+          span {
+            font-weight: bold;
+          }
+        }
+        .baseDesc {
+          display: none;
+        }
+      }
+      .toCurrency {
+        width: 44px;
+        text-align: center;
+        .toSymbol {
+          span {
+            font-weight: bold;
+          }
+        }
+        .toDesc {
+          display: none;
+        }
+      }
+      .baseSymbol {
+        padding-right: 8px;
+      }
+      .rate {
+        font-weight: bold;
+        text-align: right;
+        width: 80px;
+        font-size: 1.2rem;
+        position: relative;
+        top: -4px;
+      }
+    }
+  }
+  #footerBlock {
+    .theCurrency {
+      width: 20%;
+      clear: none;
+      display: inline-block;
+      float: left;
+      display: flex;
+      text-align: center;
+      p {
+      }
+      .baseCurrency {
+        width: 33%;
+        text-align: center;
+        .baseSymbol {
+          span {
+            font-weight: bold;
+          }
+        }
+        .baseDesc {
+          display: none;
+        }
+      }
+      .toCurrency {
+        width: 33%;
+        text-align: center;
+        .toSymbol {
+          span {
+            font-weight: bold;
+          }
+        }
+        .toDesc {
+          display: none;
+        }
+      }
+      .baseSymbol {
+        padding-right: 8px;
+      }
+      .rate {
+        font-weight: bold;
+        text-align: center;
+        width: 33%;
+        font-size: 1.8rem;
+        position: relative;
+        top: -8px;
+      }
+    }
+  }
 }
 
 </style>
