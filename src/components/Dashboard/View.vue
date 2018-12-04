@@ -17,10 +17,10 @@
 <!-- pleasing LAYOUT -->
       <v-flex xs12 id="pleasingLayout" v-if="this.dashboard.deviceLayout === 'pleasing'">
         <v-layout id="topBlock">
-          <v-flex xs5 class="leftBlock">
+          <v-flex xs5 id="leftBlock">
             <component :is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
           </v-flex>
-          <v-flex xs5 offset-xs2 class="rightBlock">
+          <v-flex xs5 offset-xs2 id="rightBlock">
             <component :is="dashboard.slotRight1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
           </v-flex>
         </v-layout>

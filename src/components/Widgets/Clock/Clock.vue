@@ -195,6 +195,26 @@ export default {
       display: inline-block;
       font-weight: 300;
     }
+    @media screen and (max-width: 959px) {
+      .time {
+        font-size: 5rem;
+        .showSeconds {
+          font-size: 2.5rem;
+          top: -24px;
+        }
+        .showAmPm {
+          top: 24px;
+          left: -50px;
+          font-size: 2rem;
+        }
+      }
+      .date {
+        font-size: 1.8rem;
+      }
+      .dayName {
+        font-size: 1.8rem;
+      }
+    }
   }
 }
 

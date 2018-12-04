@@ -553,7 +553,7 @@ export default {
 
 
   #pleasingLayout {
-    .leftBlock {
+    #leftBlock {
       .weather {
         float: left;
         .today {
@@ -591,7 +591,7 @@ export default {
         }
       }
     }
-    .rightBlock {
+    #rightBlock {
       .weather {
         float: right;
         .today {
@@ -627,6 +627,68 @@ export default {
         .location {
           clear: both;
         }
+      }
+    }
+    #footerBlock {
+      .weather {
+        width: 50%;
+        text-align: center;
+        float: left;
+        display: block;
+        @media screen and (max-width: 959px) {
+          width: 100%;
+          text-align: center;
+          margin: 0 auto;
+        }
+        .today {
+          max-width: 50%;
+          @media screen and (max-width: 959px) {
+            width: 100%;
+            padding: 0px;
+            float: none;
+          }
+          .current {
+            float: left;
+            .icon {
+              padding-right: 10px;
+              @media screen and (max-width: 959px) {
+                padding: 0px;
+                float: left;
+              }
+            }
+            @media screen and (max-width: 959px) {
+              max-width: 100%;
+              float: none;
+              display: inline-block;
+              .temp {
+                float: left;
+              }
+            }
+          }
+          @media screen and (max-width: 959px) {
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+          }
+        }
+        .location {
+          float: left;
+          padding-right: 10px;
+          @media screen and (max-width: 959px) {
+            padding: 0px;
+            float: none;
+          }
+        }
+      }
+      .forecast {
+        width: 50%;
+        float: right;
+        .forecastDay {
+          float: right;
+        }
+        @media screen and (max-width: 959px) {
+        display: none;
+      }
       }
     }
     .weather {
