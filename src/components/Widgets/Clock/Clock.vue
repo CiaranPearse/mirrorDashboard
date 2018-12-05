@@ -15,21 +15,21 @@
         <v-card-title class="headline">Configure Clock</v-card-title>
         <v-card-text>
           <form>
-              <v-radio-group v-model="timeFormat">
+              <v-radio-group v-model="editedTimeFormat">
                 <v-radio label="12 Hour" value="12Hour"></v-radio>
                 <v-radio label="24 Hour" value="24Hour"></v-radio>
               </v-radio-group>
               <v-switch
                 label="Show Seconds"
-                v-model="showSeconds"
+                v-model="editedShowSeconds"
               ></v-switch>
               <v-switch
                 label="Show Day"
-                v-model="showDay"
+                v-model="editedShowDay"
               ></v-switch>
               <v-switch
                 label="Show Date"
-                v-model="showDate"
+                v-model="editedShowDate"
               ></v-switch>
 
           <!-- <v-btn color="red" @click="onCloseEdit">Close</v-btn>
@@ -48,7 +48,12 @@
       <div @click="edit = true" class="hoverCursor">
         <div class="clock" v-if="hourtime != ''">
           <div class="time ts">
-              {{ this.hours }}:{{ this.minutes }}
+              <span class="secondShim" v-if="showSeconds === true && timeFormat == '12Hour'">
+                {{ this.hours }}:{{ this.minutes }}
+              </span>
+              <span v-else>
+                {{ this.hours }}:{{ this.minutes }}
+              </span>
             <span class="showSeconds ts" v-if="showSeconds != false">
               {{ this.seconds }} <span v-if="timeFormat == '12Hour'" class="showAmPm ts">{{ this.hourtime }}</span>
             </span>
@@ -79,7 +84,6 @@ export default {
       loading: true,
       thedate: 0,
       month: 0,
-      year: 0,
       dayNumber: 0,
       dayName: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       monthName: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -88,12 +92,16 @@ export default {
       minutes: 0,
       seconds: 0,
       UStime: 0,
+      timeFormat: '',
+      editedTimeFormat: '',
       showSeconds: true,
+      editedShowSeconds: '',
       showDay: true,
+      editedShowDay: '',
       showDate: true,
+      editedShowDate: '',
       hourtime: '',
       edit: false,
-      timeFormat: '',
       switch1: true
     }
   },
@@ -103,6 +111,10 @@ export default {
     this.showDay = this.clock.showDay
     this.showDate = this.clock.showDate
     this.showSeconds = this.clock.showSeconds
+    this.editedTimeFormat = this.clock.timeFormat
+    this.editedShowDay = this.clock.showDay
+    this.editedShowDate = this.clock.showDate
+    this.editedShowSeconds = this.clock.showSeconds
     this.loading = false
   },
   beforeDestroy () {
@@ -111,7 +123,6 @@ export default {
   methods: {
     updateDateTime () {
       let now = new Date()
-      this.year = now.getFullYear()
       this.thedate = now.getDate()
       this.month = now.getMonth()
       this.dayNumber = now.getDay()
@@ -152,10 +163,10 @@ export default {
   computed: {
     consolidated () {
       return {
-        timeFormat: this.timeFormat,
-        showDay: this.showDay,
-        showDate: this.showDate,
-        showSeconds: this.showSeconds
+        timeFormat: this.editedTimeFormat,
+        showDay: this.editedShowDay,
+        showDate: this.editedShowDate,
+        showSeconds: this.editedShowSeconds
       }
     }
   }
@@ -167,10 +178,12 @@ export default {
 #pleasingLayout {
   .clock {
     .time {
-      margin: 0 auto 0 70px;
       font-size: 8rem;
       font-weight: 200;
       line-height: 7rem;
+      .secondShim {
+        margin: 0 auto 0 70px;
+      }
       .showSeconds {
         font-size: 3.7rem;
         position: relative;
