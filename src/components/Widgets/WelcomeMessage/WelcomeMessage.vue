@@ -7,21 +7,31 @@
     </div>
   <div v-else>
     <div v-if="edit">
-      <form @submit.prevent="onChangeMessage">
-          <v-text-field
-        v-model="messageTitle"
-        label="Title"
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="messageSubtitle"
-        label="Subtitle"
-      ></v-text-field>
-      <v-btn color="red" @click="onCloseEdit">Close</v-btn>
-      <v-btn color="green" :disabled="!formIsValid" type="submit">Add Message</v-btn>
-      </form>
+      <v-dialog v-model="edit" persistent max-width="400">
+        <v-card>
+          <v-card-title class="headline">Configure Message</v-card-title>
+          <v-card-text>
+              <v-text-field
+                v-model="editedMessageTitle"
+                label="Title"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="editedMessageSubtitle"
+                label="Subtitle"
+              ></v-text-field>
+          </v-card-text>
+          <v-card-actions>
+            
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" flat @click="edit = false">Close</v-btn>
+
+            <v-btn color="green darken-1" flat @click="onChangeMessage">Update Message</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
-    <div v-else @click="onClickEdit" class="hoverCursor">
+    <div v-else @click="edit = true" class="hoverCursor">
       <h1 v-if="messageTitle">{{ messageTitle }}</h1>
       <h1 v-else>Placeholder Title</h1>
       <p v-if="messageSubtitle">{{ messageSubtitle }}</p>
@@ -39,7 +49,10 @@ export default {
       loading: true,
       edit: false,
       messageTitle: 'Placeholder Title',
-      messageSubtitle: 'Placeholder Subtitle'
+      messageSubtitle: 'Placeholder Subtitle',
+      editedMessageTitle: 'Placeholder Title',
+      editedMessageSubtitle: 'Placeholder Subtitle'
+
     }
   },
   methods: {
@@ -54,6 +67,8 @@ export default {
         id: this.theId,
         welcomeMessage: this.consolidated
       })
+      this.messageTitle = this.editedMessageTitle
+      this.messageSubtitle = this.editedMessageSubtitle
       this.edit = false
     }
   },
@@ -61,6 +76,8 @@ export default {
     this.loading = false
     this.messageTitle = this.message.welcomeMessageTitle
     this.messageSubtitle = this.message.welcomeMessageSubtitle
+    this.editedMessageTitle = this.message.welcomeMessageTitle
+    this.editedMessageSubtitle = this.message.welcomeMessageSubtitle
   },
   watch: {
     message: function (newVal, oldVal) {
@@ -75,8 +92,8 @@ export default {
     },
     consolidated () {
       return {
-        welcomeMessageTitle: this.messageTitle,
-        welcomeMessageSubtitle: this.messageSubtitle
+        welcomeMessageTitle: this.editedMessageTitle,
+        welcomeMessageSubtitle: this.editedMessageSubtitle
       }
     }
   }

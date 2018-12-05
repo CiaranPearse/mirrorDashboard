@@ -8,61 +8,51 @@
   </div>
   <div v-else>
     <div v-if="edit == true">
-      <form @submit.prevent="onChangeCurrency">
-      Base:<br />
-      <v-radio-group v-model="base" :mandatory="true">
-        <v-radio label="Euro" value="EUR"></v-radio>
-        <v-radio label="US Dollar" value="USD"></v-radio>
-        <v-radio label="British Pound" value="GBP"></v-radio>
-      </v-radio-group>
+      <v-dialog v-model="edit" persistent max-width="400">
+        <v-card>
+          <v-card-title class="headline">Configure Currency</v-card-title>
+          <v-card-text>
+            <form>
+              Base:<br />
+                <v-radio-group v-model="editedBase" :mandatory="true">
+                  <v-radio label="Euro" value="EUR"></v-radio>
+                  <v-radio label="US Dollar" value="USD"></v-radio>
+                  <v-radio label="British Pound" value="GBP"></v-radio>
+                </v-radio-group>
+                Choose up to 5<br />
+                <div>
+                  <v-select
+                    v-model="editedSelectedCurrencies"
+                    :items="items"
+                    attach
+                    chips
+                    label="Chips"
+                    multiple
+                  ></v-select>
+                </div>
+                <div>
+                  <v-radio-group v-model="editedShowFlag" :mandatory="true" row>
+                    <v-radio label="Use Flag" :value="true"></v-radio>
+                    <v-radio label="Use Symbol" :value="false"></v-radio>
+                  </v-radio-group>
+                </div>
+            </form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" flat @click="edit = false">Close</v-btn>
 
-
-      Choose up to 5<br />
-      <div>
-        <v-checkbox v-model="selectedCurrencies" value="USD" label="US Dollar"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="EUR" label="Euro"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="GBP" label="British Pound"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="AUD" label="Australian Dollar"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="BRL" label="Brazilian Real"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="BGN" label="Bulgarian lev"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="CNY" label="Chinese Yuan"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="HRK" label="Croatian Kuna"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="CZK" label="Czech Koruna"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="DKK" label="Danish Krone"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="HKD" label="Hong Kong Dollar"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="HUF" label="Hungarian Forint"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="ISK" label="Icelandic Krona"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="INR" label="Indian Rupee"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="IDR" label="Indonesian Rupiah"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="ILS" label="Israeli Shekel"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="JPY" label="Japanese Yen"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="MYR" label="Malaysian Ringgit"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="MXN" label="Mexican Peso"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="NZD" label="New Zealand Dollar"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="NOK" label="Norwegian Krone"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="PHP" label="Philippine Peso"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="PLN" label="Polish Zloty"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="RON" label="Romanian Leu"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="RUB" label="Russian Ruble"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="SGD" label="Singapore Dollar"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="ZAR" label="South African Rand"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="KRW" label="South Korean Won"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="SEK" label="Swedish Krona"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="CHF" label="Swiss Franc"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="THB" label="Thai Bhat"></v-checkbox>
-        <v-checkbox v-model="selectedCurrencies" value="TRY" label="Turkish Lira"></v-checkbox>
-      </div>
-
-      <v-btn color="red" @click="onCloseEdit">Close</v-btn>
-      <v-btn color="green" type="submit">Update Currency</v-btn>
-      </form>
+            <v-btn color="green darken-1" flat @click="onChangeCurrency">Update Currencies</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       
     </div>
-    <div v-else @click="onClickEdit">
-      <p>Currency Rates</p>
+    <div v-else @click="edit = true">
+      <p>Currency Rates for {{ base }}</p>
       <div v-for="(value, key, index) in allRates">
         <div class="theCurrency">
-          <div class="baseCurrency" v-if="showFlag === true">
+          <!-- <div class="baseCurrency" v-if="showFlag === true">
             <div class="flag" v-if="base == 'USD'"><img src="../../../assets/img/flags/USD.png"/></div>
             <div class="flag" v-if="base == 'EUR'"><img src="../../../assets/img/flags/EUR.png"/></div>
             <div class="flag" v-if="base == 'BGN'"><img src="../../../assets/img/flags/BGN.png"/></div>
@@ -99,7 +89,7 @@
           <div class="baseSymbol" v-if="showFlag === false"><span>{{ base }}</span>
             
           </div>
-          <div class="arrow"><v-icon>arrow_right_alt</v-icon></div>
+          <div class="arrow"><v-icon>arrow_right_alt</v-icon></div> -->
           <div class="toCurrency">
             <div class="flag" :class="key" v-if="showFlag === true">
               <div class="flag" v-if="key == 'USD'"><img src="../../../assets/img/flags/USD.png"/></div>
@@ -158,26 +148,27 @@ export default {
       randomNumber: 3,
       timer: '',
       base: 'EUR',
+      editedBase: '',
       selectedCurrencies: ['EUR'],
+      editedSelectedCurrencies: ['EUR'],
       currency5Rate: '',
       allRates: '',
-      showFlag: true
+      showFlag: true,
+      editedShowFlag: true,
+      items: ['USD', 'EUR', 'GBP', 'AUD', 'BRL', 'BGN', 'CNY', 'HRK', 'CZK', 'DKK', 'HKD', 'HUF', 'ISK', 'INR', 'IDR', 'ILS', 'JPY', 'MYR', 'MXN', 'NZD', 'NOK', 'PHP', 'PLN', 'RON', 'RUB', 'SGD', 'ZAR', 'KRW', 'SEK', 'CHF', 'THB', 'TRY'],
+      value: ['USD', 'EUR', 'GBP', 'AUD', 'BRL', 'BGN', 'CNY', 'HRK', 'CZK', 'DKK', 'HKD', 'HUF', 'ISK', 'INR', 'IDR', 'ILS', 'JPY', 'MYR', 'MXN', 'NZD', 'NOK', 'PHP', 'PLN', 'RON', 'RUB', 'SGD', 'ZAR', 'KRW', 'SEK', 'CHF', 'THB', 'TRY']
     }
   },
   created () {
     this.base = this.currency.base
+    this.editedBase = this.currency.base
     this.selectedCurrencies = this.currency.selectedCurrencies
+    this.editedSelectedCurrencies = this.currency.selectedCurrencies
+    this.showFlag = this.currency.showFlag
+    this.editedShowFlag = this.currency.showFlag
   },
   mounted () {
-    // const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
-    var baseCurrency = this.base
-    axios.get('https://api.exchangeratesapi.io/latest?base=' + baseCurrency + '&symbols=' + this.selectedCurrencies, {
-    })
-    .then(response => {
-      console.log(response.data.rates)
-      this.allRates = response.data.rates
-    })
-    this.loading = false
+    setTimeout(this.getCurrency, 3000)
   },
   methods: {
     onClickEdit () {
@@ -187,19 +178,33 @@ export default {
       this.edit = false
     },
     onChangeCurrency (payload) {
+      this.loading = true
       this.$store.dispatch('updateWidgetData', {
         id: this.theId,
         currency: this.consolidated
       })
-      console.log('changed currency')
+      setTimeout(this.getCurrency, 3000)
+      this.selectedCurrencies = this.editedSelectedCurrencies
+      this.base = this.editedBase
+      this.showFlag = this.editedShowFlag
       this.edit = false
+    },
+    getCurrency () {
+      axios.get('https://api.exchangeratesapi.io/latest?base=' + this.base + '&symbols=' + this.selectedCurrencies, {
+      })
+      .then(response => {
+        console.log(response.data.rates)
+        this.allRates = response.data.rates
+      })
+      this.loading = false
     }
   },
   computed: {
     consolidated () {
       return {
         base: this.base,
-        selectedCurrencies: this.selectedCurrencies
+        selectedCurrencies: this.editedSelectedCurrencies,
+        showFlag: this.editedShowFlag
       }
     }
   }

@@ -1,10 +1,10 @@
 <template>
-	<div v-if="currentTempC === ''">
+	<div v-if="currentTempC === ''" class="loadingShim">
 		<v-progress-circular
 	      indeterminate
 	      color="white"
 	      ></v-progress-circular>
-	      <p>Loading Weather</p>
+	      <p class='body-2'>Updating Weather</p>
 	</div>
 	<div v-else>
 		
@@ -18,22 +18,22 @@
           <h4>You can get your Longitude/Latitude <a href="https://www.latlong.net/" target="_blank">here</a></h4>
           <form>
             <v-text-field
-            v-model="location"
+            v-model="editedLocation"
             label="location"
           ></v-text-field>
           <v-text-field
-            v-model="lat"
+            v-model="editedLat"
             label="Latitude"
           ></v-text-field>
           <v-text-field
-            v-model="long"
+            v-model="editedLong"
             label="Longitude"
           ></v-text-field>
-          <v-radio-group v-model="unit" row>
+          <v-radio-group v-model="editedUnit" row>
              <v-radio label="C" value="c"></v-radio>
               <v-radio label="F" value="f"></v-radio>
           </v-radio-group>
-          <v-radio-group v-model="days" row>
+          <v-radio-group v-model="editedDays" row>
              <v-radio label="Today" value="1"></v-radio>
               <v-radio label="3 Day" value="4"></v-radio>
               <v-radio label="5 Day" value="6"></v-radio>
@@ -161,8 +161,11 @@ export default {
       loading: true,
       edit: false,
       location: '',
+      editedLocation: '',
       lat: '',
+      editedLat: '',
       long: '',
+      editedLong: '',
       summary: '',
       currentIcon: '',
       info: '',
@@ -174,43 +177,24 @@ export default {
       todayLowC: '',
       showDays: '',
       unit: 'c',
+      editedUnit: '',
       days: '1',
+      editedDays: '',
       forecast: ''
     }
   },
   mounted () {
-    console.log(this.loading)
     this.location = this.weather.location
+    this.editedLocation = this.weather.location
     this.lat = this.weather.latitude
+    this.editedLat = this.weather.latitude
     this.long = this.weather.longitude
+    this.editedLong = this.weather.longitude
     this.unit = this.weather.unit
+    this.editedUnit = this.weather.unit
     this.days = this.weather.days
-    var queryString = this.weather.latitude + ',' + this.weather.longitude
-    console.log('First is Long then Lat: ', queryString)
-    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
-    axios.get(CORS_PROXY + `https://api.darksky.net/forecast/3469e148ee58b9591f84c3244bad3199/` + queryString, {
-      headers: {
-        'crossDomain': true,
-        'Access-Control-Allow-Origin': '*'
-      }
-    })
-    .then(response => {
-      console.log(response.data)
-      var currentTemp = response.data.currently.temperature
-      this.currentTempF = currentTemp.toFixed(0)
-      var currentTempC = ((currentTemp - 32) * (5 / 9))
-      this.currentTempC = currentTempC.toFixed(0)
-      this.summary = response.data.currently.summary
-      this.todayHigh = response.data.daily.data[0].temperatureHigh.toFixed(0)
-      var todayHighCel = ((this.todayHigh - 32) * (5 / 9))
-      this.todayHighC = todayHighCel.toFixed(0)
-      this.todayLow = response.data.daily.data[0].temperatureLow.toFixed(0)
-      var todayLowCel = ((this.todayLow - 32) * (5 / 9))
-      this.todayLowC = todayLowCel.toFixed(0)
-      this.currentIcon = response.data.currently.icon
-      this.forecast = response.data.daily.data
-    })
-    this.loading = false
+    this.editedDays = this.weather.days
+    this.getWeather()
   },
   methods: {
     onClickEdit () {
@@ -220,20 +204,47 @@ export default {
       this.edit = false
     },
     onChangeWeather (payload) {
-      console.log('Consolidated: ', this.consolidated)
+      this.currentTempC = ''
       this.$store.dispatch('updateWidgetData', {
         id: this.theId,
         weather: this.consolidated
       })
       this.edit = false
+      setTimeout(this.getWeather, 3000)
     },
     moment: function () {
       return moment()
+    },
+    getWeather () {
+      var queryString = this.lat + ',' + this.long
+      const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+      axios.get(CORS_PROXY + `https://api.darksky.net/forecast/3469e148ee58b9591f84c3244bad3199/` + queryString, {
+        headers: {
+          'crossDomain': true,
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+      .then(response => {
+        queryString = ''
+        var currentTemp = response.data.currently.temperature
+        this.currentTempF = currentTemp.toFixed(0)
+        var currentTempC = ((currentTemp - 32) * (5 / 9))
+        this.currentTempC = currentTempC.toFixed(0)
+        this.summary = response.data.currently.summary
+        this.todayHigh = response.data.daily.data[0].temperatureHigh.toFixed(0)
+        var todayHighCel = ((this.todayHigh - 32) * (5 / 9))
+        this.todayHighC = todayHighCel.toFixed(0)
+        this.todayLow = response.data.daily.data[0].temperatureLow.toFixed(0)
+        var todayLowCel = ((this.todayLow - 32) * (5 / 9))
+        this.todayLowC = todayLowCel.toFixed(0)
+        this.currentIcon = response.data.currently.icon
+        this.forecast = response.data.daily.data
+      })
+      this.loading = false
     }
   },
   watch: {
     weather: function (newVal, oldVal) {
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.lat = this.weather.latitude
       this.long = this.weather.longitude
       this.location = this.weather.location
@@ -248,11 +259,11 @@ export default {
     },
     consolidated () {
       return {
-        location: this.location,
-        latitude: this.lat,
-        longitude: this.long,
-        days: this.days,
-        unit: this.unit
+        location: this.editedLocation,
+        latitude: this.editedLat,
+        longitude: this.editedLong,
+        days: this.editedDays,
+        unit: this.editedUnit
       }
     }
   }
@@ -554,6 +565,9 @@ export default {
 
   #pleasingLayout {
     #leftBlock {
+      .loadingShim {
+        margin-left: 60px;
+      }
       .weather {
         float: left;
         .today {
@@ -592,6 +606,9 @@ export default {
       }
     }
     #rightBlock {
+      .loadingShim {
+        right-left: 60px;
+      }
       .weather {
         float: right;
         .today {
@@ -630,6 +647,9 @@ export default {
       }
     }
     #footerBlock {
+      .loadingShim {
+        margin-left: 40%;
+      }
       .weather {
         width: 50%;
         text-align: center;

@@ -8,6 +8,12 @@
     Loading Dublin Bus
     </div>
     <div v-else>
+      <div v-if="error === true">
+        <p class="body-2">Dublin Bus</p>
+        <p class="body-2">[ERROR]</p>
+        <p>{{ errorMessage }}</p>
+      </div>
+      <div v-else>
       <p>This is Dublin Bus {{ stop1 }}</p>
         <div v-if="edit">
           <h4>Enter Stop ID</h4>
@@ -30,7 +36,7 @@
             {{ time.route }} -- {{ time.destination }} -- {{ time.duetime }} min
           </div>
         </div>
-        
+        </div>
       </div>
     </div>
 
@@ -51,7 +57,8 @@ export default {
       loading: true,
       timer: '',
       times: [],
-      errors: []
+      errors: [],
+      errorMessage: 'Something went wrong. We\'re looking into it'
     }
   },
   mounted () {
@@ -77,6 +84,7 @@ export default {
     })
     .catch(e => {
       console.log('theres an error: ', e)
+      this.loading = false
       this.error = true
     })
   },
