@@ -128,18 +128,14 @@
           <div class="dayTemps" v-if="unit == 'f'">
             <span class="dayHigh ts">
               {{ day.temperatureHigh.toFixed(0) }}
-            </span> / 
+            </span>/
             <span class="dayLow ts">
               {{ day.temperatureLow.toFixed(0) }}
             </span>
           </div>
           <div class="dayTemps" v-else>
-            <span class="dayHigh ts">
-              {{ ((day.temperatureHigh - 32) * (5 / 9)).toFixed(0) }}
-            </span> / 
-            <span class="dayLow ts">
-              {{ ((day.temperatureLow - 32) * (5 / 9)).toFixed(0) }}
-            </span>
+            <span class="dayHigh ts">{{ ((day.temperatureHigh - 32) * (5 / 9)).toFixed(0) }}</span>/
+            <span class="dayLow ts">{{ ((day.temperatureLow - 32) * (5 / 9)).toFixed(0) }}</span>
           </div>
             
         </div>
@@ -586,6 +582,7 @@ export default {
         .location {
           float: right;
           padding-left: 10px;
+          padding-top: 10px;
         }
       }
       .forecast {
@@ -627,6 +624,7 @@ export default {
         .location {
           float: left;
           padding-right: 10px;
+          padding-top: 10px;
         }
       }
       .forecast {
@@ -740,7 +738,7 @@ export default {
           p {
             margin-bottom: 0px;
             &.body-2 {
-              font-size: 1.7rem!important;
+              font-weight: bold;
             }
           }
         }

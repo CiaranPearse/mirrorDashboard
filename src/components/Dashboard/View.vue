@@ -1,6 +1,6 @@
 <template>
   <!-- <v-container fluid fill-height class="theContainer" :style="{ backgroundImage: `url('${backgroundImg}')` }"> -->
-    <v-container fluid fill-height class="theContainer" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/mymirrordashboard.appspot.com/o/wallpapers%2F04081_lagoonnebula_2880x1800.jpg?alt=media&token=2798c451-ca88-45a3-b3da-4140c2fae14d')">
+    <v-container fluid fill-height class="theContainer" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/mymirrordashboard.appspot.com/o/wallpapers%2Ffybevj808a221.jpg?alt=media&token=603116f0-e812-445c-b4b9-281d2ea2fe7e')">
     
       <v-layout row v-if="loading">
         <v-flex xs12 class="text-xs-center" align-self-center>
