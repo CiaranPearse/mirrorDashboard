@@ -12,6 +12,7 @@ import DateFilter from './filters/dates'
 import AlertCmp from './components/Shared/Alert.vue'
 import EditDashboardDetailsDialog from './components/Dashboard/Edit/EditDashboardDetailsDialog.vue'
 import 'vuetify/dist/vuetify.min.css'
+import 'vue-material-design-icons/styles.css'
 
 Vue.use(Vuetify)
 Vue.use(VueAxios, axios)

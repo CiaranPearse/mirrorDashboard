@@ -1,13 +1,13 @@
 <template>
-	<div v-if="currentTempC === ''" class="loadingShim">
-		<v-progress-circular
-	      indeterminate
-	      color="white"
-	      ></v-progress-circular>
-	      <p class='body-2'>Updating Weather</p>
-	</div>
-	<div v-else>
-		
+  <div v-if="currentTempC === ''" class="loadingShim">
+    <v-progress-circular
+        indeterminate
+        color="white"
+        ></v-progress-circular>
+        <p class='body-2'>Updating Weather</p>
+  </div>
+  <div v-else>
+    
 
 
 
@@ -54,21 +54,21 @@
 
 
 
-		<div @click="edit = true" class="hoverCursor">
+    <div @click="edit = true" class="hoverCursor">
       <div class="weather">
         <div class="today">
           <div class="current">
             <div class="icon">
-              <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
-              <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
-              <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
-              <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
-              <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
-              <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
-              <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
-              <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
-              <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
-              <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+              <cloudy v-if="currentIcon == 'cloudy'" class="icon-lead" />
+              <clearday v-if="currentIcon == 'clear-day'" class="icon-lead" />
+              <night v-if="currentIcon == 'clear-night'" class="icon-lead" />
+              <rain v-if="currentIcon == 'rain'" class="icon-lead" />
+              <snow v-if="currentIcon == 'snow'" class="icon-lead" />
+              <sleet v-if="currentIcon == 'sleet'" class="icon-lead" />
+              <wind v-if="currentIcon == 'wind'" class="icon-lead" />
+              <fog v-if="currentIcon == 'fog'" class="icon-lead" />
+              <partlycloudy v-if="currentIcon == 'partly-cloudy-day'" />
+              <partlycloudy v-if="currentIcon == 'partly-cloudy-night'" />
             </div>
             <div class="temp">
               <p v-if="unit === 'f'" class="ts">{{ this.currentTempF }} <sup>F&deg;</sup></p>
@@ -87,16 +87,16 @@
           <p class="subhead">Weather Forecast</p>
         </div>
         <div class="icon">
-          <img v-if="currentIcon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
-          <img v-if="currentIcon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
-          <img v-if="currentIcon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
-          <img v-if="currentIcon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
-          <img v-if="currentIcon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
-          <img v-if="currentIcon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
-          <img v-if="currentIcon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
-          <img v-if="currentIcon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
-          <img v-if="currentIcon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
-          <img v-if="currentIcon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+          <cloudy v-if="currentIcon == 'cloudy'" class="icon-sub" />
+          <clearday v-if="currentIcon == 'clear-day'" class="icon-sub" />
+          <night v-if="currentIcon == 'clear-night'" class="icon-sub" />
+          <rain v-if="currentIcon == 'rain'" class="icon-sub" />
+          <snow v-if="currentIcon == 'snow'" class="icon-sub" />
+          <sleet v-if="currentIcon == 'sleet'" class="icon-sub" />
+          <wind v-if="currentIcon == 'wind'" class="icon-sub" />
+          <fog v-if="currentIcon == 'fog'" class="icon-sub" />
+          <partlycloudy v-if="currentIcon == 'partly-cloudy-day'" class="icon-sub" />
+          <partlycloudy v-if="currentIcon == 'partly-cloudy-night'" class="icon-sub" />
         </div>
         <div class="weatherCurrentTemp">
           <span v-if="unit=='f'" class="currentTemp">{{ this.currentTempF }} <sup>F&deg;</sup> <p class="summary">{{ this.summary }}</p> </span>
@@ -114,16 +114,16 @@
             <span class="shortDay ts">{{ moment(day.time).add(index, 'd').format('dd') }}</span>
           </div>
           <div class="dayIcon ts">
-            <img v-if="day.icon == 'clear-day'" src="../../../assets/img/weatherIcons/clear-day.png" />
-            <img v-if="day.icon == 'clear-night'" src="../../../assets/img/weatherIcons/clear-night.png" />
-            <img v-if="day.icon == 'rain'" src="../../../assets/img/weatherIcons/rain.png" />
-            <img v-if="day.icon == 'snow'" src="../../../assets/img/weatherIcons/snow.png" />
-            <img v-if="day.icon == 'sleet'" src="../../../assets/img/weatherIcons/sleet.png" />
-            <img v-if="day.icon == 'wind'" src="../../../assets/img/weatherIcons/wind.png" />
-            <img v-if="day.icon == 'fog'" src="../../../assets/img/weatherIcons/fog.png" />
-            <img v-if="day.icon == 'cloudy'" src="../../../assets/img/weatherIcons/cloudy.png" />
-            <img v-if="day.icon == 'partly-cloudy-day'" src="../../../assets/img/weatherIcons/partly-cloudy-day.png" />
-            <img v-if="day.icon == 'partly-cloudy-night'" src="../../../assets/img/weatherIcons/partly-cloudy-night.png" />
+            <cloudy v-if="day.icon == 'cloudy'" class="icon-sub" />
+          <clearday v-if="day.icon == 'clear-day'" class="icon-sub" />
+          <night v-if="day.icon == 'clear-night'" class="icon-sub" />
+          <rain v-if="day.icon == 'rain'" class="icon-sub" />
+          <snow v-if="day.icon == 'snow'" class="icon-sub" />
+          <sleet v-if="day.icon == 'sleet'" class="icon-sub" />
+          <wind v-if="day.icon == 'wind'" class="icon-sub" />
+          <fog v-if="day.icon == 'fog'" class="icon-sub" />
+          <partlycloudy v-if="day.icon == 'partly-cloudy-day'" class="icon-sub" />
+          <partlycloudy v-if="day.icon == 'partly-cloudy-night'" class="icon-sub" />
           </div>
           <div class="dayTemps" v-if="unit == 'f'">
             <span class="dayHigh ts">
@@ -150,6 +150,15 @@
 <script>
 import moment from 'moment'
 import axios from 'axios'
+import cloudy from 'vue-material-design-icons/WeatherCloudy.vue'
+import clearday from 'vue-material-design-icons/WeatherSunny.vue'
+import night from 'vue-material-design-icons/WeatherNight.vue'
+import rain from 'vue-material-design-icons/WeatherRainy.vue'
+import snow from 'vue-material-design-icons/WeatherSnowy.vue'
+import sleet from 'vue-material-design-icons/WeatherHail.vue'
+import wind from 'vue-material-design-icons/WeatherWindy.vue'
+import fog from 'vue-material-design-icons/WeatherFog.vue'
+import partlycloudy from 'vue-material-design-icons/WeatherPartlycloudy.vue'
 export default {
   props: ['weather', 'theId'],
   data () {
@@ -178,6 +187,17 @@ export default {
       editedDays: '',
       forecast: ''
     }
+  },
+  components: {
+    cloudy,
+    clearday,
+    night,
+    rain,
+    snow,
+    sleet,
+    wind,
+    fog,
+    partlycloudy
   },
   mounted () {
     this.location = this.weather.location
@@ -265,7 +285,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   // .weatherHeader {
   // }
   // .weatherHeader .location {
@@ -557,6 +577,24 @@ export default {
   //   margin-top: 10px;
   //   float: right;
   // }
+
+
+  .material-design-icon.icon-lead {
+    height: 5em;
+    width: 5em;
+    .material-design-icon__svg {
+      height: 5em;
+      width: 5em;
+    }
+  }
+  .material-design-icon.icon-sub{
+    height: 2em;
+    width: 2m;
+    .material-design-icon__svg {
+      height: 2em;
+      width: 2em;
+    }
+  }
 
 
   #pleasingLayout {
