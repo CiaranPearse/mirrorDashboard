@@ -32,8 +32,16 @@
           </v-flex>
         </v-layout>
         <v-layout id="footerBlock">
-          <v-flex xs12 align-self-end>
+          <v-flex xs2 id="photoCredit">
+            <div v-if="backgroundAuthor">
+              <strong class="ts">Photo by:</strong>
+              <a :href="this.backgroundLink" class="ts">/r/{{ this.backgroundAuthor }}</a>
+            </div>
+          </v-flex>
+          <v-flex xs8 align-self-end>
            <component v-bind:is="dashboard.slotFooter" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
+          </v-flex>
+          <v-flex xs2>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -120,7 +128,8 @@ export default {
       deviceLocation: '',
       backgroundImg: '',
       backgroundType: 'default',
-      backgroundAuthor: ''
+      backgroundAuthor: '',
+      backgroundLink: ''
     }
   },
   computed: {
@@ -220,6 +229,7 @@ export default {
           console.log(response.data.data.children[randomnumber].data.author)
           this.backgroundImg = response.data.data.children[randomnumber].data.url
           this.backgroundAuthor = response.data.data.children[randomnumber].data.author
+          this.backgroundLink = 'http://www.reddit.com' + response.data.data.children[randomnumber].data.permalink
         })
       }
     }
@@ -294,6 +304,19 @@ export default {
   }
   #footerBlock {
     height: 10%;
+    #photoCredit {
+      strong {
+        font-size: 12px;
+        display: block;
+      }
+      position: absolute;
+      bottom: 0;
+      opacity: 0.5;
+      a {
+        color: white;
+        opacity: 0.5;
+      }
+    }
   }
 }
 
