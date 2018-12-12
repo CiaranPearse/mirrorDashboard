@@ -1,9 +1,14 @@
 <template>
   <div v-if="loading">
-      <v-progress-circular
-      indeterminate
-      color="white"
-      ></v-progress-circular>
+     <v-layout row>
+        <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
     </div>
   <div v-else>
     <div v-if="edit">
@@ -41,7 +46,7 @@
 </template>
 
 <script>
-
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['message', 'theId'],
   data () {
@@ -54,6 +59,9 @@ export default {
       editedMessageSubtitle: 'Placeholder Subtitle'
 
     }
+  },
+  components: {
+    OrbitSpinner
   },
   methods: {
     onClickEdit () {

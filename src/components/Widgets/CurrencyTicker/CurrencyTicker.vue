@@ -1,10 +1,13 @@
 <template>
-  <div v-if="loading == true">
-    <v-progress-circular
-      indeterminate
-      color="white"
-      ></v-progress-circular>
-      <p>Loading Exchange Rates</p>
+  <div v-if="loading">
+        <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
   </div>
   <div v-else>
     <div v-if="edit == true">
@@ -52,44 +55,6 @@
       <p>Currency Rates for {{ base }}</p>
       <div v-for="(value, key, index) in allRates">
         <div class="theCurrency">
-          <!-- <div class="baseCurrency" v-if="showFlag === true">
-            <div class="flag" v-if="base == 'USD'"><img src="../../../assets/img/flags/USD.png"/></div>
-            <div class="flag" v-if="base == 'EUR'"><img src="../../../assets/img/flags/EUR.png"/></div>
-            <div class="flag" v-if="base == 'BGN'"><img src="../../../assets/img/flags/BGN.png"/></div>
-            <div class="flag" v-if="base == 'BRL'"><img src="../../../assets/img/flags/BRL.png"/></div>
-            <div class="flag" v-if="base == 'HUF'"><img src="../../../assets/img/flags/HUF.png"/></div>
-            <div class="flag" v-if="base == 'DKK'"><img src="../../../assets/img/flags/DKK.png"/></div>
-            <div class="flag" v-if="base == 'JPY'"><img src="../../../assets/img/flags/JPY.png"/></div>
-            <div class="flag" v-if="base == 'ILS'"><img src="../../../assets/img/flags/ILS.png"/></div>
-            <div class="flag" v-if="base == 'TRY'"><img src="../../../assets/img/flags/TRY.png"/></div>
-            <div class="flag" v-if="base == 'RON'"><img src="../../../assets/img/flags/RON.png"/></div>
-            <div class="flag" v-if="base == 'GBP'"><img src="../../../assets/img/flags/GBP.png"/></div>
-            <div class="flag" v-if="base == 'PHP'"><img src="../../../assets/img/flags/PHP.png"/></div>
-            <div class="flag" v-if="base == 'HRK'"><img src="../../../assets/img/flags/HRK.png"/></div>
-            <div class="flag" v-if="base == 'NOK'"><img src="../../../assets/img/flags/NOK.png"/></div>
-            <div class="flag" v-if="base == 'MXN'"><img src="../../../assets/img/flags/MXN.png"/></div>
-            <div class="flag" v-if="base == 'AUD'"><img src="../../../assets/img/flags/AUD.png"/></div>
-            <div class="flag" v-if="base == 'IDR'"><img src="../../../assets/img/flags/IDR.png"/></div>
-            <div class="flag" v-if="base == 'KRW'"><img src="../../../assets/img/flags/KRW.png"/></div>
-            <div class="flag" v-if="base == 'HKD'"><img src="../../../assets/img/flags/HKD.png"/></div>
-            <div class="flag" v-if="base == 'ZAR'"><img src="../../../assets/img/flags/ZAR.png"/></div>
-            <div class="flag" v-if="base == 'ISK'"><img src="../../../assets/img/flags/ISK.png"/></div>
-            <div class="flag" v-if="base == 'CZK'"><img src="../../../assets/img/flags/CZK.png"/></div>
-            <div class="flag" v-if="base == 'THB'"><img src="../../../assets/img/flags/THB.png"/></div>
-            <div class="flag" v-if="base == 'MYR'"><img src="../../../assets/img/flags/MYR.png"/></div>
-            <div class="flag" v-if="base == 'NZD'"><img src="../../../assets/img/flags/NZD.png"/></div>
-            <div class="flag" v-if="base == 'PLN'"><img src="../../../assets/img/flags/PLN.png"/></div>
-            <div class="flag" v-if="base == 'SEK'"><img src="../../../assets/img/flags/SEK.png"/></div>
-            <div class="flag" v-if="base == 'RUB'"><img src="../../../assets/img/flags/RUB.png"/></div>
-            <div class="flag" v-if="base == 'CNY'"><img src="../../../assets/img/flags/CYN.png"/></div>
-            <div class="flag" v-if="base == 'SGD'"><img src="../../../assets/img/flags/SGD.png"/></div>
-            <div class="flag" v-if="base == 'CHF'"><img src="../../../assets/img/flags/CHF.png"/></div>
-            <div class="flag" v-if="base == 'INR'"><img src="../../../assets/img/flags/INR.png"/></div>
-          </div>
-          <div class="baseSymbol" v-if="showFlag === false"><span>{{ base }}</span>
-            
-          </div>
-          <div class="arrow"><v-icon>arrow_right_alt</v-icon></div> -->
           <div class="toCurrency">
             <div class="flag" :class="key" v-if="showFlag === true">
               <div class="flag" v-if="key == 'USD'"><img src="../../../assets/img/flags/USD.png"/></div>
@@ -139,6 +104,7 @@
 
 <script>
 import axios from 'axios'
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['currency', 'theId'],
   data () {
@@ -158,6 +124,9 @@ export default {
       items: ['USD', 'EUR', 'GBP', 'AUD', 'BRL', 'BGN', 'CNY', 'HRK', 'CZK', 'DKK', 'HKD', 'HUF', 'ISK', 'INR', 'IDR', 'ILS', 'JPY', 'MYR', 'MXN', 'NZD', 'NOK', 'PHP', 'PLN', 'RON', 'RUB', 'SGD', 'ZAR', 'KRW', 'SEK', 'CHF', 'THB', 'TRY'],
       value: ['USD', 'EUR', 'GBP', 'AUD', 'BRL', 'BGN', 'CNY', 'HRK', 'CZK', 'DKK', 'HKD', 'HUF', 'ISK', 'INR', 'IDR', 'ILS', 'JPY', 'MYR', 'MXN', 'NZD', 'NOK', 'PHP', 'PLN', 'RON', 'RUB', 'SGD', 'ZAR', 'KRW', 'SEK', 'CHF', 'THB', 'TRY']
     }
+  },
+  components: {
+    OrbitSpinner
   },
   created () {
     this.base = this.currency.base

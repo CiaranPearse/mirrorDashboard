@@ -1,11 +1,14 @@
 <template>
     <div v-if="loading === true">
-      <v-progress-circular
-      indeterminate
-      color="white"
-      ></v-progress-circular><br />
-      Loading Clock
-      </div>
+      <v-layout row v-if="loading">
+        <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
     </div>
 
     <div v-else>
@@ -77,6 +80,7 @@
 
 <script>
 import { getHourTime, getZeroPad } from './Filters'
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['clock', 'theId'],
   data () {
@@ -104,6 +108,9 @@ export default {
       edit: false,
       switch1: true
     }
+  },
+  components: {
+    OrbitSpinner
   },
   mounted () {
     this.$options.interval = setInterval(this.updateDateTime, 1000)

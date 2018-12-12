@@ -1,8 +1,14 @@
 <template>
   <div v-if="loading">
-    <div id="peopleInSpace">
-      <strong>Loading</strong>  
-    </div>
+    <v-layout row>
+        <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
   </div>
 
   <div v-else>
@@ -20,12 +26,16 @@
 
 <script>
 import axios from 'axios'
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   data () {
     return {
-      loading: false,
+      loading: true,
       people: ''
     }
+  },
+  components: {
+    OrbitSpinner
   },
   mounted () {
     axios.get('http://api.open-notify.org/astros.json', {

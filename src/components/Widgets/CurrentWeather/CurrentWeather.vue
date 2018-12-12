@@ -1,11 +1,11 @@
 <template>
   <div v-if="currentTempC === ''" class="loadingShim">
-    <v-progress-circular
-        indeterminate
-        color="white"
-        ></v-progress-circular>
-        <p class='body-2'>Updating Weather</p>
-  </div>
+    <orbit-spinner
+  :animation-duration="1200"
+  :size="55"
+  color="#ffffff"
+/>
+</div>
   <div v-else>
     
 
@@ -159,6 +159,7 @@ import sleet from 'vue-material-design-icons/WeatherHail.vue'
 import wind from 'vue-material-design-icons/WeatherWindy.vue'
 import fog from 'vue-material-design-icons/WeatherFog.vue'
 import partlycloudy from 'vue-material-design-icons/WeatherPartlycloudy.vue'
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['weather', 'theId'],
   data () {
@@ -197,7 +198,8 @@ export default {
     sleet,
     wind,
     fog,
-    partlycloudy
+    partlycloudy,
+    OrbitSpinner
   },
   mounted () {
     this.location = this.weather.location
@@ -579,12 +581,12 @@ export default {
   // }
 
 
-  .material-design-icon.icon-lead {
-    height: 5em;
-    width: 5em;
+  .material-design-icon {
+    height: 4em;
+    width: 4em;
     .material-design-icon__svg {
-      height: 5em;
-      width: 5em;
+      height: 4em;
+      width: 4em;
     }
   }
   .material-design-icon.icon-sub{

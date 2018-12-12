@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "epic-spinners": "^1.0.4",
     "firebase": "^5.5.9",
     "moment-timezone": "^0.5.23",
     "vue": "^2.5.2",

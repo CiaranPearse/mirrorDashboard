@@ -1,7 +1,15 @@
 <template>
   <div v-if="loading == 'true'">
     <div id="uberRealWaitTime">
-      <strong>Loading</strong>  
+      <v-layout row>
+        <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
     </div>
   </div>
 
@@ -39,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['uber', 'dashInfo'],
   data () {
@@ -49,6 +58,9 @@ export default {
       long: '',
       rides: ''
     }
+  },
+  components: {
+    OrbitSpinner
   },
   // Fetches posts when the component is created.
   created () {

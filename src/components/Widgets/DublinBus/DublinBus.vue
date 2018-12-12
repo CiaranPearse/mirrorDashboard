@@ -1,11 +1,14 @@
 <template>
   <div>
     <div v-if="loading">
-      <v-progress-circular
-      indeterminate
-      color="white"
-    ></v-progress-circular><br />
-    Loading Dublin Bus
+      <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
     </div>
     <div v-else>
       <div v-if="error === true">
@@ -44,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['dublinBus'],
   data () {
@@ -60,6 +64,9 @@ export default {
       errors: [],
       errorMessage: 'Something went wrong. We\'re looking into it'
     }
+  },
+  components: {
+    OrbitSpinner
   },
   mounted () {
     this.$options.interval = setInterval(this.changedNumber, 10000)

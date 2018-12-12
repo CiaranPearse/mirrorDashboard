@@ -1,15 +1,13 @@
 <template>
   <!-- <v-container fluid fill-height class="theContainer" :style="{ backgroundImage: `url('${backgroundImg}')` }"> -->
-    <v-container fluid fill-height class="theContainer" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/mymirrordashboard.appspot.com/o/wallpapers%2Ffybevj808a221.jpg?alt=media&token=603116f0-e812-445c-b4b9-281d2ea2fe7e')">
-    
+    <v-container fluid fill-height id="backgroundContainer" class="theContainer" v-bind:style="{ 'background-image': 'url(' + backgroundImg + ')' }">
       <v-layout row v-if="loading">
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <v-progress-circular
-            indeterminate
-            color="white"
-            :width="7"
-            :size="70"></v-progress-circular>
-            <p class="title">Loading ...</p>
+          <orbit-spinner    
+            :animation-duration="1200"    
+            :size="55"    
+            color="#ffffff"   
+          />
         </v-flex>
       </v-layout>
       <v-layout row v-else>
@@ -31,7 +29,6 @@
         </v-layout>
         <v-layout id="bottomCenterBlock">
           <v-flex xs12 align-self-center>
-           
           </v-flex>
         </v-layout>
         <v-layout id="footerBlock">
@@ -113,27 +110,18 @@ import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 import Uber from '../Widgets/Uber'
 import PeopleInSpace from '../Widgets/PeopleInSpace'
+import { OrbitSpinner } from 'epic-spinners'
+import moment from 'moment-timezone'
 export default {
   props: ['id'],
   data () {
     return {
       dashTitle: '',
       deviceLocation: '',
-      backgroundImg: ''
+      backgroundImg: '',
+      backgroundType: 'default',
+      backgroundAuthor: ''
     }
-  },
-  mounted () {
-    axios.get('https://www.reddit.com/r/EarthPorn/top/.json', {
-    })
-    .then(response => {
-      var responseLength = response.data.data.children.length
-      console.log(responseLength)
-      var randomnumber = Math.floor(Math.random() * (responseLength - 0)) + 0
-      console.log(randomnumber)
-      console.log(response.data.data.children[randomnumber].data.url)
-      this.backgroundImg = response.data.data.children[randomnumber].data.url
-    })
-    this.loading = false
   },
   computed: {
     dashboard () {
@@ -193,6 +181,49 @@ export default {
       }
     }
   },
+  watch: {
+    dashboard () {
+      console.log(this.dashboard)
+      console.log('dashboard Changed!')
+      console.log(moment().format('DDD'))
+      this.dashTitle = this.dashboard.dashTitle
+      this.deviceLocation = this.dashboard.deviceLocation
+      this.backgroundType = this.dashboard.backgroundType
+      if (this.dashboard.backgroundType === 'solid') {
+        console.log('its solid')
+      }
+      if (this.dashboard.backgroundType === 'flickr') {
+        console.log('its FLICKR')
+        axios({
+          method: 'GET',
+          url: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=nature&format=json',
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:8080'
+          }
+        }).then((data) => {
+          console.log(data)
+        })
+      }
+      if (this.dashboard.backgroundType === 'dropbox') {
+        console.log('its DROPBOX')
+      }
+      if (this.dashboard.backgroundType === 'earthporn') {
+        console.log('its EARTH PORN')
+        axios.get('https://www.reddit.com/r/EarthPorn/top/.json', {
+        })
+        .then(response => {
+          var responseLength = response.data.data.children.length
+          console.log(responseLength)
+          var randomnumber = Math.floor(Math.random() * (responseLength - 0)) + 0
+          console.log(randomnumber)
+          console.log(response.data.data.children[randomnumber].data.url)
+          console.log(response.data.data.children[randomnumber].data.author)
+          this.backgroundImg = response.data.data.children[randomnumber].data.url
+          this.backgroundAuthor = response.data.data.children[randomnumber].data.author
+        })
+      }
+    }
+  },
   beforeCreate: function () {
     document.body.className = 'viewPage'
   },
@@ -208,7 +239,8 @@ export default {
     'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage,
     'Uber': Uber,
-    'PeopleInSpace': PeopleInSpace
+    'PeopleInSpace': PeopleInSpace,
+    OrbitSpinner
   }
 }
 </script>
@@ -219,6 +251,10 @@ export default {
  background-repeat: no-repeat;
  background-position: center;
  background-size: cover;
+}
+.orbit-spinner {    
+  text-align: center;   
+  margin: 0 auto;   
 }
 
 /* PLEASING LAYOUT */
@@ -261,12 +297,6 @@ export default {
   }
 }
 
-
-
-
-
-
-
 .redborder {
   border: 1px solid red;
 }
@@ -287,3 +317,6 @@ export default {
     text-align: center;
   }
 </style>
+
+
+

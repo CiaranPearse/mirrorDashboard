@@ -134,7 +134,7 @@
                         </v-radio-group>
 											</v-flex>
 
-											<v-flex xs8>
+											<v-flex xs5>
 												<h3>Layout</h3>
 												<v-radio-group v-model="dashboardLayout" row>
 													<v-radio value="pleasing" v-if="dashboardDevice == 'monitor' || dashboardDevice == 'kiosk' || dashboardDevice == 'mirror'">
@@ -155,6 +155,76 @@
 												</v-radio-group>
 												
 											</v-flex>
+
+                      <v-flex xs3>
+                        <h3>Background</h3>
+                        <v-radio-group v-model="backgroundType" column>
+                          <div v-if="dashboardDevice === 'mirror'">
+                            <v-radio value="MirrorBg">
+                              <div slot="label">Mirror Background</div>
+                            </v-radio>
+                          </div>
+                          <div v-else>
+                            <v-radio value="solid">
+                              <div slot="label">Black</div>
+                            </v-radio>
+                            <!-- <v-radio value="flickr">
+                              <div slot="label">Flickr</div>
+                            </v-radio>
+                            <v-radio value="dropbox">
+                              <div slot="label">Dropbox</div>
+                            </v-radio> -->
+                            <v-radio value="earthporn">
+                              <div slot="label">Reddit EarthPorn</div>
+                            </v-radio>
+                          </div>
+                        </v-radio-group>
+                      </v-flex>
+                      <!-- <v-flex xs3>
+                        <h3>Background Source</h3>
+                        <div v-if="dashboardDevice === 'mirror'">
+                          <v-radio value="Black">
+                            <div slot="label">Black</div>
+                          </v-radio>
+                        </div>
+                        <div v-else>
+                          <div v-if="backgroundType === 'solid'">
+                            <v-radio-group v-model="backgroundSource" column>
+                              <v-radio value="Black" selected>
+                                <div slot="label">Black</div>
+                              </v-radio>
+                              <v-radio value="White">
+                                <div slot="label">White</div>
+                              </v-radio>
+                              <v-radio value="Red">
+                                <div slot="label">Red</div>
+                              </v-radio>
+                            </v-radio-group>
+                          </div>
+                          <div v-else-if="backgroundType === 'earthporn'">
+                            <v-text-field
+                              name="backgroundSource"
+                              id="backgroundSource"
+                              v-model="backgroundSource"
+                              required
+                              value="reddit.com/r/earthPorn"
+                              hidden
+                              >
+                            </v-text-field>
+                            <p>We'll fetch the top images from reddit.com/earthPorn</p>
+                          </div>
+                          <div v-else>
+                              <v-text-field
+                              name="backgroundSource"
+                              label="Whats the URL of the source"
+                              id="backgroundSource"
+                              v-model="backgroundSource"
+                              required
+                              >
+                            </v-text-field>
+                          </div>
+                        </div>
+                      </v-flex> -->
 										</v-layout>
     
 
@@ -534,6 +604,8 @@ export default {
       editedSlotRight3: '',
       editedSlotFooter: '',
       updated: null,
+      backgroundSource: null,
+      backgroundType: 'Solid Color',
       widgets: [
         'BBCNews',
         'CNNWorldNews',
@@ -619,6 +691,10 @@ export default {
     this.longitude = this.dashboard.longitude
     this.latitude = this.dashboard.latitude
     this.dashboardDevice = this.dashboard.deviceType
+    if (this.dashboard.backgroundType !== undefined) {
+      this.backgroundType = this.dashboard.backgroundType
+    }
+    this.backgroundSource = this.dashboard.backgroundSource
     this.searchLeft1 = this.dashboard.slotLeft1
     this.searchLeft2 = this.dashboard.slotLeft2
     this.searchLeft3 = this.dashboard.slotLeft3
@@ -639,7 +715,6 @@ export default {
     this.editedSlotRight2 = this.dashboard.slotRight2
     this.editedSlotRight3 = this.dashboard.slotRight3
     this.editedSlotFooter = this.dashboard.slotFooter
-    this.deviceType = this.dashboard.deviceType
     this.dashInfo = {'dashId': this.id, 'longitude': this.dashboard.longitude, 'latitude': this.dashboard.latitude}
     this.loading = false
   },
@@ -668,6 +743,8 @@ export default {
         longitude: this.longitude,
         latitude: this.latitude,
         deviceType: this.dashboardDevice,
+        backgroundType: this.backgroundType,
+        backgroundSource: this.backgroundSource,
         slotLeft1: this.editedSlotLeft1,
         slotLeft2: this.editedSlotLeft2,
         slotLeft3: this.editedSlotLeft3,

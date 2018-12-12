@@ -56,6 +56,12 @@ export const store = new Vuex.Store({
       if (payload.deviceId) {
         dashboard.deviceId = payload.deviceId
       }
+      if (payload.backgroundType) {
+        dashboard.backgroundType = payload.backgroundType
+      }
+      if (payload.backgroundSource) {
+        dashboard.backgroundSource = payload.backgroundSource
+      }
       if (payload.deviceLocation) {
         dashboard.deviceLocation = payload.deviceLocation
       }
@@ -144,6 +150,8 @@ export const store = new Vuex.Store({
             dashboards.push({
               id: key,
               deviceId: obj[key].deviceId,
+              backgroundType: obj[key].backgroundType,
+              backgroundSource: obj[key].backgroundSource,
               dashTitle: obj[key].dashTitle,
               deviceLocation: obj[key].deviceLocation,
               longitude: obj[key].longitude,
@@ -177,6 +185,8 @@ export const store = new Vuex.Store({
         dashTitle: payload.dashTitle,
         deviceId: payload.deviceId,
         deviceLocation: payload.deviceLocation,
+        backgroundSource: payload.backgroundSource,
+        backgroundType: payload.backgroundType,
         longitude: payload.longitude,
         latitude: payload.latitude,
         created: payload.created,
@@ -204,6 +214,12 @@ export const store = new Vuex.Store({
       }
       if (payload.deviceId) {
         updateObj.deviceId = payload.deviceId
+      }
+      if (payload.backgroundType) {
+        updateObj.backgroundType = payload.backgroundType
+      }
+      if (payload.backgroundSource) {
+        updateObj.backgroundSource = payload.backgroundSource
       }
       if (payload.deviceLocation) {
         updateObj.deviceLocation = payload.deviceLocation

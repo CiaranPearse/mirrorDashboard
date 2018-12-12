@@ -1,11 +1,14 @@
 <template>
   <div v-if="loading">
-    <v-progress-circular
-    indeterminate
-    color="white"
-    ></v-progress-circular><br />
-    Loading Quotes
-    </div>
+    <v-layout row>
+        <v-flex xs12 class="text-xs-center" align-self-center>
+          <orbit-spinner
+            :animation-duration="1200"
+            :size="55"
+            color="#ffffff"
+          />
+        </v-flex>
+      </v-layout>
   </div>
   <div v-else>
 
@@ -46,7 +49,7 @@
 </template>
 
 <script>
-
+import { OrbitSpinner } from 'epic-spinners'
 export default {
   props: ['quoted'],
   data () {
@@ -636,6 +639,9 @@ export default {
         ]
       }
     }
+  },
+  components: {
+    OrbitSpinner
   },
   mounted () {
     this.$options.interval = setInterval(this.changedNumber, this.timer)
