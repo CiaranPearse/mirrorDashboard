@@ -2,7 +2,7 @@
   <div v-if="loading">
      <v-layout row>
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner
+          <welcomemessage-orbit-spinner
             :animation-duration="1200"
             :size="55"
             color="#ffffff"
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { OrbitSpinner } from 'epic-spinners'
+import { WelcomemessageOrbitSpinner } from 'epic-spinners'
 export default {
   props: ['message', 'theId'],
   data () {
@@ -61,7 +61,7 @@ export default {
     }
   },
   components: {
-    OrbitSpinner
+    WelcomemessageOrbitSpinner
   },
   methods: {
     onClickEdit () {
@@ -109,6 +109,10 @@ export default {
 </script>
 
 <style>
+.updateMsg {
+  padding-top: 10px;
+  font-weight: 600;
+}
 .quotes{
   margin-top: -10px;
   font-family: 'Roboto', sans-serif;

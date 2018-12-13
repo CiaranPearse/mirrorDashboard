@@ -1,6 +1,6 @@
 <template>
   <div v-if="currentTempC === ''" class="loadingShim">
-    <orbit-spinner
+    <weather-orbit-spinner
   :animation-duration="1200"
   :size="55"
   color="#ffffff"
@@ -159,7 +159,7 @@ import sleet from 'vue-material-design-icons/WeatherHail.vue'
 import wind from 'vue-material-design-icons/WeatherWindy.vue'
 import fog from 'vue-material-design-icons/WeatherFog.vue'
 import partlycloudy from 'vue-material-design-icons/WeatherPartlycloudy.vue'
-import { OrbitSpinner } from 'epic-spinners'
+import { WeatherOrbitSpinner } from 'epic-spinners'
 export default {
   props: ['weather', 'theId'],
   data () {
@@ -199,7 +199,7 @@ export default {
     wind,
     fog,
     partlycloudy,
-    OrbitSpinner
+    WeatherOrbitSpinner
   },
   mounted () {
     this.location = this.weather.location
@@ -602,7 +602,7 @@ export default {
   #pleasingLayout {
     #leftBlock {
       .loadingShim {
-        margin-left: 60px;
+        float: left;
       }
       .weather {
         float: left;
@@ -644,7 +644,7 @@ export default {
     }
     #rightBlock {
       .loadingShim {
-        right-left: 60px;
+        float: right;
       }
       .weather {
         float: right;

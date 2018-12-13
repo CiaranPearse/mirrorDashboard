@@ -2,7 +2,7 @@
   <div v-if="loading">
     <v-layout row>
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner
+          <quotes-orbit-spinner
             :animation-duration="1200"
             :size="55"
             color="#ffffff"
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { OrbitSpinner } from 'epic-spinners'
+import { QuotesOrbitSpinner } from 'epic-spinners'
 export default {
   props: ['quoted'],
   data () {
@@ -641,7 +641,7 @@ export default {
     }
   },
   components: {
-    OrbitSpinner
+    QuotesOrbitSpinner
   },
   mounted () {
     this.$options.interval = setInterval(this.changedNumber, this.timer)
@@ -679,7 +679,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.updateMsg {
+  padding-top: 10px;
+  font-weight: 600;
+}
 .quotes{
   margin-top: -10px;
   font-family: 'Roboto', sans-serif;

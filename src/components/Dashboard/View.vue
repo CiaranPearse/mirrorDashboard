@@ -3,7 +3,7 @@
     <v-container fluid fill-height id="backgroundContainer" class="theContainer" v-bind:style="{ 'background-image': 'url(' + backgroundImg + ')' }">
       <v-layout row v-if="loading">
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner    
+          <dashboard-orbit-spinner    
             :animation-duration="1200"    
             :size="55"    
             color="#ffffff"   
@@ -118,7 +118,7 @@ import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 import Uber from '../Widgets/Uber'
 import PeopleInSpace from '../Widgets/PeopleInSpace'
-import { OrbitSpinner } from 'epic-spinners'
+import { DashboardOrbitSpinner } from 'epic-spinners'
 import moment from 'moment-timezone'
 export default {
   props: ['id'],
@@ -250,7 +250,7 @@ export default {
     'WelcomeMessage': WelcomeMessage,
     'Uber': Uber,
     'PeopleInSpace': PeopleInSpace,
-    OrbitSpinner
+    DashboardOrbitSpinner
   }
 }
 </script>

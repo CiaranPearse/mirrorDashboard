@@ -2,7 +2,7 @@
   <div>
     <div v-if="loading">
       <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner
+          <dublinbus-orbit-spinner
             :animation-duration="1200"
             :size="55"
             color="#ffffff"
@@ -47,7 +47,7 @@
 
 <script>
 import axios from 'axios'
-import { OrbitSpinner } from 'epic-spinners'
+import { DublinbusOrbitSpinner } from 'epic-spinners'
 export default {
   props: ['dublinBus'],
   data () {
@@ -66,7 +66,7 @@ export default {
     }
   },
   components: {
-    OrbitSpinner
+    DublinbusOrbitSpinner
   },
   mounted () {
     this.$options.interval = setInterval(this.changedNumber, 10000)

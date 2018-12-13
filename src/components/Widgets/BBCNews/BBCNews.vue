@@ -3,7 +3,7 @@
 
       <v-layout row v-if="loading">
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner
+          <news-orbit-spinner
             :animation-duration="1200"
             :size="55"
             color="#ffffff"
@@ -35,7 +35,7 @@
 
 <script>
 import axios from 'axios'
-import { OrbitSpinner } from 'epic-spinners'
+import { NewsOrbitSpinner } from 'epic-spinners'
 var parseString = require('xml2js').parseString
 export default {
   data () {
@@ -47,7 +47,7 @@ export default {
     }
   },
   components: {
-    OrbitSpinner
+    NewsOrbitSpinner
   },
   // Fetches posts when the component is created.
   created () {

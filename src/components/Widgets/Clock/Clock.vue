@@ -2,7 +2,7 @@
     <div v-if="loading === true">
       <v-layout row v-if="loading">
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner
+          <clock-orbit-spinner
             :animation-duration="1200"
             :size="55"
             color="#ffffff"
@@ -80,7 +80,7 @@
 
 <script>
 import { getHourTime, getZeroPad } from './Filters'
-import { OrbitSpinner } from 'epic-spinners'
+import { ClockOrbitSpinner } from 'epic-spinners'
 export default {
   props: ['clock', 'theId'],
   data () {
@@ -110,7 +110,7 @@ export default {
     }
   },
   components: {
-    OrbitSpinner
+    ClockOrbitSpinner
   },
   mounted () {
     this.$options.interval = setInterval(this.updateDateTime, 1000)

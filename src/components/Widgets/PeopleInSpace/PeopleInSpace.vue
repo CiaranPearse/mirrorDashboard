@@ -2,7 +2,7 @@
   <div v-if="loading">
     <v-layout row>
         <v-flex xs12 class="text-xs-center" align-self-center>
-          <orbit-spinner
+          <peopleinspace-orbit-spinner
             :animation-duration="1200"
             :size="55"
             color="#ffffff"
@@ -26,7 +26,7 @@
 
 <script>
 import axios from 'axios'
-import { OrbitSpinner } from 'epic-spinners'
+import { PeopleinspaceOrbitSpinner } from 'epic-spinners'
 export default {
   data () {
     return {
@@ -35,7 +35,7 @@ export default {
     }
   },
   components: {
-    OrbitSpinner
+    PeopleinspaceOrbitSpinner
   },
   mounted () {
     axios.get('http://api.open-notify.org/astros.json', {
