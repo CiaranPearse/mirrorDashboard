@@ -1,8 +1,8 @@
 <template>
-  <div v-if="loading == 'true'">
+  <div v-if="rides === ''">
     <div id="uberRealWaitTime">
       <v-layout row>
-        <v-flex xs12 class="text-xs-center" align-self-center>
+        <v-flex xs12 class="text-xs-center">
           <orbit-spinner
             :animation-duration="1200"
             :size="55"
@@ -52,7 +52,7 @@ export default {
   props: ['uber', 'dashInfo'],
   data () {
     return {
-      loading: true,
+      loadingUber: true,
       editUber: false,
       lat: '',
       long: '',
@@ -81,7 +81,7 @@ export default {
       console.log(response.data)
       this.rides = response.data.times
     })
-    this.loading = false
+    this.loadingUber = false
   },
   methods: {
     onChangeUber (payload) {
@@ -91,6 +91,12 @@ export default {
         uber: this.consolidated
       })
       this.editUber = false
+    }
+  },
+  watch: {
+    uber: function (newVal, oldVal) {
+      this.lat = this.uber.latitude
+      this.long = this.uber.longitude
     }
   },
   computed: {
