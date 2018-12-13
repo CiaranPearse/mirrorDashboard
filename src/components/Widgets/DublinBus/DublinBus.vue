@@ -71,10 +71,8 @@ export default {
   mounted () {
     this.$options.interval = setInterval(this.changedNumber, 10000)
     if (this.dublinBus.stop1) {
-      console.log('has peops value')
       this.stop1 = this.dublinBus.stop1
     } else {
-      console.log('doesnt have value')
     }
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
     const currentBusStop = this.stop1

@@ -89,7 +89,6 @@ export default {
   },
   watch: {
     message: function (newVal, oldVal) {
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.messageTitle = this.message.welcomeMessageTitle
       this.messageSubtitle = this.message.welcomeMessageSubtitle
     }

@@ -162,7 +162,6 @@ export default {
       axios.get('https://api.exchangeratesapi.io/latest?base=' + this.base + '&symbols=' + this.selectedCurrencies, {
       })
       .then(response => {
-        console.log(response.data.rates)
         this.allRates = response.data.rates
       })
       this.loading = false

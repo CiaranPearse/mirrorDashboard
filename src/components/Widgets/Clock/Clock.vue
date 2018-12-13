@@ -66,7 +66,7 @@
         	</div>
           <div class="dateday">
           	<div class="dayName ts" v-if="this.showDay != false">
-          		{{ this.dayName[dayNumber - 1] }} <span v-if="this.showDate != false">, </span>
+          		{{ this.dayName[dayNumber - 1] }}<span v-if="this.showDate != false">, </span>
           	</div>
           	<div class="date ts" v-if="this.showDate != false">
           		{{ this.monthName[month] }} {{ this.thedate }}
@@ -141,7 +141,7 @@ export default {
       if ((this.hourtime === 'AM') && (this.timeFormat === '24Hour') && (this.hours <= 9)) {
         this.hours = ('0' + this.hours)
       }
-      if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour')) {
+      if ((this.hourtime === 'PM') && (this.timeFormat === '24Hour') && (this.hours >= 1)) {
         this.hours = (this.hours + 12)
       }
     },

@@ -14,6 +14,10 @@
         
 <!-- pleasing LAYOUT -->
       <v-flex xs12 id="pleasingLayout" v-if="this.dashboard.deviceLayout === 'pleasing'">
+        <div v-if="backgroundAuthor" id="photoCredit">
+              <strong class="ts">Photo by:</strong>
+              <a :href="this.backgroundLink" class="ts">/r/{{ this.backgroundAuthor }}</a>
+            </div>
         <v-layout id="topBlock">
           <v-flex xs5 id="leftBlock">
             <component :is="dashboard.slotLeft1" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
@@ -32,16 +36,8 @@
           </v-flex>
         </v-layout>
         <v-layout id="footerBlock">
-          <v-flex xs2 id="photoCredit">
-            <div v-if="backgroundAuthor">
-              <strong class="ts">Photo by:</strong>
-              <a :href="this.backgroundLink" class="ts">/r/{{ this.backgroundAuthor }}</a>
-            </div>
-          </v-flex>
-          <v-flex xs8 align-self-end>
+          <v-flex xs12 align-self-end>
            <component v-bind:is="dashboard.slotFooter" v-bind="attributes.listOfAttrs" :theId="this.id"></component>
-          </v-flex>
-          <v-flex xs2>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -119,7 +115,7 @@ import WelcomeMessage from '../Widgets/WelcomeMessage'
 import Uber from '../Widgets/Uber'
 import PeopleInSpace from '../Widgets/PeopleInSpace'
 import { DashboardOrbitSpinner } from 'epic-spinners'
-import moment from 'moment-timezone'
+// import moment from 'moment-timezone'
 export default {
   props: ['id'],
   data () {
@@ -129,7 +125,8 @@ export default {
       backgroundImg: '',
       backgroundType: 'default',
       backgroundAuthor: '',
-      backgroundLink: ''
+      backgroundLink: '',
+      currentBackground: ''
     }
   },
   computed: {
@@ -183,7 +180,6 @@ export default {
           var addCurrencyTicker = {'currency': this.dashboard.allProps.currency}
           Object.assign(listOfAttrs, addCurrencyTicker)
         }
-        console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }
       return {
         listOfAttrs
@@ -191,51 +187,54 @@ export default {
     }
   },
   watch: {
-    dashboard () {
-      console.log(this.dashboard)
-      console.log('dashboard Changed!')
-      console.log(moment().format('DDD'))
-      this.dashTitle = this.dashboard.dashTitle
-      this.deviceLocation = this.dashboard.deviceLocation
-      this.backgroundType = this.dashboard.backgroundType
-      if (this.dashboard.backgroundType === 'solid') {
-        console.log('its solid')
+    dashboard (newValue, oldValue) {
+      // console.log(moment().format('DDD'))
+      if (newValue.backgroundType !== this.currentBackground) {
+        if (newValue.backgroundType === 'solid') {
+          console.log('its solid')
+          this.backgroundType = 'solid'
+          this.backgroundImg = null
+          this.backgroundAuthor = null
+          this.backgroundLink = null
+        }
+        if (newValue.backgroundType === 'flickr') {
+          console.log('its FLICKR')
+          axios({
+            method: 'GET',
+            url: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=nature&format=json',
+            headers: {
+              'Access-Control-Allow-Origin': 'http://localhost:8080'
+            }
+          }).then((data) => {
+            console.log(data)
+          })
+        }
+        if (newValue.backgroundType === 'dropbox') {
+          console.log('its DROPBOX')
+        }
+        if (newValue.backgroundType === 'earthporn') {
+          console.log('its EARTH PORN')
+          this.getearthPorn()
+        }
       }
-      if (this.dashboard.backgroundType === 'flickr') {
-        console.log('its FLICKR')
-        axios({
-          method: 'GET',
-          url: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=nature&format=json',
-          headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:8080'
-          }
-        }).then((data) => {
-          console.log(data)
-        })
-      }
-      if (this.dashboard.backgroundType === 'dropbox') {
-        console.log('its DROPBOX')
-      }
-      if (this.dashboard.backgroundType === 'earthporn') {
-        console.log('its EARTH PORN')
-        axios.get('https://www.reddit.com/r/EarthPorn/top/.json', {
-        })
-        .then(response => {
-          var responseLength = response.data.data.children.length
-          console.log(responseLength)
-          var randomnumber = Math.floor(Math.random() * (responseLength - 0)) + 0
-          console.log(randomnumber)
-          console.log(response.data.data.children[randomnumber].data.url)
-          console.log(response.data.data.children[randomnumber].data.author)
-          this.backgroundImg = response.data.data.children[randomnumber].data.url
-          this.backgroundAuthor = response.data.data.children[randomnumber].data.author
-          this.backgroundLink = 'http://www.reddit.com' + response.data.data.children[randomnumber].data.permalink
-        })
-      }
+      this.currentBackground = newValue.backgroundType
     }
   },
   beforeCreate: function () {
     document.body.className = 'viewPage'
+  },
+  methods: {
+    getearthPorn () {
+      axios.get('https://www.reddit.com/r/EarthPorn/top/.json', {
+      })
+      .then(response => {
+        var responseLength = response.data.data.children.length
+        var randomnumber = Math.floor(Math.random() * (responseLength - 0)) + 0
+        this.backgroundImg = response.data.data.children[randomnumber].data.url
+        this.backgroundAuthor = response.data.data.children[randomnumber].data.author
+        this.backgroundLink = 'http://www.reddit.com' + response.data.data.children[randomnumber].data.permalink
+      })
+    }
   },
   components: {
     'BBCNews': BBCNews,
@@ -270,6 +269,22 @@ export default {
 /* PLEASING LAYOUT */
 
 #pleasingLayout {
+  #photoCredit {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
+    padding-left: 4px;
+    padding-botton: 4px;
+    strong {
+      font-size: 12px;
+      display: block;
+    }
+    a {
+      color: white;
+      opacity: 0.8;
+    }
+  }
   #topBlock {
     height: 10%;
     .leftBlock {
@@ -304,19 +319,6 @@ export default {
   }
   #footerBlock {
     height: 10%;
-    #photoCredit {
-      strong {
-        font-size: 12px;
-        display: block;
-      }
-      position: absolute;
-      bottom: 0;
-      opacity: 0.5;
-      a {
-        color: white;
-        opacity: 0.5;
-      }
-    }
   }
 }
 

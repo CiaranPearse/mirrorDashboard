@@ -228,7 +228,7 @@ export default {
         weather: this.consolidated
       })
       this.edit = false
-      setTimeout(this.getWeather, 3000)
+      setTimeout(this.getWeather, 500)
     },
     moment: function () {
       return moment()
@@ -269,6 +269,12 @@ export default {
       this.city = this.weather.city
       this.days = this.weather.days
       this.unit = this.weather.unit
+      if (newVal.latitude !== oldVal.latitude) {
+        this.getWeather()
+      }
+      if (newVal.longitude !== oldVal.longitude) {
+        this.getWeather()
+      }
     }
   },
   computed: {

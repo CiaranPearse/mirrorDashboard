@@ -64,7 +64,6 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    console.log('created Uber')
     this.lat = this.uber.latitude
     this.long = this.uber.longitude
   },
@@ -78,14 +77,12 @@ export default {
       }
     })
     .then(response => {
-      console.log(response.data)
       this.rides = response.data.times
     })
     this.loadingUber = false
   },
   methods: {
     onChangeUber (payload) {
-      console.log('Consolidated: ', this.consolidated)
       this.$store.dispatch('updateWidgetData', {
         id: this.theId,
         uber: this.consolidated

@@ -41,7 +41,6 @@ export default {
     axios.get('http://api.open-notify.org/astros.json', {
     })
     .then(response => {
-      console.log(response.data)
       this.people = response.data.people
     })
     this.loading = false
