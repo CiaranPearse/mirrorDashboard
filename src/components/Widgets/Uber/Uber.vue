@@ -28,6 +28,11 @@
               v-model="long"
               label="Longitude"
             ></v-text-field>
+            <v-text-field
+              v-model="updateEvery"
+              label="Update Every"
+              messages="Enter the time in seconds you woild like this to update"
+            ></v-text-field>
       </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -61,7 +66,8 @@ export default {
       lat: '',
       long: '',
       rides: '',
-      uberRefresh: ''
+      uberRefresh: '',
+      updateEvery: 30
     }
   },
   components: {
@@ -112,7 +118,8 @@ export default {
           console.log(response.data.times)
         })
         this.loadingUber = false
-      }, 30000)
+        console.log('set to update every: ', this.updateFrequency)
+      }, this.updateFrequency)
     }
   },
   watch: {
@@ -130,6 +137,9 @@ export default {
         latitude: this.lat,
         longitude: this.long
       }
+    },
+    updateFrequency () {
+      return this.updateEvery * 1000
     }
   }
 }
