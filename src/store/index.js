@@ -310,6 +310,10 @@ export const store = new Vuex.Store({
         var uber = payload.uber
         updateObj['allProps/uber'] = uber
       }
+      if (payload.wifi) {
+        var wifi = payload.wifi
+        updateObj['allProps/wifi'] = wifi
+      }
       if (payload.currency) {
         var currency = payload.currency
         updateObj['allProps/currency'] = currency
@@ -355,6 +359,10 @@ export const store = new Vuex.Store({
       if (payload.uber) {
         var uber = payload.uber
         updateObj['allProps/uber'] = uber
+      }
+      if (payload.wifi) {
+        var wifi = payload.wifi
+        updateObj['allProps/wifi'] = wifi
       }
       if (payload.currency) {
         var currency = payload.currency

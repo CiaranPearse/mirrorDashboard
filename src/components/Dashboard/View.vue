@@ -114,6 +114,7 @@ import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 import Uber from '../Widgets/Uber'
 import PeopleInSpace from '../Widgets/PeopleInSpace'
+import Wifi from '../Widgets/Wifi'
 import { DashboardOrbitSpinner } from 'epic-spinners'
 // import moment from 'moment-timezone'
 export default {
@@ -179,6 +180,10 @@ export default {
         if ((this.dashboard.allProps.currency !== null) || (this.dashboard.allProps.currency !== undefined)) {
           var addCurrencyTicker = {'currency': this.dashboard.allProps.currency}
           Object.assign(listOfAttrs, addCurrencyTicker)
+        }
+        if ((this.dashboard.allProps.wifi !== null) || (this.dashboard.allProps.wifi !== undefined)) {
+          var addWifi = {'wifi': this.dashboard.allProps.wifi}
+          Object.assign(listOfAttrs, addWifi)
         }
       }
       return {
@@ -248,6 +253,7 @@ export default {
     'WelcomeMessage': WelcomeMessage,
     'Uber': Uber,
     'PeopleInSpace': PeopleInSpace,
+    'Wifi': Wifi,
     DashboardOrbitSpinner
   }
 }
