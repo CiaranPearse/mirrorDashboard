@@ -60,7 +60,6 @@
 <script>
 import { WifiOrbitSpinner } from 'epic-spinners'
 import WifiIcon from 'vue-material-design-icons/Wifi.vue'
-import SpeedTest from 'speedtest-net'
 import WifiSsidIcon from 'vue-material-design-icons/WifiStrengthAlertOutline.vue'
 import WifiPasswordIcon from 'vue-material-design-icons/WifiStrengthLockOutline.vue'
 export default {
@@ -108,13 +107,6 @@ export default {
     },
     getSpeed () {
       console.log('GETTING SPEED')
-      var testSpeed = SpeedTest({maxTime: 5000})
-      testSpeed.on('data', data => {
-        console.dir(data)
-      })
-      testSpeed.on('error', err => {
-        console.error(err)
-      })
     }
   },
   watch: {
