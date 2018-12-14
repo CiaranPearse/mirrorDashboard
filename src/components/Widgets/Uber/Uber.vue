@@ -80,18 +80,6 @@ export default {
     this.long = this.uber.longitude
   },
   mounted () {
-    // const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
-    // axios.get(CORS_PROXY + 'https://api.uber.com/v1.2/estimates/time?start_latitude=37.7752315&start_longitude=-122.418075', {
-    //   headers: {
-    //     'crossDomain': true,
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Authorization': 'Token XXxaR--cwsdmHryDd9lr8wqJqXDsY3RNr02W5ARi'
-    //   }
-    // })
-    // .then(response => {
-    //   this.rides = response.data.times
-    // })
-    // this.loadingUber = false
     this.getUber()
   },
   methods: {
@@ -126,6 +114,7 @@ export default {
     uber: function (newVal, oldVal) {
       this.lat = this.uber.latitude
       this.long = this.uber.longitude
+      this.updateEvery = this.uber.updateEvery
     }
   },
   computed: {
