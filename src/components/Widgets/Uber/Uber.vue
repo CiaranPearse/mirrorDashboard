@@ -38,8 +38,11 @@
     </v-dialog>
 
     <div @click="editUber = true" class="hoverCursor">
+      <CarFront class="uberIconCar" />
+      <img src="../../../assets/img/logos/Uber_Logo_white.png" class="uberLogo" />
+      <p class="uberEstimate">Live Arrival Estimate</p>
       <div v-for="cars in rides">
-        <strong>{{ cars.display_name}}</strong> - {{ cars.estimate / 60}} minutes
+        <span class="uberCarType">{{ cars.display_name}}</span> <span class="uberCarTime">{{ cars.estimate / 60}} mins</span>
       </div>
     </div>
   </div>
@@ -48,6 +51,7 @@
 <script>
 import axios from 'axios'
 import { UberOrbitSpinner } from 'epic-spinners'
+import CarFront from 'vue-material-design-icons/car.vue'
 export default {
   props: ['uber', 'dashInfo'],
   data () {
@@ -56,11 +60,13 @@ export default {
       editUber: false,
       lat: '',
       long: '',
-      rides: ''
+      rides: '',
+      uberRefresh: ''
     }
   },
   components: {
-    UberOrbitSpinner
+    UberOrbitSpinner,
+    CarFront
   },
   // Fetches posts when the component is created.
   created () {
@@ -68,18 +74,19 @@ export default {
     this.long = this.uber.longitude
   },
   mounted () {
-    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
-    axios.get(CORS_PROXY + 'https://api.uber.com/v1.2/estimates/time?start_latitude=37.7752315&start_longitude=-122.418075', {
-      headers: {
-        'crossDomain': true,
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Token XXxaR--cwsdmHryDd9lr8wqJqXDsY3RNr02W5ARi'
-      }
-    })
-    .then(response => {
-      this.rides = response.data.times
-    })
-    this.loadingUber = false
+    // const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+    // axios.get(CORS_PROXY + 'https://api.uber.com/v1.2/estimates/time?start_latitude=37.7752315&start_longitude=-122.418075', {
+    //   headers: {
+    //     'crossDomain': true,
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Authorization': 'Token XXxaR--cwsdmHryDd9lr8wqJqXDsY3RNr02W5ARi'
+    //   }
+    // })
+    // .then(response => {
+    //   this.rides = response.data.times
+    // })
+    // this.loadingUber = false
+    this.getUber()
   },
   methods: {
     onChangeUber (payload) {
@@ -88,6 +95,24 @@ export default {
         uber: this.consolidated
       })
       this.editUber = false
+    },
+    getUber: function () {
+      this.uberRefresh = setInterval(() => {
+        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+        axios.get(CORS_PROXY + 'https://api.uber.com/v1.2/estimates/time?start_latitude=37.7752315&start_longitude=-122.418075', {
+          headers: {
+            'crossDomain': true,
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Token XXxaR--cwsdmHryDd9lr8wqJqXDsY3RNr02W5ARi'
+          }
+        })
+        .then(response => {
+          this.rides = response.data.times
+          console.log('UBER LOADED')
+          console.log(response.data.times)
+        })
+        this.loadingUber = false
+      }, 30000)
     }
   },
   watch: {
@@ -115,6 +140,36 @@ export default {
   padding-top: 10px;
   font-weight: 600;
 }
+.uberIconCar {
+  color: white;
+}
+.uberEstimate {
+  margin: 0 -6px 0 0;
+}
+.uberCarType {
+  width: 100px;
+  font-weight: 600;
+  display: inline-block;
+}
+.uberCarTime {
+  width: 60px;
+  text-align: right;
+  display: inline-block;
+}
+.material-design-icon.uberIconCar {
+  height: 2em;
+  width: 2em;
+}
+
+.material-design-icon.uberIconCar > .material-design-icon__svg {
+    height: 2em;
+    width: 2em;
+}
+
+.uberLogo {
+  width: 54px;
+}
+
   #leftBlock {
     #uberRealWaitTime {
       .spinnerContainer {

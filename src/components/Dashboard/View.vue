@@ -190,12 +190,11 @@ export default {
     dashboard (newValue, oldValue) {
       // console.log(moment().format('DDD'))
       if (newValue.backgroundType !== this.currentBackground) {
+        this.backgroundImg = null
+        this.backgroundAuthor = null
+        this.backgroundLink = null
         if (newValue.backgroundType === 'solid') {
-          console.log('its solid')
           this.backgroundType = 'solid'
-          this.backgroundImg = null
-          this.backgroundAuthor = null
-          this.backgroundLink = null
         }
         if (newValue.backgroundType === 'flickr') {
           console.log('its FLICKR')
