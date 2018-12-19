@@ -50,17 +50,26 @@
           </tr>
         </table>
       </div>
-      <div id="wifiSpeed" v-if="showSpeed">
-        Show Wifi Speen here
+      <div id="wifiSpeed">
+        Show Wifi Speed here
+        <div v-if="speedLoading">
+          <p>SPEED IS LOADING</p>
+        </div>
+        <div v-else>
+          {{ this.speedUpdatedAgo }}<br />
+          {{ this.showSpeedBps }}<br />
+          {{ this.showSpeedKbps }}<br />
+          {{ this.showSpeedMbps }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 import { WifiOrbitSpinner } from 'epic-spinners'
 import WifiIcon from 'vue-material-design-icons/Wifi.vue'
-import SpeedTest from 'speedtest-net'
 import WifiSsidIcon from 'vue-material-design-icons/WifiStrengthAlertOutline.vue'
 import WifiPasswordIcon from 'vue-material-design-icons/WifiStrengthLockOutline.vue'
 export default {
@@ -69,9 +78,21 @@ export default {
     return {
       isWifiLoading: true,
       editWifi: false,
-      ssid: '',
+      ssid: 'WiFi Name',
       wifiPassword: 'Wifi Password',
-      showSpeed: false
+      showSpeed: false,
+      showSpeedBps: 1,
+      showSpeedKbps: 2,
+      showSpeedMbps: 3,
+      speedLoading: false,
+      imageAddr: 'http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg',
+      startTime: (new Date()).getTime(),
+      endTime: (new Date()).getTime(),
+      downloadSize: 0,
+      speedUpdated: (new Date()).getTime(),
+      speedUpdatedAgo: '',
+      intervalid1: '',
+      counter: 0
     }
   },
   components: {
@@ -81,15 +102,32 @@ export default {
     WifiPasswordIcon
   },
   created () {
-    this.ssid = this.wifi.ssid
-    this.wifiPassword = this.uber.wifiPassword
+    this.ssid = ''
+    this.wifiPassword = ''
   },
   mounted () {
-    this.getWifi()
-    this.getSpeed()
+    this.ssid = this.wifi.ssid
+    this.wifiPassword = this.wifi.wifiPassword
+    this.showSpeed = this.wifi.showSpeed
     this.isWifiLoading = false
+    this.getTheSpeed()
+    this.updatedAgo()
   },
   methods: {
+    moment: function () {
+      return moment()
+    },
+    updatedAgo: function () {
+      var a = moment(this.speedUpdated)
+      var b = moment()
+      this.speedUpdatedAgo = a.from(b)
+      this.intervalid1 = setInterval(function () {
+        var a = moment(this.speedUpdated)
+        var b = moment()
+        this.speedUpdatedAgo = a.from(b)
+        console.log(this.speedUpdatedAgo)
+      }.bind(this), 30000)
+    },
     onChangeWifi (payload) {
       this.$store.dispatch('updateWidgetData', {
         id: this.theId,
@@ -97,24 +135,39 @@ export default {
       })
       this.editWifi = false
     },
-    getWifi () {
-      if (this.ssid !== '') {
-        this.ssid = this.wifi.ssid
-        this.wifiPassword = this.wifi.wifiPassword
-      } else {
-        this.ssid = 'Wifi name'
-        this.wifiPassword = 'Wifi Password'
+    getTheSpeed () {
+      this.downloadSize = 4995374
+      this.initiateSpeedDetection()
+      if (window.addEventListener) {
+        window.addEventListener('load', this.initiateSpeedDetection, false)
+      } else if (window.attachEvent) {
+        window.attachEvent('onload', this.initiateSpeedDetection)
       }
     },
-    getSpeed () {
-      console.log('GETTING SPEED')
-      var testSpeed = SpeedTest({maxTime: 5000})
-      testSpeed.on('data', data => {
-        console.dir(data)
-      })
-      testSpeed.on('error', err => {
-        console.error(err)
-      })
+    initiateSpeedDetection () {
+      window.setTimeout(this.measureConnectionSpeed, 1)
+    },
+    measureConnectionSpeed () {
+      var self = this
+      var download = new Image()
+      this.startTime = (new Date()).getTime()
+      download.onload = function () {
+        this.endTime = (new Date()).getTime()
+        self.showResults()
+      }
+      var cacheBuster = '?nnn=' + this.startTime
+      download.src = this.imageAddr + cacheBuster
+    },
+    showResults () {
+      var duration = (this.startTime - this.endTime) / 100
+      var bitsLoaded = this.downloadSize * 8
+      var speedBps = (bitsLoaded / duration).toFixed(2)
+      var speedKbps = (speedBps / 1024).toFixed(2)
+      var speedMbps = (speedKbps / 1024).toFixed(2)
+      this.showSpeedBps = (speedBps + ' Bps')
+      this.showSpeedKbps = (speedKbps + ' Kbps')
+      this.showSpeedMbps = (speedMbps + ' Mbps')
+      this.speedUpdated = (new Date()).getTime()
     }
   },
   watch: {

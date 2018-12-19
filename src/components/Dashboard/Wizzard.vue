@@ -564,6 +564,7 @@ import Quotes from '../Widgets/Quotes'
 import CurrentWeather from '../Widgets/CurrentWeather'
 import WelcomeMessage from '../Widgets/WelcomeMessage'
 import PeopleInSpace from '../Widgets/PeopleInSpace'
+import Wifi from '../Widgets/Wifi'
 import Uber from '../Widgets/Uber'
 export default {
   props: ['id'],
@@ -618,7 +619,8 @@ export default {
         'Quotes',
         'WelcomeMessage',
         'PeopleInSpace',
-        'Uber'
+        'Uber',
+        'Wifi'
       ]
     }
   },
@@ -634,7 +636,8 @@ export default {
     'CurrentWeather': CurrentWeather,
     'WelcomeMessage': WelcomeMessage,
     'PeopleInSpace': PeopleInSpace,
-    'Uber': Uber
+    'Uber': Uber,
+    'Wifi': Wifi
   },
   computed: {
     dashboard () {
@@ -674,6 +677,10 @@ export default {
         if ((this.dashboard.allProps.currency !== null) || (this.dashboard.allProps.currency !== undefined)) {
           var addCurrency = {'currency': this.dashboard.allProps.currency}
           Object.assign(listOfAttrs, addCurrency)
+        }
+        if ((this.dashboard.allProps.wifi !== null) || (this.dashboard.allProps.wifi !== undefined)) {
+          var addWifi = {'wifi': this.dashboard.allProps.wifi}
+          Object.assign(listOfAttrs, addWifi)
         }
         console.log('THIS IS THE ATTRs: ', listOfAttrs)
       }
