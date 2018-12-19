@@ -51,15 +51,19 @@
         </table>
       </div>
       <div id="wifiSpeed">
-        Show Wifi Speed here
         <div v-if="speedLoading">
           <p>SPEED IS LOADING</p>
         </div>
         <div v-else>
-          {{ this.speedUpdatedAgo }}<br />
-          {{ this.showSpeedBps }}<br />
-          {{ this.showSpeedKbps }}<br />
-          {{ this.showSpeedMbps }}
+          <div v-if="showSpeedBps !== ''">
+            <div v-if="showUpdatedAt === true">{{ this.speedUpdatedAgo }}</div>
+            <div v-if="showBps">{{ this.showSpeedBps }}</div>
+            <div v-if="showKbps">{{ this.showSpeedKbps }}</div>
+            <div v-if="showMbps">{{ this.showSpeedMbps }}</div>
+          </div>
+          <div v-else>
+            <p>Calculating Wifi Speed</p>
+          </div>
         </div>
       </div>
     </div>
@@ -81,9 +85,9 @@ export default {
       ssid: 'WiFi Name',
       wifiPassword: 'Wifi Password',
       showSpeed: false,
-      showSpeedBps: 1,
-      showSpeedKbps: 2,
-      showSpeedMbps: 3,
+      showSpeedBps: '',
+      showSpeedKbps: '',
+      showSpeedMbps: '',
       speedLoading: false,
       imageAddr: 'http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg',
       startTime: (new Date()).getTime(),
@@ -92,7 +96,11 @@ export default {
       speedUpdated: (new Date()).getTime(),
       speedUpdatedAgo: '',
       intervalid1: '',
-      counter: 0
+      counter: 0,
+      showUpdatedAt: true,
+      showBps: false,
+      showKbps: false,
+      showMbps: true
     }
   },
   components: {
@@ -144,10 +152,6 @@ export default {
         window.attachEvent('onload', this.initiateSpeedDetection)
       }
     },
-<<<<<<< HEAD
-    getSpeed () {
-      console.log('GETTING SPEED')
-=======
     initiateSpeedDetection () {
       window.setTimeout(this.measureConnectionSpeed, 1)
     },
@@ -172,7 +176,6 @@ export default {
       this.showSpeedKbps = (speedKbps + ' Kbps')
       this.showSpeedMbps = (speedMbps + ' Mbps')
       this.speedUpdated = (new Date()).getTime()
->>>>>>> add-speed-check
     }
   },
   watch: {
