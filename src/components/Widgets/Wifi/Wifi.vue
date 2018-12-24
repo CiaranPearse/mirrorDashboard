@@ -27,6 +27,18 @@
               v-model="wifiPassword"
               label="Password"
             ></v-text-field>
+            <v-checkbox
+              label="Show Bps"
+              v-model="showBps"
+            ></v-checkbox>
+            <v-checkbox
+              label="Show Kbps"
+              v-model="showKbps"
+            ></v-checkbox>
+            <v-checkbox
+              label="Show Mbps"
+              v-model="showMbps"
+            ></v-checkbox>
       </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -55,11 +67,11 @@
           <p>SPEED IS LOADING</p>
         </div>
         <div v-else>
-          <div v-if="showSpeedBps !== ''">
-            <div v-if="showUpdatedAt === true">{{ this.speedUpdatedAgo }}</div>
-            <div v-if="showBps">{{ this.showSpeedBps }}</div>
-            <div v-if="showKbps">{{ this.showSpeedKbps }}</div>
-            <div v-if="showMbps">{{ this.showSpeedMbps }}</div>
+          <div v-if="speedBps !== ''">
+            <div v-if="showUpdatedAt">Updated {{ this.speedUpdatedAgo }}</div>
+            <div v-if="showBps">{{ this.speedBps }} Bps</div>
+            <div v-if="showKbps">{{ this.speedKbps }} Kbps</div>
+            <div v-if="showMbps">{{ this.speedMbps }} Mbps</div>
           </div>
           <div v-else>
             <p>Calculating Wifi Speed</p>
@@ -85,22 +97,23 @@ export default {
       ssid: 'WiFi Name',
       wifiPassword: 'Wifi Password',
       showSpeed: false,
-      showSpeedBps: '',
-      showSpeedKbps: '',
-      showSpeedMbps: '',
+      speedBps: '',
+      speedKbps: '',
+      speedMbps: '',
       speedLoading: false,
-      imageAddr: 'http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg',
-      startTime: (new Date()).getTime(),
-      endTime: (new Date()).getTime(),
-      downloadSize: 0,
-      speedUpdated: (new Date()).getTime(),
+      imageAddr: 'http://i.imgur.com/pfudboE.jpg',
+      startTime: 0,
+      endTime: 0,
+      downloadSize: 4281953,
+      speedUpdated: 0,
       speedUpdatedAgo: '',
       intervalid1: '',
       counter: 0,
       showUpdatedAt: true,
       showBps: false,
       showKbps: false,
-      showMbps: true
+      showMbps: true,
+      intervaliWifi: ''
     }
   },
   components: {
@@ -112,29 +125,22 @@ export default {
   created () {
     this.ssid = ''
     this.wifiPassword = ''
+    // this.$options.interval = setInterval(this.getTheSpeed, 10000)
   },
   mounted () {
     this.ssid = this.wifi.ssid
     this.wifiPassword = this.wifi.wifiPassword
-    this.showSpeed = this.wifi.showSpeed
+    this.showBps = this.wifi.showBps
+    this.showKbps = this.wifi.showKbps
+    this.showMbps = this.wifi.showMbps
     this.isWifiLoading = false
-    this.getTheSpeed()
+    this.getDlSpeed()
+    this.MeasureConnectionSpeed()
     this.updatedAgo()
   },
   methods: {
     moment: function () {
       return moment()
-    },
-    updatedAgo: function () {
-      var a = moment(this.speedUpdated)
-      var b = moment()
-      this.speedUpdatedAgo = a.from(b)
-      this.intervalid1 = setInterval(function () {
-        var a = moment(this.speedUpdated)
-        var b = moment()
-        this.speedUpdatedAgo = a.from(b)
-        console.log(this.speedUpdatedAgo)
-      }.bind(this), 30000)
     },
     onChangeWifi (payload) {
       this.$store.dispatch('updateWidgetData', {
@@ -143,39 +149,56 @@ export default {
       })
       this.editWifi = false
     },
-    getTheSpeed () {
-      this.downloadSize = 4995374
-      this.initiateSpeedDetection()
-      if (window.addEventListener) {
-        window.addEventListener('load', this.initiateSpeedDetection, false)
-      } else if (window.attachEvent) {
-        window.attachEvent('onload', this.initiateSpeedDetection)
-      }
-    },
-    initiateSpeedDetection () {
-      window.setTimeout(this.measureConnectionSpeed, 1)
-    },
-    measureConnectionSpeed () {
-      var self = this
-      var download = new Image()
+    MeasureConnectionSpeed () {
       this.startTime = (new Date()).getTime()
-      download.onload = function () {
-        this.endTime = (new Date()).getTime()
-        self.showResults()
-      }
+      var download = new Image()
       var cacheBuster = '?nnn=' + this.startTime
       download.src = this.imageAddr + cacheBuster
+      download.onload = function () {
+        this.showResults()
+      }.bind(this)
+      download.onerror = function (err, msg) {
+        console.log(err)
+      }
     },
     showResults () {
-      var duration = (this.startTime - this.endTime) / 100
-      var bitsLoaded = this.downloadSize * 8
-      var speedBps = (bitsLoaded / duration).toFixed(2)
-      var speedKbps = (speedBps / 1024).toFixed(2)
-      var speedMbps = (speedKbps / 1024).toFixed(2)
-      this.showSpeedBps = (speedBps + ' Bps')
-      this.showSpeedKbps = (speedKbps + ' Kbps')
-      this.showSpeedMbps = (speedMbps + ' Mbps')
+      this.endTime = (new Date()).getTime()
+      this.duration = (this.endTime - this.startTime) / 1000
+      this.bitsLoaded = this.downloadSize * 8
+      this.speedBps = (this.bitsLoaded / this.duration).toFixed(2)
+      this.speedKbps = (this.speedBps / 1024).toFixed(2)
+      this.speedMbps = (this.speedKbps / 1024).toFixed(2)
       this.speedUpdated = (new Date()).getTime()
+      console.log([
+        'duration' + this.duration,
+        'endTime' + this.endTime,
+        'startTime' + this.startTime,
+        this.speedMbps + ' Mbps'
+      ])
+    },
+    getDlSpeed () {
+      this.intervaliWifi = setInterval(function () {
+        this.MeasureConnectionSpeed()
+      }.bind(this), 300000)
+    },
+    updatedAgo: function () {
+      let lastUpdate = this.endTime
+      if (lastUpdate === 0) {
+        lastUpdate = (new Date()).getTime()
+      }
+      var a = moment(lastUpdate)
+      var b = moment()
+      this.speedUpdatedAgo = a.from(b)
+      this.intervalid1 = setInterval(function () {
+        let lastUpdate = this.endTime
+        if (lastUpdate === 0) {
+          lastUpdate = (new Date()).getTime()
+        }
+        var a = moment(this.endTime)
+        var b = moment()
+        this.speedUpdatedAgo = a.from(b)
+        console.log(this.speedUpdatedAgo)
+      }.bind(this), 1000)
     }
   },
   watch: {
@@ -191,9 +214,16 @@ export default {
     consolidated () {
       return {
         ssid: this.ssid,
-        wifiPassword: this.wifiPassword
+        wifiPassword: this.wifiPassword,
+        showBps: this.showBps,
+        showKbps: this.showKbps,
+        showMbps: this.showMbps,
+        speedUpdated: this.speedUpdated
       }
     }
+  },
+  beforeDestroy () {
+    clearInterval(this.intervaliWifi)
   }
 }
 </script>

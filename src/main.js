@@ -9,6 +9,7 @@ import VueAxios from 'vue-axios'
 import moment from 'moment-timezone'
 import { store } from './store'
 import DateFilter from './filters/dates'
+import VueTimers from 'vue-timers'
 import AlertCmp from './components/Shared/Alert.vue'
 import EditDashboardDetailsDialog from './components/Dashboard/Edit/EditDashboardDetailsDialog.vue'
 import 'vuetify/dist/vuetify.min.css'
@@ -17,6 +18,7 @@ import 'vue-material-design-icons/styles.css'
 Vue.use(Vuetify)
 Vue.use(VueAxios, axios)
 Vue.use(VueMoment, {moment})
+Vue.use(VueTimers)
 Vue.component('app-alert', AlertCmp)
 Vue.component('app-edit-dashboard-details-dialog', EditDashboardDetailsDialog)
 Vue.config.productionTip = false
