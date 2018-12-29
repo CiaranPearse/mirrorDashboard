@@ -139,7 +139,7 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    loadDashboards ({commit}) {
+    loadDashboards ({commit}, payload) {
       commit('setLoading', true)
       firebase.database().ref('dashboards').on('value', function (snapshot) {
         if (snapshot.val()) {
@@ -185,10 +185,6 @@ export const store = new Vuex.Store({
         dashTitle: payload.dashTitle,
         deviceId: payload.deviceId,
         deviceLocation: payload.deviceLocation,
-        backgroundSource: payload.backgroundSource,
-        backgroundType: payload.backgroundType,
-        longitude: payload.longitude,
-        latitude: payload.latitude,
         created: payload.created,
         updated: payload.updated,
         creatorId: getters.user.id
@@ -391,7 +387,8 @@ export const store = new Vuex.Store({
           commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
-            registeredDashboards: []
+            registeredDashboards: [],
+            userLevel: 'free'
           }
           commit('setUser', newUser)
         }
@@ -400,6 +397,7 @@ export const store = new Vuex.Store({
         error => {
           commit('setLoading', false)
           commit('setError', error)
+          console.log('Error on signup: ', error)
         }
       )
     },
@@ -409,10 +407,12 @@ export const store = new Vuex.Store({
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(
         user => {
+          console.log('User from signin is: ', user)
           commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
-            registeredDashboards: []
+            registeredDashboards: [],
+            userLevel: ''
           }
           commit('setUser', newUser)
         }
@@ -425,7 +425,7 @@ export const store = new Vuex.Store({
       )
     },
     autoSignIn ({commit}, payload) {
-      commit('setUser', {id: payload.uid, registeredDashboards: []})
+      commit('setUser', {id: payload.uid, registeredDashboards: [], userLevel: ''})
     },
     logout ({commit}) {
       firebase.auth().signOut()
@@ -437,6 +437,7 @@ export const store = new Vuex.Store({
   },
   getters: {
     loadedDashboards (state) {
+      console.log(state)
       return state.loadedDashboards.sort((dashboardA, dashboardB) => {
         return dashboardA.created > dashboardB.created
       })

@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+  <v-container>
       <v-layout v-for="dashboard in dashboards" 
           :key="dashboard.id" 
           class="mb-2">

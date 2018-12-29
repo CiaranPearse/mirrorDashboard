@@ -169,12 +169,12 @@ export default {
       this.speedKbps = (this.speedBps / 1024).toFixed(2)
       this.speedMbps = (this.speedKbps / 1024).toFixed(2)
       this.speedUpdated = (new Date()).getTime()
-      console.log([
-        'duration' + this.duration,
-        'endTime' + this.endTime,
-        'startTime' + this.startTime,
-        this.speedMbps + ' Mbps'
-      ])
+      // console.log([
+      //   'duration' + this.duration,
+      //   'endTime' + this.endTime,
+      //   'startTime' + this.startTime,
+      //   this.speedMbps + ' Mbps'
+      // ])
     },
     getDlSpeed () {
       this.intervaliWifi = setInterval(function () {
@@ -197,7 +197,7 @@ export default {
         var a = moment(this.endTime)
         var b = moment()
         this.speedUpdatedAgo = a.from(b)
-        console.log(this.speedUpdatedAgo)
+        // console.log(this.speedUpdatedAgo)
       }.bind(this), 1000)
     }
   },

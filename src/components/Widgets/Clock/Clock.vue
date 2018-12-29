@@ -96,7 +96,7 @@ export default {
       minutes: 0,
       seconds: 0,
       UStime: 0,
-      timeFormat: '',
+      timeFormat: '12Hour',
       editedTimeFormat: '',
       showSeconds: true,
       editedShowSeconds: '',
@@ -114,14 +114,25 @@ export default {
   },
   mounted () {
     this.$options.interval = setInterval(this.updateDateTime, 1000)
-    this.timeFormat = this.clock.timeFormat
-    this.showDay = this.clock.showDay
-    this.showDate = this.clock.showDate
-    this.showSeconds = this.clock.showSeconds
-    this.editedTimeFormat = this.clock.timeFormat
-    this.editedShowDay = this.clock.showDay
-    this.editedShowDate = this.clock.showDate
-    this.editedShowSeconds = this.clock.showSeconds
+    if (this.clock !== undefined) {
+      this.timeFormat = this.clock.timeFormat
+      this.showDay = this.clock.showDay
+      this.showDate = this.clock.showDate
+      this.showSeconds = this.clock.showSeconds
+      this.editedTimeFormat = this.clock.timeFormat
+      this.editedShowDay = this.clock.showDay
+      this.editedShowDate = this.clock.showDate
+      this.editedShowSeconds = this.clock.showSeconds
+    } else {
+      this.timeFormat = '12Hour'
+      this.showDay = true
+      this.showDate = true
+      this.showSeconds = true
+      this.editedTimeFormat = '12Hour'
+      this.editedShowDay = true
+      this.editedShowDate = true
+      this.editedShowSeconds = true
+    }
     this.loading = false
   },
   beforeDestroy () {

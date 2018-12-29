@@ -124,7 +124,7 @@ export default {
       dashTitle: '',
       deviceLocation: '',
       backgroundImg: '',
-      backgroundType: 'default',
+      backgroundType: '',
       backgroundAuthor: '',
       backgroundLink: '',
       currentBackground: ''
@@ -216,9 +216,9 @@ export default {
         if (newValue.backgroundType === 'dropbox') {
           console.log('its DROPBOX')
         }
-        if (newValue.backgroundType === 'earthporn') {
+        if (newValue.backgroundType === 'earthPorn') {
           console.log('its EARTH PORN')
-          this.getearthPorn()
+          this.getEarthPorn()
         }
       }
       this.currentBackground = newValue.backgroundType
@@ -228,7 +228,12 @@ export default {
     document.body.className = 'viewPage'
   },
   methods: {
-    getearthPorn () {
+    getBackground () {
+      if (this.backgroundType === 'earthPorn') {
+        this.getEarthPorn()
+      }
+    },
+    getEarthPorn () {
       axios.get('https://www.reddit.com/r/EarthPorn/top/.json', {
       })
       .then(response => {
@@ -255,6 +260,11 @@ export default {
     'PeopleInSpace': PeopleInSpace,
     'Wifi': Wifi,
     DashboardOrbitSpinner
+  },
+  mounted () {
+    console.log('page is mounted')
+    this.backgroundType = this.dashboard.backgroundType
+    this.getBackground()
   }
 }
 </script>
@@ -347,6 +357,3 @@ export default {
     text-align: center;
   }
 </style>
-
-
-
