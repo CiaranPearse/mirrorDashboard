@@ -386,11 +386,23 @@ export const store = new Vuex.Store({
         user => {
           commit('setLoading', false)
           const newUser = {
-            id: user.user.uid,
-            registeredDashboards: [],
-            userLevel: 'free'
+            id: user.user.uid
           }
           commit('setUser', newUser)
+        }
+      )
+      .then(
+        user => {
+          const dateNow = new Date()
+          console.log('Lets Create a User Profile Now')
+          console.log(this.state.user.id)
+          const newUser = {
+            userLevel: 'free',
+            joinDate: dateNow.toISOString(),
+            isAdmin: false
+          }
+          firebase.database().ref('users/' + this.state.user.id).set(newUser)
+          console.log('Profile should be created with TEST field as XXXXXXX')
         }
       )
       .catch(
