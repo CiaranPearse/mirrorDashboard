@@ -59,6 +59,16 @@
 					        ></v-select>
 				        </v-flex>
 				        <v-flex xs12 sm6 md3>
+				          <v-select
+					          v-model="languageEdit"
+					          :items="languageItems"
+					          item-text="name"
+					          item-value="code"
+					          label="Select"
+					          single-line
+					        ></v-select>
+				        </v-flex>
+				        <v-flex xs12 sm6 md3>
 				          <v-text-field
 				            v-model="locationEdit"
 				            label="Your Location"
@@ -91,7 +101,7 @@
 				          ></v-text-field>
 				        </v-flex>
 		          <v-btn color="red" @click="onCloseEdit">Close</v-btn>
-		          <v-btn color="green" type="submit">Update Profile</v-btn>
+		          <v-btn color="green" @click="onUpdateProfile">Update Profile</v-btn>
 		          </form>
 						</div>
 
@@ -129,7 +139,14 @@ export default {
       longitudeEdit: null,
       latitudeEdit: null,
       languageEdit: null,
-      updateDate: null,
+      languageItems: [
+        {name: 'English US', code: 'en_US'},
+        {name: 'English UK', code: 'en_UK'},
+        {name: 'English ROI', code: 'en_IE'},
+        {name: 'Espanol', code: 'es_ES'},
+        {name: 'Magyar', code: 'hu_HU'}
+      ],
+      updated: null,
       currencyItems: [
         {name: 'United Kingdom Pound', code: 'GBP'},
         {name: 'United States Dollar', code: 'USD'},
@@ -259,12 +276,35 @@ export default {
       this.editing = false
     },
     onUpdateProfile () {
-      console.log('profile is ready to update')
+      this.editDialog = false
+      const dateNow = new Date()
+      this.$store.dispatch('updateUserData', {
+        id: this.userId,
+        firstName: this.firstNameEdit,
+        lastName: this.lastNameEdit,
+        avatar: this.avatarEdit,
+        currency: this.currencyEdit,
+        location: this.locationEdit,
+        timeZone: this.timeZoneEdit,
+        longitude: this.longitudeEdit,
+        latitude: this.latitudeEdit,
+        language: this.languageEdit,
+        updated: dateNow.toISOString()
+      })
+      this.firstName = this.firstNameEdit
+      this.lastName = this.lastNameEdit
+      this.avatar = this.avatarEdit
+      this.currency = this.currencyEdit
+      this.location = this.locationEdit
+      this.timeZone = this.timeZoneEdit
+      this.longitude = this.longitudeEdit
+      this.latitude = this.latitudeEdit
+      this.language = this.languageEdit
+      this.editing = false
     }
   },
   computed: {
     thisUser () {
-      console.log('from getters/computed: ', this.$store.state.user)
       let userInfo = this.$store.state.user
       this.userId = userInfo.id
       this.firstName = userInfo.firstName

@@ -128,6 +128,39 @@ export const store = new Vuex.Store({
     setUser (state, payload) {
       state.user = payload
     },
+    updateUser (state, payload) {
+      const user = state.user
+      if (payload.firstName) {
+        user.firstName = payload.firstName
+      }
+      if (payload.lastName) {
+        user.lastName = payload.lastName
+      }
+      if (payload.avatar) {
+        user.avatar = payload.avatar
+      }
+      if (payload.currency) {
+        user.currency = payload.currency
+      }
+      if (payload.location) {
+        user.location = payload.location
+      }
+      if (payload.timeZone) {
+        user.timeZone = payload.timeZone
+      }
+      if (payload.longitude) {
+        user.longitude = payload.longitude
+      }
+      if (payload.latitude) {
+        user.latitude = payload.latitude
+      }
+      if (payload.language) {
+        user.language = payload.language
+      }
+      if (payload.updated) {
+        user.updated = payload.updated
+      }
+    },
     setLoading (state, payload) {
       state.loading = payload
     },
@@ -482,6 +515,51 @@ export const store = new Vuex.Store({
           commit('setError', error)
         }
       )
+    },
+    updateUserData ({commit}, payload) {
+      commit('setLoading', true)
+      const updateUserObj = {}
+      console.log('PAYLOAD', payload)
+      if (payload.firstName) {
+        updateUserObj.firstName = payload.firstName
+      }
+      if (payload.lastName) {
+        updateUserObj.lastName = payload.lastName
+      }
+      if (payload.avatar) {
+        updateUserObj.avatar = payload.avatar
+      }
+      if (payload.currency) {
+        updateUserObj.currency = payload.currency
+      }
+      if (payload.location) {
+        updateUserObj.location = payload.location
+      }
+      if (payload.timeZone) {
+        updateUserObj.timeZone = payload.timeZone
+      }
+      if (payload.longitude) {
+        updateUserObj.longitude = payload.longitude
+      }
+      if (payload.latitude) {
+        updateUserObj.latitude = payload.latitude
+      }
+      if (payload.language) {
+        updateUserObj.language = payload.language
+      }
+      if (payload.updated) {
+        updateUserObj.updated = payload.updated
+      }
+      firebase.database().ref('users').child(payload.id).update(updateUserObj)
+      .then(() => {
+        commit('setLoading', false)
+        console.log('This is the push of the USER payload', payload)
+        // commit('updateUser', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        commit('setLoading', false)
+      })
     },
     logout ({commit}) {
       firebase.auth().signOut()
