@@ -116,7 +116,7 @@ import Uber from '../Widgets/Uber'
 import PeopleInSpace from '../Widgets/PeopleInSpace'
 import Wifi from '../Widgets/Wifi'
 import { DashboardOrbitSpinner } from 'epic-spinners'
-// import moment from 'moment-timezone'
+
 export default {
   props: ['id'],
   data () {

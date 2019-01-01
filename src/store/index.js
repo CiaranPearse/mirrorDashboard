@@ -139,6 +139,11 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    loadedProfile ({commit}, payload) {
+      console.log('in loadedProfile inside ACTIONS')
+      console.log('The Commit is: ', commit)
+      console.log('The payload is: ', payload)
+    },
     loadDashboards ({commit}, payload) {
       commit('setLoading', true)
       firebase.database().ref('dashboards').on('value', function (snapshot) {
@@ -397,6 +402,15 @@ export const store = new Vuex.Store({
           console.log('Lets Create a User Profile Now')
           console.log(this.state.user.id)
           const newUser = {
+            firstName: 'Saga',
+            lastName: 'Dash',
+            location: 'Cork, Ireland',
+            longitude: '-8.486316',
+            latitude: '51.896893',
+            timeZone: 'GMT',
+            language: 'en_US',
+            currency: 'USD',
+            avatar: 'http://ciaranfoley.com/assets/img/author/perry.jpg',
             userLevel: 'free',
             joinDate: dateNow.toISOString(),
             isAdmin: false
@@ -423,7 +437,6 @@ export const store = new Vuex.Store({
           commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
-            registeredDashboards: [],
             userLevel: ''
           }
           commit('setUser', newUser)
@@ -438,6 +451,37 @@ export const store = new Vuex.Store({
     },
     autoSignIn ({commit}, payload) {
       commit('setUser', {id: payload.uid, registeredDashboards: [], userLevel: ''})
+    },
+    fetchUserData ({commit, getters}) {
+      commit('setLoading', true)
+      firebase.database().ref('/users/' + getters.user.id).once('value')
+      .then(data => {
+        const values = data.val()
+        console.log('from fetchUserData: ', values)
+        const updatedUser = {
+          id: getters.user.id,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          location: values.location,
+          longitude: values.longitude,
+          latitude: values.latitude,
+          timeZone: values.timeZone,
+          language: values.language,
+          currency: values.currency,
+          avatar: values.avatar,
+          userLevel: values.userLevel,
+          joinDate: values.joinDate,
+          isAdmin: values.isAdmin
+        }
+        commit('setLoading', false)
+        commit('setUser', updatedUser)
+      })
+      .catch(
+        error => {
+          commit('setLoading', false)
+          commit('setError', error)
+        }
+      )
     },
     logout ({commit}) {
       firebase.auth().signOut()
@@ -463,6 +507,13 @@ export const store = new Vuex.Store({
           return dashboard.id === dashboardId
         })
       }
+    },
+    getCurrentUser (state) {
+      console.log('From getCurrentUser: ', state.user)
+      // return state.user
+    },
+    loadProfile (state) {
+      return state.loadedProfile
     },
     user (state) {
       return state.user
