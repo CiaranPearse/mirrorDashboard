@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
+import router from '@/router'
 
 Vue.use(Vuex)
 
@@ -432,7 +433,6 @@ export const store = new Vuex.Store({
       .then(
         user => {
           const dateNow = new Date()
-          console.log('Lets Create a User Profile Now')
           console.log(this.state.user.id)
           const newUser = {
             firstName: 'Saga',
@@ -450,6 +450,11 @@ export const store = new Vuex.Store({
           }
           firebase.database().ref('users/' + this.state.user.id).set(newUser)
           console.log('Profile should be created with TEST field as XXXXXXX')
+        }
+      )
+      .then(
+        user => {
+          router.push('/profile')
         }
       )
       .catch(

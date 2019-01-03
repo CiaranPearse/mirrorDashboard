@@ -104,6 +104,7 @@ export default {
   methods: {
     onSignup () {
       this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      this.$router.push('/profile')
     },
     onDismissed () {
       this.$store.dispatch('clearError')

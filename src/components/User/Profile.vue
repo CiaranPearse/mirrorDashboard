@@ -6,6 +6,25 @@
 						<p>LOADING ...</p>
 					</div>
 					<div v-else>
+						<v-dialog v-model="dialog" persistent max-width="290">
+      <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
+      <v-card>
+        <v-card-title class="headline">Use Google's location service?</v-card-title>
+        <v-card-text><p>Some of our widgets rely on location information to work.<br />By clicking the "Find Me" button below we can guess<br />
+          - Your Longitude<br />
+          - Your Latitude<br />
+          - Your city and country<br />
+          - Your local currency.<br />
+          - Your Timezone<br /><br />You can enter this information manually in your profile or within the widgets if you wish.<br />
+                      <a @click="userDeclinedGeo">Don't show this again</a>
+                    </p></v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click="dialog = false">I'll do it myself</v-btn>
+          <v-btn color="green darken-1" flat @click="getLocation">Find me</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 						<div v-if="!editing">
 						  <span> {{ this.userId }} </span><br />
 						  <span> {{ this.firstName }} </span><br />
@@ -78,6 +97,14 @@
 				        </v-flex>
 				        <v-flex xs12 sm6 md3>
 				          <v-text-field
+				            v-model="countryEdit"
+				            label="Your Country"
+				            single-line
+				            outline
+				          ></v-text-field>
+				        </v-flex>
+				        <v-flex xs12 sm6 md3>
+				          <v-text-field
 				            v-model="timeZoneEdit"
 				            label="Timezone"
 				            single-line
@@ -112,6 +139,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -123,6 +151,7 @@ export default {
       avatar: null,
       currency: null,
       location: null,
+      country: null,
       timeZone: null,
       longitude: null,
       latitude: null,
@@ -135,6 +164,7 @@ export default {
       avatarEdit: null,
       currencyEdit: null,
       locationEdit: null,
+      countryEdit: null,
       timeZoneEdit: null,
       longitudeEdit: null,
       latitudeEdit: null,
@@ -259,7 +289,10 @@ export default {
         {name: 'Viet Nam Dong', code: 'VND'},
         {name: 'Yemen Rial', code: 'YER'},
         {name: 'Zimbabwe Dollar.', code: 'ZWD'}
-      ]
+      ],
+      declinedGeo: false,
+      alert: null,
+      dialog: false
     }
   },
   mounted () {
@@ -272,7 +305,7 @@ export default {
       this.editing = true
     },
     onCloseEdit () {
-      // If there are changes andf save hasnt been checked then push a warning.
+      // If there are changes and save hasnt been checked then push a warning.
       this.editing = false
     },
     onUpdateProfile () {
@@ -285,10 +318,12 @@ export default {
         avatar: this.avatarEdit,
         currency: this.currencyEdit,
         location: this.locationEdit,
+        counrty: this.counrtyEdit,
         timeZone: this.timeZoneEdit,
         longitude: this.longitudeEdit,
         latitude: this.latitudeEdit,
         language: this.languageEdit,
+        declinedGeo: this.declinedGeo,
         updated: dateNow.toISOString()
       })
       this.firstName = this.firstNameEdit
@@ -296,11 +331,42 @@ export default {
       this.avatar = this.avatarEdit
       this.currency = this.currencyEdit
       this.location = this.locationEdit
+      this.country = this.countryEdit
       this.timeZone = this.timeZoneEdit
       this.longitude = this.longitudeEdit
       this.latitude = this.latitudeEdit
       this.language = this.languageEdit
       this.editing = false
+    },
+    userDeclinedGeo: function (event) {
+      this.declinedGeo = true
+      this.dialog = false
+    },
+    getLocation () {
+      var self = this
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(self.showPosition)
+      } else {
+        this.alert = 'Geolocation is not supported by this browser.'
+      }
+    },
+    showPosition (position) {
+      // const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+      axios.get('https://api.ipdata.co?api-key=1c2f33af048503d2cf3f316ea974ece3a94891b0d514cd369d51a1a8', {
+      })
+      .then(result => {
+        console.log('result from googleAPI: ', result.data)
+        this.longitudeEdit = result.data.longitude
+        this.latitudeEdit = result.data.latitude
+        this.locationEdit = result.data.city
+        this.countryEdit = result.data.country_name
+        this.currencyEdit = result.data.currency.code
+        this.timeZoneEdit = result.data.time_zone.abbr
+        this.dialog = false
+      })
+      .catch(err => {
+        console.log('error Handle: ', err)
+      })
     }
   },
   computed: {
@@ -312,6 +378,7 @@ export default {
       this.avatar = userInfo.avatar
       this.currency = userInfo.currency
       this.location = userInfo.location
+      this.country = userInfo.country
       this.timeZone = userInfo.timeZone
       this.longitude = userInfo.longitude
       this.latitude = userInfo.latitude

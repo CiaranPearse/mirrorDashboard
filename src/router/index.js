@@ -60,7 +60,8 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       props: true,
-      component: Profile
+      component: Profile,
+      beforeEnter: AuthGuard
     },
     {
       path: '/about',
